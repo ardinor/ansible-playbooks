@@ -3,10 +3,10 @@
 
   tasks:
     - name: Start volume container
-      docker: image=centos name=dbdata
+      docker: image=centos name=dbdata volumes=/dbdata
 
     - name: Start MariaDB Container
-      docker: image=mariadb name=mojibake-db
+      docker: image=mariadb name=mojibake-db volumes_from=dbdata
               env="MYSQL_ROOT_PASSWORD={{ db_root_password }},
                    MYSQL_USER={{ db_user }},
                    MYSQL_PASSWORD={{ db_user_password }},
