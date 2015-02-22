@@ -1,0 +1,6 @@
+- hosts: web
+  sudo: yes
+
+  tasks:
+   - name: Install Docker
+     yum: name=docker state=present
