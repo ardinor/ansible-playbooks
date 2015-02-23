@@ -1,0 +1,3 @@
+---
+# The port Mojibake itself will run on
+mojibake-port: 5000
