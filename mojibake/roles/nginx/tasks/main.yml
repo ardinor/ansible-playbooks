@@ -3,7 +3,7 @@
 
   tasks:
     - name: Install nginx repo
-      yum: name="{{ nginx-rpm-url }}" state=present
+      yum: name={{ nginx_rpm_url }} state=present
 
     - name: Install nginx
       yum: name=nginx state=latest
@@ -11,7 +11,24 @@
     - name: Enable nginx service
       service: name=nginx enabled=yes
 
-    # config goes here
+    - name: Make sites-available directory
+      file: path=/etc/nginx/sites-available state=directory
+
+    - name: Make sites-enabled directory
+      file: path=/etc/nginx/sites-enabled state=directory
+
+    # Check mode on these files, need to specify it?
+    # Does this really need to be a template?
+    - name: Install main nginx config file
+      template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+      notify: restart nginx
+
+    - name: Install site config file
+      template: src=site.conf.j2 dest=/etc/nginx/sites-available/site.conf
+
+    - name: Link site config to sites-enabled
+      command: ln -s /etc/nginx/sites-available/site.conf /etc/nginx/sites-enabled/site.conf
+      notify: restart nginx
 
     - name: Allow http through the firewall
       firewalld: service=http permanent=true state=enabled

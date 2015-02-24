@@ -1,3 +1,10 @@
 ---
 # Where to download the RPM that will install the nginx repo
-nginx-rpm-url: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+nginx_rpm_url: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+# The site url without www
+site_url: defestri.org
+ssl_cert_location: /srv/ssl/cert.crt
+ssl_private_key_location: /srv/ssl/cert.key
+root_dir: /var/www/defestri/httpdocs
+access_log: /var/www/defestri/logs/access.log
+error_log:

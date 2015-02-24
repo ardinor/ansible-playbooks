@@ -14,7 +14,7 @@
 
     - name: Start Mojibake Docker container
       docker: image=ardinor/mojibake-python name=mojibake
-              ports=127.0.0.1:{{ mojibake-port }}:8000
+              ports=127.0.0.1:{{ mojibake_port }}:8000
               links=mojibake-db:mojibake-db
               env="ADMIN_USER={{ admin_user }},
                    ADMIN_PASS={{ admin_pass }},

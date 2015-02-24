@@ -1,0 +1,25 @@
+---
+
+# Firewalld should be running anway, just double check whether this is needed or not.
+- name: ensure firewalld running
+  service: name=firewalld state=started enabled=yes
+
+- name: install ntp
+  yum: name=ntp state=present
+  tag: ntp
+
+- name: start ntp
+  service: name=ntpd state=started enabled=yes
+  tag: ntp
+
+# Install epel, needed for fail2ban
+- name: install EPEL repo
+  yum: name=epel-release state=present
+
+- name: install fail2ban
+  yum: name=fail2ban state=latest
+
+# Copy fail2ban config file over
+
+- name: start fail2ban and ensure enabled=yes
+  service: name=fail2ban state=started enabled=yes
