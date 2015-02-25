@@ -5,7 +5,7 @@
   tasks:
 
     - name: add ssh users
-      user: name={{ item }} groups=sshusers append=yes
+      user: name={{ item }} groups=sshusers append=yes password={{ password }}
       with_items: ssh_users
       tags: users
 
