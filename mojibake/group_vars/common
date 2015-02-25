@@ -1,0 +1,7 @@
+---
+# list of users who should have ssh access
+ssh_users:
+  - jordan
+
+admin_users:
+  - jordan

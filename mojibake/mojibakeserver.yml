@@ -1,0 +1,7 @@
+---
+- hosts: mojibakeservers
+  roles:
+    - common
+    - docker
+    - nginx
+    - mojibake-site

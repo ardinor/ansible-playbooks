@@ -1,25 +1,42 @@
 ---
+- hosts: all
+  sudo: yes
 
-# Firewalld should be running anway, just double check whether this is needed or not.
-- name: ensure firewalld running
-  service: name=firewalld state=started enabled=yes
+  tasks:
 
-- name: install ntp
-  yum: name=ntp state=present
-  tag: ntp
+    - name: add ssh users
+      user: name={{ item }} groups=sshusers append=yes
+      with_items: ssh_users
+      tags: users
 
-- name: start ntp
-  service: name=ntpd state=started enabled=yes
-  tag: ntp
+    - name: add admin users
+      user: name={{ item }} groups=admins append=yes
+      with_items: admin_users
+      tags: users
 
-# Install epel, needed for fail2ban
-- name: install EPEL repo
-  yum: name=epel-release state=present
+    # Firewalld should be running anway, just double check whether this is needed or not.
+    - name: ensure firewalld running
+      service: name=firewalld state=started enabled=yes
 
-- name: install fail2ban
-  yum: name=fail2ban state=latest
+    - name: install ntp
+      yum: name=ntp state=present
+      tags: ntp
 
-# Copy fail2ban config file over
+    - name: start ntp
+      service: name=ntpd state=started enabled=yes
+      tags: ntp
 
-- name: start fail2ban and ensure enabled=yes
-  service: name=fail2ban state=started enabled=yes
+    # Install epel, needed for fail2ban
+    - name: install EPEL repo
+      yum: name=epel-release state=present
+      tags: epel
+
+    - name: install fail2ban
+      yum: name=fail2ban state=latest
+      tags: fail2ban
+
+    # Copy fail2ban config file over
+
+    - name: start fail2ban and ensure enabled=yes
+      service: name=fail2ban state=started enabled=yes
+      tags: fail2ban
