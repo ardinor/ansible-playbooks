@@ -1,23 +1,22 @@
 # {{ ansible_managed }}
 
+#ListenAddress
+{% if sshd_port != 22 %}
 Port {{ sshd_port }}
+{% endif %}
+
 Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
-HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
-UsePrivilegeSeparation yes
+UsePrivilegeSeparation sandbox
 
-KeyRegenerationInterval 3600
-ServerKeyBits 768
-
-SyslogFacility AUTH
+SyslogFacility AUTHPRIV
 LogLevel INFO
 
-LoginGraceTime 120
-PermitRootLogin no
+LoginGraceTime 1m
+PermitRootLogin without-password
 StrictModes yes
 
-RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile      %h/.ssh/authorized_keys
 
@@ -26,21 +25,19 @@ RhostsRSAAuthentication no
 HostbasedAuthentication no
 
 PermitEmptyPasswords no
-
-ChallengeResponseAuthentication no
-
+ChallengeResponseAuthentication yes
 PasswordAuthentication no
 
-X11Forwarding yes
-X11DisplayOffset 10
+X11Forwarding no
 PrintMotd no
-PrintLastLog yes
-TCPKeepAlive yes
 
-AllowGroups sshusers
+#GSSAPIAuthentication yes
+#GSSAPICleanupCredentials yes
+
+AllowGroups ssh_users
 
 AcceptEnv LANG LC_*
 
 Subsystem sftp /usr/lib/openssh/sftp-server
 
-UsePAM no
+UsePAM yes
