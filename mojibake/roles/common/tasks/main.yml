@@ -1,42 +1,40 @@
 ---
-- hosts: all
-  sudo: yes
 
-  tasks:
+- name: add ssh users
+  user: name={{ item }} groups=sshusers append=yes password={{ password }}
+  with_items:
+    - ssh_users
+  tags: users
 
-    - name: add ssh users
-      user: name={{ item }} groups=sshusers append=yes password={{ password }}
-      with_items: ssh_users
-      tags: users
+- name: add admin users
+  user: name={{ item }} groups=admins append=yes
+  with_items:
+    - admin_users
+  tags: users
 
-    - name: add admin users
-      user: name={{ item }} groups=admins append=yes
-      with_items: admin_users
-      tags: users
+# Firewalld should be running anway, just double check whether this is needed or not.
+- name: ensure firewalld running
+  service: name=firewalld state=started enabled=yes
 
-    # Firewalld should be running anway, just double check whether this is needed or not.
-    - name: ensure firewalld running
-      service: name=firewalld state=started enabled=yes
+- name: install ntp
+  yum: name=ntp state=present
+  tags: ntp
 
-    - name: install ntp
-      yum: name=ntp state=present
-      tags: ntp
+- name: start ntp
+  service: name=ntpd state=started enabled=yes
+  tags: ntp
 
-    - name: start ntp
-      service: name=ntpd state=started enabled=yes
-      tags: ntp
+# Install epel, needed for fail2ban
+- name: install EPEL repo
+  yum: name=epel-release state=present
+  tags: epel
 
-    # Install epel, needed for fail2ban
-    - name: install EPEL repo
-      yum: name=epel-release state=present
-      tags: epel
+- name: install fail2ban
+  yum: name=fail2ban state=latest
+  tags: fail2ban
 
-    - name: install fail2ban
-      yum: name=fail2ban state=latest
-      tags: fail2ban
+# Copy fail2ban config file over
 
-    # Copy fail2ban config file over
-
-    - name: start fail2ban and ensure enabled=yes
-      service: name=fail2ban state=started enabled=yes
-      tags: fail2ban
+- name: start fail2ban and ensure enabled=yes
+  service: name=fail2ban state=started enabled=yes
+  tags: fail2ban

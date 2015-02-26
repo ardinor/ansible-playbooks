@@ -1,12 +1,10 @@
-- hosts: web
-  sudo: yes
+---
 
-  tasks:
-    - name: Install Docker
-      yum: name=docker state=latest
-      tag: docker
+- name: Install Docker
+  yum: name=docker state=latest
+  tag: docker
 
-   # Is Fig available in CentOS repos? Check this
-    - name: Install Fig
-      yum: name=fig state=latest
-      tag: docker
+# Is Fig available in CentOS repos? Check this
+- name: Install Fig
+  yum: name=fig state=latest
+  tag: docker
