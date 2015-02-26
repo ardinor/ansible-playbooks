@@ -34,10 +34,10 @@ PrintMotd no
 #GSSAPIAuthentication yes
 #GSSAPICleanupCredentials yes
 
-AllowGroups ssh_users root
+AllowGroups root ssh_users
 
 AcceptEnv LANG LC_*
 
-Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp /usr/libexec/openssh/sftp-server
 
 UsePAM yes

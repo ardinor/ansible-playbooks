@@ -16,14 +16,22 @@
 - name: add ssh users
   user: name={{ item }} groups=ssh_users append=yes password={{ password }}
   with_items:
-    - ssh_users
+    - "{{ ssh_users }}"
   tags: users
 
 - name: add admin users
   user: name={{ item }} groups=admins append=yes
   with_items:
-    - admin_users
+    - "{{ admin_users }}"
   tags: users
+
+#key="{{ lookup('file', './files/item.pub' | regex_replace('item', item)) }}"
+- name: make ssh key directory
+  authorized_key: user="{{ item }}"
+                  key="{{ lookup('file', '/home/jordan/.ssh/jvirt01.pub') }}"
+                  manage_dir=yes
+  with_items:
+    - "{{ ssh_users }}"
 
 # Copy sshd config over
 # TO DO: Get the main ipv4 and ipv6 addresses and put them in as the listen addresses?
@@ -38,6 +46,7 @@
 - name: allow new ssh port through firewall
   firewalld: port={{ sshd_port }} permanent=true state=enabled
   when: sshd_port != 22
+  notify: restart firewalld
 
 # Firewalld should be running anway, just double check whether this is needed or not.
 - name: ensure firewalld running
