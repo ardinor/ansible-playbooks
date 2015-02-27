@@ -3,6 +3,6 @@
 - hosts: mojibakeservers
   roles:
     - common
-    #- docker
-    #- nginx
+    - docker
+    - nginx
     #- mojibake-site

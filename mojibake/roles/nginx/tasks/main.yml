@@ -1,5 +1,11 @@
 ---
 
+- name: add www-data user
+  user: name=www-data system=yes state=present
+
+- name: make /var/www
+  file: path=/var/www state=directory owner=www-data group=www-data mode=0755
+
 - name: Install nginx repo
   yum: name={{ nginx_rpm_url }} state=present
 
@@ -25,7 +31,8 @@
   template: src=site.conf.j2 dest=/etc/nginx/sites-available/site.conf
 
 - name: Link site config to sites-enabled
-  command: ln -s /etc/nginx/sites-available/site.conf /etc/nginx/sites-enabled/site.conf
+  file: src=/etc/nginx/sites-available/site.conf dest=/etc/nginx/sites-enabled/site.conf
+        state=link
   notify: restart nginx
 
 - name: Allow http through the firewall
