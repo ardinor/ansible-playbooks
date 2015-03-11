@@ -37,6 +37,8 @@
 
 - name: Allow http through the firewall
   firewalld: service=http permanent=true state=enabled
+  notify: restart firewalld
 
 - name: Allow https through the firewall
   firewalld: service=https permanent=true state=enabled
+  notify: restart firewalld
