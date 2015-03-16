@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+# fail2ban - ssh jail
+
+# Current setup looks for any 3 failures in 24 hours and bans
+# offending IPs for 48 hours
+
+[ssh]
+
+ignoreip = 127.0.0.1/8 {% for address in management_ips %}{{ management_ips }} {% endfor %}
+enabled     = true
+# findtime = 1 day
+findtime    = 86400
+# bantime = 2 days
+bantime     = 172800
+maxretry    = 3

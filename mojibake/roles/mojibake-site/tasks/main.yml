@@ -1,5 +1,9 @@
 ---
 
+# TO DO: Investigate if this is necessary
+- name: Change SELinux to allow Docker to connect to TCP sockets
+  command: /usr/sbin/setsebool -P docker_connect_any 1
+
 - name: Start volume container
   docker: image=centos name=dbdata volumes=/dbdata
 

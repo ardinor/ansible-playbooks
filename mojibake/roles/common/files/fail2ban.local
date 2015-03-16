@@ -1,0 +1,17 @@
+# fail2ban - fail2ban jail
+
+# Monitors the fail2ban log itself for bans, if it finds the same
+# offending IP being banned 3 times in 1 week, it bans them for
+# 4 weeks.
+
+[fail2ban]
+
+enabled     = true
+port        = ssh
+filter      = fail2ban
+logpath     = /var/log/fail2ban.log
+# findtime  = 1 week
+findtime    = 604800
+# bantime   = 4 weeks
+bantime     = 1814400
+maxretry    = 3
