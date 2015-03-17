@@ -70,7 +70,7 @@
   tags: epel
 
 - name: install fail2ban
-  yum: name=fail2ban state=latest
+  yum: name=fail2ban-server state=latest
   tags: fail2ban
 
 - name: copy fail2ban ssh jail config across

@@ -4,9 +4,11 @@
 # Current setup looks for any 3 failures in 24 hours and bans
 # offending IPs for 48 hours
 
-[ssh]
+[sshd]
 
-ignoreip = 127.0.0.1/8 {% for address in management_ips %}{{ management_ips }} {% endfor %}
+{% if management_ips %}
+ignoreip = {% for address in management_ips %}{{ management_ips }} {% endfor %}
+{% endif %}
 enabled     = true
 # findtime = 1 day
 findtime    = 86400
