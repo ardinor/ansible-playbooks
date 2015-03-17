@@ -4,6 +4,10 @@
   yum: name=docker state=latest
   tags: docker
 
+- name: start docker
+  service: name=docker state=started enabled=yes
+  tags: docker
+
 # Is Fig available in CentOS repos? Check this
 # Fig is being deprecated in favour of Docker Compose
 #- name: Install Fig
