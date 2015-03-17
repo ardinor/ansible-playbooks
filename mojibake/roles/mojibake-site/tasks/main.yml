@@ -5,19 +5,23 @@
   command: /usr/sbin/setsebool -P docker_connect_any 1
 
 - name: Start volume container
-  docker: image=centos name=dbdata volumes=/dbdata
+  docker: image=centos name=db-data volumes=/var/lib/mysql
 
 - name: Start MariaDB Container
-  docker: image=mariadb name=mojibake-db volumes_from=dbdata
+  docker: image=ardinor/centos-mariadb name=mojibake-db volumes_from=db-data
           env="MYSQL_ROOT_PASSWORD={{ db_root_password }},
                MYSQL_USER={{ db_user }},
                MYSQL_PASSWORD={{ db_user_password }},
                MYSQL_DATABASE={{ db_table }}"
 
+- name: Start Mojibake volume container
+  docker: image=centos name=mojibake-data volumes=/var/lib/mojibake
+
 - name: Start Mojibake Docker container
   docker: image=ardinor/mojibake-python name=mojibake
           ports=127.0.0.1:{{ mojibake_port }}:8000
           links=mojibake-db:mojibake-db
+          volumes_from=mojibake-data
           env="ADMIN_USER={{ admin_user }},
                ADMIN_PASS={{ admin_pass }},
                DB_USER={{ db_user }},
