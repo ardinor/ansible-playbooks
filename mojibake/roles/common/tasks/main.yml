@@ -7,6 +7,9 @@
 - name: install libselinux-python
   yum: name=libselinux-python state=present
 
+- name: install yum-fastestmirror
+  yum: name=yum-plugin-fastestmirror state=present
+
 - name: add groups
   group: name={{ item }} state=present
   with_items:

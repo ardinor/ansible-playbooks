@@ -13,7 +13,9 @@ Performs the following:
 - Copies over SSHD config (authorised keys only)
 - Installs and starts NTP
 - Installs EPEL
-- Installs fail2ban and copies config over (SSHD jail and a fail2ban jail which monitors fail2ban's log and bans IPs that have already been banned more than 3 times)
+- Installs fail2ban and copies config over
+    - SSHD jail
+    - fail2ban jail - which monitors fail2ban's log and bans IPs that have already been banned more than 3 times
 
 ### [nginx](mojibake/roles/nginx/) ###
 
@@ -25,4 +27,4 @@ Installs, starts and enables Docker, also installs Docker Compose.
 
 ### [Mojibake](mojibake/roles/mojibake-site/) ###
 
-Ansible playbook for deploying Mojibake using Docker
+Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) using Docker.
