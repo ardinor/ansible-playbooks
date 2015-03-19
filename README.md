@@ -15,7 +15,7 @@ Performs the following:
 - Installs EPEL
 - Installs fail2ban and copies config over
     - SSHD jail
-    - fail2ban jail - which monitors fail2ban's log and bans IPs that have already been banned more than 3 times
+    - fail2ban jail which monitors fail2ban's log and bans IPs that have already been banned more than 3 times by other jails
 
 ### [nginx](mojibake/roles/nginx/) ###
 
