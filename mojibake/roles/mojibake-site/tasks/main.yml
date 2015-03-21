@@ -4,9 +4,6 @@
 - name: Change SELinux to allow Docker to connect to TCP sockets
   command: /usr/sbin/setsebool -P docker_connect_any 1
 
-- name: make /var/www/defestri
-  file: path=/var/www/defestri state=directory owner=www-data group=www-data mode=0755
-
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git
        dest=/tmp/mojibake

@@ -4,11 +4,19 @@
 nginx_rpm_url: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 # The site url without www
 site_url: defestri.org
-# Where the SSL Cert is located on the server
+
+# If we want the server we're deploying to use ssl, if not a different config will be used
+ssl: false
+# If we're using SSL, where the SSL Cert is located on the server
 ssl_cert_location: /srv/ssl/cert.crt
-# Where the SSL Private Key is located on the server
+# If we're using SSL, where the SSL Private Key is located on the server
 ssl_private_key_location: /srv/ssl/cert.key
+
 root_dir: /var/www/defestri/
+
 proxy_pass_port: 8000
+
+site_directory: /var/www/defestri
+site_log_directory: /var/www/defestri/logs
 access_log: /var/www/defestri/logs/access.log
 error_log: /var/www/defestri/logs/error.log
