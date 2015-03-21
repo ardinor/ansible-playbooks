@@ -94,7 +94,7 @@
 # The service will fail to start if the log doesn't exist and since we
 # haven't started the service before it won't. First touch it
 - name: create fail2ban.log
-  command: touch /var/log/fail2ban.log
+  file: path=/var/log/fail2ban.log state=file
   tags: fail2ban
 
 - name: start fail2ban and ensure enabled=yes
