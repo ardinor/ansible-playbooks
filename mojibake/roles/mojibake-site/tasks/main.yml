@@ -8,6 +8,9 @@
   git: repo=https://github.com/ardinor/mojibake.git
        dest=/tmp/mojibake
 
+- name: Remove existing static files (if any)
+  command: rm -rf /var/www/defestri/static
+
 - name: Move static files over to /var/www/defestri
   command: mv /tmp/mojibake/mojibake/static/ /var/www/defestri/static
   notify: restart nginx
@@ -16,10 +19,16 @@
   command: rm -rf /tmp/mojibake
 
 - name: make /var/mojibake
-  file: path=/var/www/mojibake state=directory
+  file: path=/var/mojibake state=directory
 
 - name: Pull down Docker compose file
-  command: curl -o /var/www/mojibake/docker-compose.yml https://raw.githubusercontent.com/ardinor/dockerfiles/master/Compose%20files/mojibake/docker-compose.yml
+  get_url:
+    url="https://raw.githubusercontent.com/ardinor/dockerfiles/master/Compose%20files/mojibake/docker-compose.yml"
+    dest="/var/mojibake/docker-compose.yml"
+    mode=0400
 
 - name: Start mojibake and related containers
-  command: docker-compose up /var/www/docker-compose.yml -d
+  shell: docker-compose up -d
+  args:
+    chdir: /var/mojibake/
+  environment: compose_env
