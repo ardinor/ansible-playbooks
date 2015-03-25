@@ -4,6 +4,21 @@
 - name: Change SELinux to allow Docker to connect to TCP sockets
   command: /usr/sbin/setsebool -P docker_connect_any 1
 
+- name: Get the logspout policy module from Github
+  get_url:
+    url="https://raw.githubusercontent.com/ardinor/selinux-modules/master/logspout/logspout.te"
+    dest="/tmp/logspout.te"
+    mode=0400
+
+- name: Turn the logspout policy module .te to a .mod file
+  command: checkmodule -M -m -o /tmp/logspout.mod logspout.te
+
+- name: Turn the logspout policy module .mod into a .pp
+  command: semodule_package -o /tmp/logspout.pp -m /tmp/logspout.mod
+
+- name: Load the logspout policy module
+  command: semodule -i /tmp/logspout.pp
+
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git
        dest=/tmp/mojibake
