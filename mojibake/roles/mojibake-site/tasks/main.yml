@@ -9,15 +9,22 @@
     url="https://raw.githubusercontent.com/ardinor/selinux-modules/master/logspout/logspout.te"
     dest="/tmp/logspout.te"
     mode=0400
+  tags:
+    - logging
 
 - name: Turn the logspout policy module .te to a .mod file
   command: checkmodule -M -m -o /tmp/logspout.mod logspout.te
+  tags: logging
 
 - name: Turn the logspout policy module .mod into a .pp
   command: semodule_package -o /tmp/logspout.pp -m /tmp/logspout.mod
+  tags:
+    - logging
 
 - name: Load the logspout policy module
   command: semodule -i /tmp/logspout.pp
+  tags:
+    - logging
 
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git

@@ -20,27 +20,22 @@
   with_items:
     - ssh_users
     - admins
-  tags: users
+  tags:
+    - users
 
-- name: add ssh users
-  user: name={{ item }} groups=ssh_users append=yes password={{ password }}
+- name: add users
+  user: name={{ item.0.name }} groups={{ item.1 }} append=yes password={{ password }}
+  with_subelements:
+    - users
+    - roles
+
+- name: add ssh keys
+  authorized_key: user={{ item.name }}
+                  key=https://github.com/{{ item.github }}.keys
+                  manage_dir=yes
+                  state=present
   with_items:
-    - "{{ ssh_users }}"
-  tags: users
-
-- name: add admin users
-  user: name={{ item }} groups=admins append=yes
-  with_items:
-    - "{{ admin_users }}"
-  tags: users
-
-#key="{{ lookup('file', './files/item.pub' | regex_replace('item', item)) }}"
-#- name: make ssh key directory
-#  authorized_key: user="{{ item }}"
-#                  key="{{ lookup('file', '/home/jordan/.ssh/jvirt01.pub') }}"
-#                  manage_dir=yes
-#  with_items:
-#    - "{{ ssh_users }}"
+    - "{{ users }}"
 
 # Copy sshd config over
 # TO DO: Get the main ipv4 and ipv6 addresses and put them in as the listen addresses?
@@ -66,11 +61,13 @@
 
 - name: install ntp
   yum: name=ntp state=present
-  tags: ntp
+  tags:
+    - ntp
 
 - name: start ntp
   service: name=ntpd state=started enabled=yes
-  tags: ntp
+  tags:
+    - ntp
 
 # Install epel, needed for fail2ban
 - name: install EPEL repo
@@ -94,14 +91,17 @@
 - name: copy fail2ban fail2ban filter across
   copy: src=../files/fail2ban.conf dest=/etc/fail2ban/filter.d/fail2ban.conf
   notify: restart fail2ban
-  tags: fail2ban
+  tags:
+    - fail2ban
 
 # The service will fail to start if the log doesn't exist and since we
 # haven't started the service before it won't. First touch it
 - name: create fail2ban.log
   file: path=/var/log/fail2ban.log state=file
-  tags: fail2ban
+  tags:
+    - fail2ban
 
 - name: start fail2ban and ensure enabled=yes
   service: name=fail2ban state=started enabled=yes
-  tags: fail2ban
+  tags:
+    - fail2ban
