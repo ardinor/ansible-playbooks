@@ -30,12 +30,13 @@
     - roles
 
 - name: add ssh keys
-  authorized_key: user={{ item.name }}
-                  key=https://github.com/{{ item.github }}.keys
+  authorized_key: user={{ item.0.name }}
+                  key="{{ lookup('file', item.1) }}"
                   manage_dir=yes
                   state=present
-  with_items:
-    - "{{ users }}"
+  with_subelements:
+    - users
+    - keys
 
 # Copy sshd config over
 # TO DO: Get the main ipv4 and ipv6 addresses and put them in as the listen addresses?

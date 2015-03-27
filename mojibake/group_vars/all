@@ -6,7 +6,8 @@ password: $6$rounds=100000$q6eBgkFOsL9TJKOF$g8p24Oo.Hv4BpgjIrDUBaTM6LZipuqvq8bMb
 
 users:
   - name: jordan
-    github: ardinor
+    keys: 
+      - /home/jordan/.ssh/jordan.pub
     roles:
       - ssh_users
       - admins
