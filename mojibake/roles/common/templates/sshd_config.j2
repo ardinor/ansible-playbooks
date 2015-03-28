@@ -14,7 +14,9 @@ SyslogFacility AUTHPRIV
 LogLevel INFO
 
 LoginGraceTime 1m
-PermitRootLogin without-password
+# If you'll be using pubkey root login you need this
+#PermitRootLogin without-password
+PermitRootLogin
 StrictModes yes
 
 PubkeyAuthentication yes
