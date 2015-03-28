@@ -1,6 +1,8 @@
 ---
 
 - hosts: mojibakeservers
+  sudo: True
+
   roles:
     # Since mojibake-site has dependencies (common/docker/nginx)
     # they are run first and don't need to be in here

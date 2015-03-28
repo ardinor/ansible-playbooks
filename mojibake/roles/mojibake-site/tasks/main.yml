@@ -51,7 +51,7 @@
     mode=0400
 
 - name: Start mojibake and related containers
-  shell: docker-compose up -d
+  shell: /usr/local/bin/docker-compose up -d
   args:
     chdir: /var/mojibake/
   environment: compose_env

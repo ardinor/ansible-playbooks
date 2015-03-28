@@ -59,6 +59,8 @@
 
 - name: update packages
   yum: name=* state=latest
+  tags:
+    - update
 
 - name: install ntp
   yum: name=ntp state=present
