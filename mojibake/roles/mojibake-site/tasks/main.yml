@@ -14,7 +14,8 @@
 
 - name: Turn the logspout policy module .te to a .mod file
   command: checkmodule -M -m -o /tmp/logspout.mod logspout.te
-  tags: logging
+  tags:
+    - logging
 
 - name: Turn the logspout policy module .mod into a .pp
   command: semodule_package -o /tmp/logspout.pp -m /tmp/logspout.mod
