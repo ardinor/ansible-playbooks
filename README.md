@@ -28,3 +28,7 @@ Installs, starts and enables Docker, also installs Docker Compose.
 ### [Mojibake](mojibake/roles/mojibake-site/) ###
 
 Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) using Docker.
+
+### [Logging](mojibake/roles/logging/) ###
+
+Ansible playbook for settings up logging on the server. Deploys a [Logspout](https://github.com/gliderlabs/logspout) Docker container for collecting Docker container logs and a [logstash](http://logstash.net/) Docker container for collecting logs (from both Logspout and the host itself) in order to ship them off to a central logging server.

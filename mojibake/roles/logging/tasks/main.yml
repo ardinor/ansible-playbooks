@@ -22,3 +22,20 @@
   command: semodule -i /tmp/logspout.pp
   tags:
     - docker-logging
+
+- name: make /var/mojibake
+  file: path=/var/mojibake state=directory
+
+- name: Pull down Docker compose file
+  get_url:
+    url="https://raw.githubusercontent.com/ardinor/dockerfiles/master/Compose%20files/logstash-logspout/docker-compose.yml"
+    dest="/var/logging/docker-compose.yml"
+    mode=0400
+  tags:
+    - docker-logging
+
+- name: Start logspout and logstash containers
+  shell: /usr/local/bin/docker-compose up -d
+  args:
+    chdir: /var/logging/
+  environment: compose_env
