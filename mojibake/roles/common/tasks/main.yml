@@ -28,6 +28,8 @@
   with_subelements:
     - users
     - roles
+  tags:
+    - users
 
 - name: add ssh keys
   authorized_key: user={{ item.0.name }}
@@ -37,6 +39,18 @@
   with_subelements:
     - users
     - keys
+  tags:
+    - users
+
+- name: add pretty colourful PS1
+  lineinfile: dest=/home/{{ item.name }}/.bashrc
+              state=present
+              regexp="^PS1="
+              line="PS1='\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'"
+  with_items:
+    - "{{ users }}"
+  tags:
+    - users
 
 # Copy sshd config over
 # TO DO: Get the main ipv4 and ipv6 addresses and put them in as the listen addresses?
