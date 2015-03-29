@@ -2,7 +2,7 @@
 # fail2ban - ssh jail
 
 # Current setup looks for any 3 failures in 24 hours and bans
-# offending IPs for 48 hours
+# offending IPs for 72 hours
 
 [sshd]
 
@@ -12,6 +12,6 @@ ignoreip = {% for address in management_ips %}{{ management_ips }} {% endfor %}
 enabled     = true
 # findtime = 1 day
 findtime    = 86400
-# bantime = 2 days
-bantime     = 172800
+# bantime = 3 days
+bantime     = 259200
 maxretry    = 3
