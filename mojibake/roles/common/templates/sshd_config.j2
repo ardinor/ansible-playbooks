@@ -14,9 +14,11 @@ SyslogFacility AUTHPRIV
 LogLevel INFO
 
 LoginGraceTime 1m
+
 # If you'll be using pubkey root login you need this
 #PermitRootLogin without-password
-PermitRootLogin
+PermitRootLogin no
+
 StrictModes yes
 
 PubkeyAuthentication yes
@@ -36,7 +38,10 @@ PrintMotd no
 #GSSAPIAuthentication yes
 #GSSAPICleanupCredentials yes
 
-AllowGroups root ssh_users
+# If you want root login you'll need to add root here
+#AllowUsers root
+
+AllowGroups ssh_users
 
 AcceptEnv LANG LC_*
 
