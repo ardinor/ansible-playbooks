@@ -1,0 +1,24 @@
+---
+
+- name: Get the logspout policy module from Github
+  get_url:
+    url="https://raw.githubusercontent.com/ardinor/selinux-modules/master/logspout/logspout.te"
+    dest="/tmp/logspout.te"
+    mode=0400
+  tags:
+    - docker-logging
+
+- name: Turn the logspout policy module .te to a .mod file
+  command: checkmodule -M -m -o /tmp/logspout.mod logspout.te
+  tags:
+    - docker-logging
+
+- name: Turn the logspout policy module .mod into a .pp
+  command: semodule_package -o /tmp/logspout.pp -m /tmp/logspout.mod
+  tags:
+    - docker-logging
+
+- name: Load the logspout policy module
+  command: semodule -i /tmp/logspout.pp
+  tags:
+    - docker-logging
