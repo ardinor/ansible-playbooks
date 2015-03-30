@@ -5,5 +5,10 @@
 
 # Copy config
 
+- name: Allow http through the firewall
+  firewalld: service=dns permanent=true state=enabled
+  notify: restart firewalld
+
 - name: Start and enable bind (named)
   service: name=named state=started enabled=yes
+

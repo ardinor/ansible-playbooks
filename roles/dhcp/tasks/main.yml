@@ -5,5 +5,9 @@
 
 # Copy config
 
+- name: Allow dhcp through the firewall
+  firewalld: service=dhcp permanent=true state=enabled
+  notify: restart firewalld
+
 - name: Start and enable dnsmasq
   service: name=dnsmasq state=started enabled=yes
