@@ -1,0 +1,9 @@
+---
+
+- name: install bind
+  yum: name=bind state=present
+
+# Copy config
+
+- name: Start and enable bind (named)
+  service: name=named state=started enabled=yes

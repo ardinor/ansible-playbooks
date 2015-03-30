@@ -2,3 +2,8 @@
 
 - name: Install dnsmasq
   yum: name=dnsmasq state=present
+
+# Copy config
+
+- name: Start and enable dnsmasq
+  service: name=dnsmasq state=started enabled=yes
