@@ -1,0 +1,10 @@
+---
+
+local_only_domain: int.defestri.org
+domain: int.defestri.org
+dhcp_start: 192.168.1.10
+dhcp_end: 192.168.1.30
+dhcp_lease: 12h
+default_router: 192.168.1.62
+ntp_server: 192.168.1.60
+windows_support: True

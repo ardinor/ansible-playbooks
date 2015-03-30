@@ -1,6 +1,6 @@
 ---
 
-- hosts: mojibakeservers
+- hosts: mojibakehosts
   sudo: True
 
   roles:
