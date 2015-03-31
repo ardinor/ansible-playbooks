@@ -3,9 +3,27 @@
 - name: install bind
   yum: name=bind state=present
 
-# Copy config
+- name: Copy across master config file
+  copy: src=../files/named.conf dest=/etc/named.conf
+        owner=root group=named mode=0640
+  notify: restart bind
 
-- name: Allow http through the firewall
+- name: Copy across config file for local zones
+  copy: src=../files/named.conf.local dest=/etc/named.conf.local
+        owner=root group=named mode=0640
+  notify: restart bind
+
+- name: Copy over site DNS config
+  copy: src=../db.site.com dest=/var/named/db.site.com
+        owner=named group=named mode=0640
+  notify: restart bind
+
+- name: Copy over reverse DNS config
+  copy: src=../db.10.0.0 dest=/var/named/db.10.0.0
+        owner=named group=named mode=0640
+  notify: restart bind
+
+- name: Allow dns through the firewall
   firewalld: service=dns permanent=true state=enabled
   notify: restart firewalld
 

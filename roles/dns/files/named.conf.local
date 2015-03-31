@@ -1,0 +1,6 @@
+zone "site.com" {
+        type master;
+        file "/var/named/db.site.com";
+        // to allow transfer to slave
+        //allow-transfer { 192.0.2.2; };
+};
