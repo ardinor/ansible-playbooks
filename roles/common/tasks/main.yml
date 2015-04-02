@@ -55,6 +55,13 @@
   tags:
     - users
 
+- name: copy basic vimrc over
+  copy: src=../files/.vimrc dest=/home/{{ item.name }}/.vimrc
+  with_items:
+    - "{{ users }}"
+  tags:
+    - users
+
 # Copy sshd config over
 # TO DO: Get the main ipv4 and ipv6 addresses and put them in as the listen addresses?
 - name: Install sshd config file
