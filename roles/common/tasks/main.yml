@@ -3,20 +3,33 @@
 # For SELinux utilities like semanage
 - name: install policycoreutils-python
   yum: name=policycoreutils-python state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
 
 - name: install libselinux-python
   yum: name=libselinux-python state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
 
 - name: install yum-fastestmirror
   yum: name=yum-plugin-fastestmirror state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
 
 # Need to think more whether this should really be in the common role
 # or just in the mojibake role
 - name: install git
   yum: name=git state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
+
+- name: install git
+  apt: name=git state=present
+  when: ansible_os_family == "Debian"
 
 - name: install vim
   yum: name=vim state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
+
+- name: install vim
+  apt: name=vim state=present
+  when: ansible_os_family == "Debian"
 
 - name: add groups
   group: name={{ item }} state=present
@@ -83,11 +96,13 @@
 
 - name: update packages
   yum: name=* state=latest
+  when: ansible_os_family == "Red Hat Enterprise Linux"
   tags:
     - update
 
 - name: install ntp
   yum: name=ntp state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
   tags:
     - ntp
 
@@ -99,10 +114,12 @@
 # Install epel, needed for fail2ban
 - name: install EPEL repo
   yum: name=epel-release state=present
+  when: ansible_os_family == "Red Hat Enterprise Linux"
   tags: epel
 
 - name: install fail2ban
   yum: name=fail2ban-server state=latest
+  when: ansible_os_family == "Red Hat Enterprise Linux"
   tags: fail2ban
 
 - name: copy fail2ban ssh jail config across

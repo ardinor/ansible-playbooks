@@ -1,3 +1,9 @@
 ---
 
+# talk to all hosts just so we can learn about them
+# https://docs.ansible.com/playbooks_best_practices.html#operating-system-and-distribution-variance
+- hosts: all
+  tasks:
+     - group_by: key=os_{{ ansible_distribution }}
+
 - include: mojibake-hosts.yml
