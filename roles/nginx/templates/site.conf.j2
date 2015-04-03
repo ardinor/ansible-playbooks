@@ -7,7 +7,7 @@ server {
 }
 
 server {
- listen 80 spdy;
+ listen 80;
  server_name {{ site_url }};
 
  keepalive_timeout 70;
@@ -18,27 +18,32 @@ server {
  access_log {{ access_log }};
  error_log {{ error_log }};
 
- location ~* \.(ico|css|js|gif|jpg|jpeg|png|xml|pdf)$ {
+# location ~* \.(ico|css|js|gif|jpg|jpeg|png|xml|pdf)$ {
+#  expires 1w;
+#  add_header Pragma public;
+#  add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+#  log_not_found off;
+# }
+
+ location /static/ {
   expires 1w;
   add_header Pragma public;
   add_header Cache-Control "public, must-revalidate, proxy-revalidate";
   log_not_found off;
- }
-
- location /static/ {
   root {{ root_dir }}static;
-  autoindex off;
  }
 
  location = /favicon.ico {
   log_not_found off;
   access_log off;
+  root /var/www/defestri/static/;
  }
 
  location = /robots.txt {
   allow all;
   log_not_found off;
   access_log off;
+  root /var/www/defestri/static/;
  }
 
  location ~ /\. {
@@ -54,10 +59,10 @@ server {
  }
 
  location / {
-  proxy_pass http://127.0.0.1:{{ proxy_pass_port }};
   proxy_set_header Host $http_host;
   proxy_set_header X-Real-IP $remote_addr;
   proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+  proxy_pass http://127.0.0.1:{{ proxy_pass_port }};
  }
 
 }
