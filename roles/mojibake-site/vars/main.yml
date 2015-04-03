@@ -4,11 +4,11 @@ mojibake_port: 5000
 
 compose_env:
   # mojibakedb environment variables
-  MYSQL_ROOT_PASSWORD:
+  MYSQL_ROOT_PASSWORD: password
   MYSQL_USER: mojibake
-  MYSQL_PASSWORD:
+  MYSQL_PASSWORD: password
   # mojibake environment variables
-  ADMIN_USER:
-  ADMIN_PASS:
+  ADMIN_USER: jordan
+  ADMIN_PASS: password
   DB_USER: mojibake
-  DB_PASS:
+  DB_PASS: password
