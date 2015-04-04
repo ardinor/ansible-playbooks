@@ -1,0 +1,3 @@
+# Don't bring up the testing certs
+*.crt
+*.key

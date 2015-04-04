@@ -6,11 +6,13 @@ nginx_rpm_url: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-cent
 site_url: defestri.org
 
 # If we want the server we're deploying to use ssl, if not a different config will be used
-ssl: false
+ssl: true
+# SSL cert directory
+ssl_cert_dir: /etc/nginx/ssl
 # If we're using SSL, where the SSL Cert is located on the server
-ssl_cert_location: /srv/ssl/cert.crt
+ssl_cert_location: /etc/nginx/ssl/server.crt
 # If we're using SSL, where the SSL Private Key is located on the server
-ssl_private_key_location: /srv/ssl/cert.key
+ssl_private_key_location: /etc/nginx/ssl/server.key
 
 root_dir: /var/www/defestri/
 
