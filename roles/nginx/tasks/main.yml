@@ -4,7 +4,8 @@
   user: name=www-data system=yes state=present
 
 - name: make /var/www
-  file: path=/var/www state=directory owner=www-data group=www-data mode=0755
+  file: path=/var/www state=directory
+        owner=www-data group=www-data mode=0755
 
 - name: Install nginx repo
   yum: name={{ nginx_rpm_url }} state=present
@@ -28,21 +29,21 @@
 
 - name: Make SSL cert directory
   file: path={{ ssl_cert_dir }} state=directory
-        owner=www-data group=www-data mode=0400
+        owner=root group=root mode=0400
   with_items:
     - ssl_cert_dir
   when: ssl == true
 
 - name: Copy across SSL certificate
   copy: src=../files/server.crt dest={{ ssl_cert_location }}
-        owner=www-data group=www-data mode=0400
+        owner=root group=root mode=0400
   with_items:
     - ssl_cert_location
   when: ssl == true
 
 - name: Copy across SSL key
   copy: src=../files/server.key dest={{ ssl_private_key_location }}
-        owner=www-data group=www-data mode=0400
+        owner=root group=root mode=0400
   with_items:
     - ssl_private_key_location
   when: ssl == true
