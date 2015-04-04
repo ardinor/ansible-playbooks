@@ -26,6 +26,27 @@
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: restart nginx
 
+- name: Make SSL cert directory
+  file: path={{ ssl_cert_dir }} state=directory
+        owner=www-data group=www-data mode=0400
+  with_items:
+    - ssl_cert_dir
+  when: ssl == true
+
+- name: Copy across SSL certificate
+  copy: src=../files/server.crt dest={{ ssl_cert_location }}
+        owner=www-data group=www-data mode=0400
+  with_items:
+    - ssl_cert_location
+  when: ssl == true
+
+- name: Copy across SSL key
+  copy: src=../files/server.key dest={{ ssl_private_key_location }}
+        owner=www-data group=www-data mode=0400
+  with_items:
+    - ssl_private_key_location
+  when: ssl == true
+
 - name: Install SSL site config file
   template: src=ssl_site.conf.j2 dest=/etc/nginx/sites-available/site.conf
   when: ssl == true
