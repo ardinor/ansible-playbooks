@@ -28,6 +28,9 @@
   command: mv /tmp/mojibake/mojibake/static/ /var/www/defestri/static
   notify: restart nginx
 
+- name: Change ownership of static files
+  command: chown -R www-data:www-data /var/www/defestri
+
 - name: Restore the correct SELinux context to our files
   command: /usr/sbin/restorecon -R /var/www/defestri
 
