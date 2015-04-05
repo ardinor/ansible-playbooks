@@ -7,7 +7,7 @@
 [sshd]
 
 {% if management_ips %}
-ignoreip = {% for address in management_ips %}{{ management_ips }} {% endfor %}
+ignoreip = {% for address in management_ips %}{{ address }} {% endfor %}
 {% endif %}
 enabled     = true
 # findtime = 1 day
@@ -15,3 +15,6 @@ findtime    = 86400
 # bantime = 3 days
 bantime     = 259200
 maxretry    = 3
+{% if ansible_os_family == "RedHat" %}
+banaction = firewallcmd-ipset
+{% endif %}

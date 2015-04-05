@@ -13,22 +13,27 @@
   yum: name=yum-plugin-fastestmirror state=present
   when: ansible_os_family == "RedHat"
 
-# Need to think more whether this should really be in the common role
-# or just in the mojibake role
-- name: install git
-  yum: name=git state=present
+# Install epel, needed for fail2ban and htop
+- name: install EPEL repo
+  yum: name=epel-release state=present
+  when: ansible_os_family == "RedHat"
+  tags: epel
+
+- name: install git/vim/htop
+  yum: name={{ item }} state=present
+  with_items:
+    - git
+    - vim
+    - htop
+    - bind-utils
   when: ansible_os_family == "RedHat"
 
-- name: install git
+- name: install git/vim/htop
   apt: name=git state=present
-  when: ansible_os_family == "Debian"
-
-- name: install vim
-  yum: name=vim state=present
-  when: ansible_os_family == "RedHat"
-
-- name: install vim
-  apt: name=vim state=present
+  with_items:
+    - git
+    - vim
+    - htop
   when: ansible_os_family == "Debian"
 
 - name: add groups
@@ -111,12 +116,6 @@
   tags:
     - ntp
 
-# Install epel, needed for fail2ban
-- name: install EPEL repo
-  yum: name=epel-release state=present
-  when: ansible_os_family == "RedHat"
-  tags: epel
-
 - name: install fail2ban
   yum: name=fail2ban-server state=latest
   when: ansible_os_family == "RedHat"
@@ -128,7 +127,7 @@
   tags: fail2ban
 
 - name: copy fail2ban fail2ban jail config across
-  copy: src=../files/fail2ban.local dest=/etc/fail2ban/jail.d/fail2ban.local
+  template: src=fail2ban.local.j2 dest=/etc/fail2ban/jail.d/fail2ban.local
   notify: restart fail2ban
   tags: fail2ban
 

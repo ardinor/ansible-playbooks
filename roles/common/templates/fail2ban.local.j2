@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 # fail2ban - fail2ban jail
 
 # Monitors the fail2ban log itself for bans, if it finds the same
@@ -15,3 +17,6 @@ findtime    = 604800
 # bantime   = 4 weeks
 bantime     = 1814400
 maxretry    = 3
+{% if ansible_os_family == "RedHat" %}
+banaction = firewallcmd-ipset
+{% endif %}
