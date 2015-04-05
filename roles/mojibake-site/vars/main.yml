@@ -2,6 +2,8 @@
 # The port Mojibake itself will run on
 mojibake_port: 5000
 
+selinux_enabled: false
+
 compose_env:
   # mojibakedb environment variables
   MYSQL_ROOT_PASSWORD: password

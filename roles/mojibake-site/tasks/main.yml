@@ -11,9 +11,11 @@
 # TO DO: Investigate if this is necessary
 - name: Change SELinux to allow Docker to connect to TCP sockets
   command: /usr/sbin/setsebool -P docker_connect_any 1
+  when: selinux_enabled == true
 
 - name: Change SELinux to allow nginx to connect to other network sockets
   command: /usr/sbin/setsebool -P httpd_can_network_connect 1
+  when: selinux_enabled == true
 
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git
@@ -33,6 +35,7 @@
 
 - name: Restore the correct SELinux context to our files
   command: /usr/sbin/restorecon -R /var/www/defestri
+  when: selinux_enabled == true
 
 - name: Remove unncessary mojibake code
   command: rm -rf /tmp/mojibake
@@ -41,7 +44,7 @@
   file: path=/var/mojibake state=directory
 
 - name: pull down ardinor/centos-mariadb - ensure we have the latest
-  command: docker pull ardinor/centos-mariadb
+  command: docker pull ardinor/centos-mariadb:latest
 
 - name: pull down ardinor/mojibake-python - ensure we have the latest
   command: docker pull ardinor/mojibake-python:latest
