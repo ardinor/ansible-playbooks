@@ -1,5 +1,7 @@
 ---
 
+docker_logging: true
+
 compose_env:
   # logstash container environment variables
   # The Redis instance we'll be shipping our logs off to
