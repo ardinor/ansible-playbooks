@@ -1,0 +1,5 @@
+---
+
+- name: install znc
+  yum: name=znc state=present
+  when: ansible_os_family == "RedHat"

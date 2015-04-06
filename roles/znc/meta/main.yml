@@ -1,0 +1,6 @@
+---
+
+# Depend on the common role, for CentOS we expect the EPEL repo enabled.
+
+dependencies:
+  - { role: common }
