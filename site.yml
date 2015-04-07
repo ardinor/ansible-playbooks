@@ -6,4 +6,5 @@
   tasks:
      - group_by: key=os_{{ ansible_distribution }}
 
+- include: common.yml
 - include: mojibake-hosts.yml

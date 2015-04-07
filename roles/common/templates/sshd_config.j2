@@ -47,4 +47,5 @@ AcceptEnv LANG LC_*
 
 Subsystem sftp /usr/libexec/openssh/sftp-server
 
-UsePAM no
+# Stop it whining UsePAM no is not supported
+UsePAM yes

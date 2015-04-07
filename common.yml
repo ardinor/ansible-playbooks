@@ -1,0 +1,7 @@
+---
+
+- hosts: common
+  sudo: True
+
+  roles:
+    - common

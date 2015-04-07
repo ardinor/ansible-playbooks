@@ -95,10 +95,6 @@
   when: sshd_port != 22
   notify: restart firewalld
 
-# Firewalld should be running anway, just double check whether this is needed or not.
-- name: ensure firewalld running
-  service: name=firewalld state=started enabled=yes
-
 - name: update packages
   yum: name=* state=latest
   when: ansible_os_family == "RedHat"
@@ -116,6 +112,7 @@
   tags:
     - ntp
 
+# TO DO: investigate fail2ban-systemd
 - name: install fail2ban
   yum: name=fail2ban-server state=latest
   when: ansible_os_family == "RedHat"
