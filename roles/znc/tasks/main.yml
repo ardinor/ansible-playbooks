@@ -11,10 +11,15 @@
   command: openssl req -nodes -newkey rsa:2048 -keyout /var/lib/znc/.znc/znc.pem -x509 -days 3650 -out /var/lib/znc/.znc/znc.pem
   when: znc_ssl == true
 
+- name: Install znc config file
+  template: src=znc.conf.j2 dest=/var/lib/znc/.znc/configs/znc.conf
+            owner=znc group=znc mode=0660
+
 - name: start znc and ensure enabled=yes
   service: name=znc state=started enabled=yes
 
-# Immediate was added in Ansible 1.9
+# Immediate was added in Ansible 1.9, if you're using an earlier version
+# you'll need to restart firewalld
 - name: Allow znc through the firewall
   firewalld: port={{ item }}/tcp permanent=true state=enabled immediate=yes
   with_items:
