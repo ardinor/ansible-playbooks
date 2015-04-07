@@ -3,3 +3,20 @@
 - name: install znc
   yum: name=znc state=present
   when: ansible_os_family == "RedHat"
+
+- name: create config directory
+  command: mkdir -P /var/lib/znc/.znc/configs
+
+- name: make cert
+  command: openssl req -nodes -newkey rsa:2048 -keyout /var/lib/znc/.znc/znc.pem -x509 -days 3650 -out /var/lib/znc/.znc/znc.pem
+  when: znc_ssl == true
+
+- name: start znc and ensure enabled=yes
+  service: name=znc state=started enabled=yes
+
+# Immediate was added in Ansible 1.9
+- name: Allow znc through the firewall
+  firewalld: port={{ item }}/tcp permanent=true state=enabled immediate=yes
+  with_items:
+    - znc_port
+

@@ -1,0 +1,15 @@
+---
+
+znc_port: 8439
+
+znc_ipv6: true
+
+znc_ssl: true
+
+znc_username: test
+znc_nickname: test
+znc_altnick: test_
+znc_ident: test
+znc_realname: Test Person
+# The sha256 hash of the password
+znc_pass: sha256#8aa880f8ff5b14243cb03bdd26575021af27bd59a8b5d3a80c89edde3abaa33b#P1nHF1ll8MNTIFCRxNv-#
