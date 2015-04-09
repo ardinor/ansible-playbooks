@@ -10,8 +10,26 @@
 // But if you feel risky, you might want to read help on /znc saveconfig and /znc rehash.
 // Also check http://en.znc.in/wiki/Configuration
 
+AnonIPLimit = 10
+ConnectDelay = 5
+HideVersion = false
+LoadModule = webadmin
+LoadModule = fail2ban 10080, 3
+LoadModule = lastseen
+LoadModule = adminlog
+LoadModule = chansaver
+LoadModule = partyline
+MaxBufferSize = 500
+ProtectWebSessions = true
+SSLCertFile = /var/lib/znc/znc.pem
+ServerThrottle = 30
+Skin = forest
+StatusPrefix = *
 Version = 1.6.0
+
 <Listener l>
+        AllowIRC = true
+        AllowWeb = true
         Port = {{ znc_port }}
         IPv4 = true
         {% if znc_ipv6 == true %}
@@ -20,8 +38,8 @@ Version = 1.6.0
         {% if znc_ssl == true %}
         SSL = true
         {% endif %}
+        URIPrefix = /
 </Listener>
-LoadModule = webadmin
 
 <User {{ znc_username }}>
         Pass       = {{ znc_pass }}
@@ -32,4 +50,8 @@ LoadModule = webadmin
         RealName   = {{ znc_realname }}
         LoadModule = chansaver
         LoadModule = controlpanel
+        PrependTimestamp = true
+        QuitMsg = Quit
+        TimestampFormat = [%H:%M:%S]
+        Timezone = Australia/Brisbane
 </User>
