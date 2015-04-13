@@ -4,6 +4,7 @@
 # python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
 password: $6$rounds=100000$q6eBgkFOsL9TJKOF$g8p24Oo.Hv4BpgjIrDUBaTM6LZipuqvq8bMbMt6.SbU2Ds8mH6jWVUaqRADQSkq9CQwcFnsIMzxbI4aqfmFRM0
 
+# Add users to the wheel role if you want them to be able to use sudo
 users:
   - name: jordan
     keys:
