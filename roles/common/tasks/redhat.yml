@@ -1,0 +1,54 @@
+---
+
+# For SELinux utilities like semanage
+- name: install policycoreutils-python
+  yum: name=policycoreutils-python state=present
+  when: ansible_selinux != false and
+        ansible_selinux.mode == "enforcing"
+
+- name: install libselinux-python
+  yum: name=libselinux-python state=present
+  when: ansible_selinux != false and
+        ansible_selinux.mode == "enforcing"
+
+- name: install yum-fastestmirror
+  yum: name=yum-plugin-fastestmirror state=present
+
+# Install epel, needed for fail2ban and htop
+- name: install EPEL repo
+  yum: name=epel-release state=present
+  tags: epel
+
+- name: update packages
+  yum: name=* state=latest
+  tags:
+    - update
+
+- name: install git/vim/htop
+  yum: name={{ item }} state=present
+  with_items:
+    - git
+    - vim
+    - htop
+    - bind-utils
+
+- name: install ntp
+  yum: name=ntp state=present
+  tags:
+    - ntp
+
+# TO DO: investigate fail2ban-systemd
+- name: install fail2ban
+  yum: name=fail2ban-server state=latest
+  tags: fail2ban
+
+- name: notify SELinux of a port change for SSH if we changed the port
+  command: /usr/sbin/semanage port -a -t ssh_port_t -p tcp {{ sshd_port }}
+  when: sshd_port != 22 and
+        ansible_selinux != false and
+        ansible_selinux.mode == "enforcing"
+
+- name: allow new ssh port through firewall
+  firewalld: port={{ sshd_port }} permanent=true state=enabled
+  when: sshd_port != 22
+  notify: restart firewalld

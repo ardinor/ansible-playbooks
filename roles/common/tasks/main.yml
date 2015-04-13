@@ -1,39 +1,9 @@
 ---
 
-# For SELinux utilities like semanage
-- name: install policycoreutils-python
-  yum: name=policycoreutils-python state=present
+- include: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- name: install libselinux-python
-  yum: name=libselinux-python state=present
-  when: ansible_os_family == "RedHat"
-
-- name: install yum-fastestmirror
-  yum: name=yum-plugin-fastestmirror state=present
-  when: ansible_os_family == "RedHat"
-
-# Install epel, needed for fail2ban and htop
-- name: install EPEL repo
-  yum: name=epel-release state=present
-  when: ansible_os_family == "RedHat"
-  tags: epel
-
-- name: install git/vim/htop
-  yum: name={{ item }} state=present
-  with_items:
-    - git
-    - vim
-    - htop
-    - bind-utils
-  when: ansible_os_family == "RedHat"
-
-- name: install git/vim/htop
-  apt: name=git state=present
-  with_items:
-    - git
-    - vim
-    - htop
+- include: debian.yml
   when: ansible_os_family == "Debian"
 
 - name: add groups
@@ -86,37 +56,10 @@
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
   notify: restart sshd
 
-- name: notify SELinux of a port change for SSH if we changed the port
-  command: /usr/sbin/semanage port -a -t ssh_port_t -p tcp {{ sshd_port }}
-  when: sshd_port != 22
-
-- name: allow new ssh port through firewall
-  firewalld: port={{ sshd_port }} permanent=true state=enabled
-  when: sshd_port != 22
-  notify: restart firewalld
-
-- name: update packages
-  yum: name=* state=latest
-  when: ansible_os_family == "RedHat"
-  tags:
-    - update
-
-- name: install ntp
-  yum: name=ntp state=present
-  when: ansible_os_family == "RedHat"
-  tags:
-    - ntp
-
 - name: start ntp
   service: name=ntpd state=started enabled=yes
   tags:
     - ntp
-
-# TO DO: investigate fail2ban-systemd
-- name: install fail2ban
-  yum: name=fail2ban-server state=latest
-  when: ansible_os_family == "RedHat"
-  tags: fail2ban
 
 - name: copy fail2ban ssh jail config across
   template: src=sshd.local.j2 dest=/etc/fail2ban/jail.d/sshd.local

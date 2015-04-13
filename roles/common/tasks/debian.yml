@@ -1,0 +1,14 @@
+---
+
+- name: install git/vim/htop
+  apt: name=git state=present
+  with_items:
+    - git
+    - vim
+    - htop
+
+# # TO DO: investigate fail2ban-systemd
+# - name: install fail2ban
+#   yum: name=fail2ban-server state=latest
+#   when: ansible_os_family == "RedHat"
+#   tags: fail2ban
