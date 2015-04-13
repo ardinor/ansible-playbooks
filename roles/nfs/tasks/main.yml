@@ -1,0 +1,21 @@
+---
+
+- name: Install nfs-utils
+  yum: name=nfs-utils state=latest
+
+- name: Allow nfs through the firewall
+  firewalld: service=nfs permanent=true state=enabled  immediate=yes
+
+- name: Install exports file
+  template: src=exports.j2 dest=/etc/exports
+            owner=root group=root mode=0622
+  notify: restart nginx
+
+# Can't enable nfs-lock and nfs-idmap?
+- name: start nfs services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
