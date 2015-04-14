@@ -1,0 +1,19 @@
+
+$TTL    604800
+site.com.  IN SOA ns1.site.com. admin.site.com. (
+                                                2015033101      ; serial number
+                                                3h              ; refresh interval
+                                                30m             ; retry interval
+                                                3w              ; expiry period
+                                                1h              ; negative TTL
+)
+
+; name server
+site.com.        IN      NS      ns1.site.com.
+
+; A records for name servers
+ns1                     IN      A       192.168.1.5
+
+; Other A records
+@                       IN      A       192.168.1.5
+www                     IN      A       192.168.1.5

@@ -9,7 +9,7 @@
   notify: restart bind
 
 - name: Copy across config file for local zones
-  copy: src=../files/named.conf.local dest=/etc/named.conf.local
+  template: src=named.conf.local.j2 dest=/etc/named.conf.local
         owner=root group=named mode=0640
   notify: restart bind
 
