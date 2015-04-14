@@ -4,12 +4,12 @@
 - name: install policycoreutils-python
   yum: name=policycoreutils-python state=present
   when: ansible_selinux != false and
-        ansible_selinux.mode == "enforcing"
+        ansible_selinux.status != "disabled"
 
 - name: install libselinux-python
   yum: name=libselinux-python state=present
   when: ansible_selinux != false and
-        ansible_selinux.mode == "enforcing"
+        ansible_selinux.status != "disabled"
 
 - name: install yum-fastestmirror
   yum: name=yum-plugin-fastestmirror state=present
