@@ -32,6 +32,14 @@
     - htop
     - bind-utils
 
+- name: check firewalld installed
+  stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
+  register: firewalld_installed
+
+- name: start and enable firewalld
+  service: name=firewalld state=started enabled=yes
+  when: firewalld_installed.stat.isreg is defined and firewalld_installed.stat.isreg
+
 - name: install ntp
   yum: name=ntp state=present
   tags:
