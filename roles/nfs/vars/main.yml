@@ -1,0 +1,5 @@
+---
+
+# Location on the host, address range of clients accessing it
+exports:
+  - { location: /mnt/media, client_address: 192.168.1.1/26 }
