@@ -1,11 +1,5 @@
 ---
 
-- name: Install nginx repo
-  yum: name={{ nginx_rpm_url }} state=present
-
-- name: Install nginx
-  yum: name=nginx state=latest
-
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
   register: firewalld_installed

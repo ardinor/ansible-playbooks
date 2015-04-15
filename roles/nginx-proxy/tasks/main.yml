@@ -3,18 +3,9 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- name: add www-data user
-  user: name=www-data system=yes state=present
-
-- name: make /var/www
-  file: path=/var/www state=directory
-        owner=www-data group=www-data mode=0755
-
 - name: Make required directories
   file: path={{ item }} state=directory
   with_items:
-    - /etc/nginx/sites-available
-    - /etc/nginx/sites-enabled
     - "{{ site_directory }}"
     - "{{ site_log_directory }}"
 
