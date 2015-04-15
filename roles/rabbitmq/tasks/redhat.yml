@@ -1,0 +1,8 @@
+---
+
+- name: Install rabbitmq signing key
+  command: rpm --import http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+
+- name: Install rabbitmq
+  yum: name=https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.1/rabbitmq-server-3.5.1-1.noarch.rpm
+       state=present

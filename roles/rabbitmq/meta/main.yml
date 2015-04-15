@@ -1,0 +1,6 @@
+---
+
+# CentOS needs the EPEL repo
+
+dependencies:
+  - { role: common }
