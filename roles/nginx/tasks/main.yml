@@ -1,17 +1,14 @@
 ---
 
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
 - name: add www-data user
   user: name=www-data system=yes state=present
 
 - name: make /var/www
   file: path=/var/www state=directory
         owner=www-data group=www-data mode=0755
-
-- name: Install nginx repo
-  yum: name={{ nginx_rpm_url }} state=present
-
-- name: Install nginx
-  yum: name=nginx state=latest
 
 - name: Make required directories
   file: path={{ item }} state=directory
@@ -63,12 +60,3 @@
 
 - name: start nginx and ensure enabled=yes
   service: name=nginx state=started enabled=yes
-
-- name: Allow http through the firewall
-  firewalld: service=http permanent=true state=enabled
-  notify: restart firewalld
-
-- name: Allow https through the firewall
-  firewalld: service=https permanent=true state=enabled
-  notify: restart firewalld
-  when: ssl == true
