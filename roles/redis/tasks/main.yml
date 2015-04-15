@@ -1,0 +1,10 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- include: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: start redis and ensure enabled=yes
+  service: name=redis state=started enabled=yes

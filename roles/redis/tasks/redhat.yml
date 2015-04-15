@@ -1,0 +1,4 @@
+---
+
+- name: Install redis
+  yum: name=redis state=latest
