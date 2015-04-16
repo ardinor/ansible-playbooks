@@ -15,7 +15,7 @@
     - users
 
 - name: add users
-  user: name={{ item.0.name }} groups={{ item.1 }} append=yes password={{ password }}
+  user: name={{ item.0.name }} groups={{ item.1 }} append=yes
   with_subelements:
     - users
     - roles
