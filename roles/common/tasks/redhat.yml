@@ -24,13 +24,14 @@
   tags:
     - update
 
-- name: install git/vim/htop
+- name: install git/vim/htop/wget
   yum: name={{ item }} state=present
   with_items:
     - git
     - vim
     - htop
     - bind-utils
+    - wget
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no

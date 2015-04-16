@@ -1,11 +1,12 @@
 ---
 
-- name: install git/vim/htop
-  apt: name=git state=present
+- name: install git/vim/htop/wget
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - git
     - vim
     - htop
+    - wget
 
 # # TO DO: investigate fail2ban-systemd
 # - name: install fail2ban
