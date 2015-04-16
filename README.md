@@ -34,6 +34,23 @@ Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) u
 
 Ansible playbook for settings up logging on the server. Deploys a [Logspout](https://github.com/gliderlabs/logspout) Docker container for collecting Docker container logs and a [logstash](http://logstash.net/) Docker container for collecting logs (from both Logspout and the host itself) in order to ship them off to a central logging server.
 
+### [Redis](mojibake/roles/redis/) ###
+
+Installs and starts/enables [Redis](http://redis.io/)
+
+### [RabbitMQ](mojibake/roles/rabbitmq) ###
+
+Installs and starts/enables [RabbitMQ](https://www.rabbitmq.com/).
+
+### [Sensu-Core](mojibake/roles/sensu-core) ###
+
+Installs Sensu Core, the core is used by clients as well as servers. But I've split out the client role from core in order to use delegate_to to add clients to the server automatically (work in progress).
+
+### [Sensu-Server](mojibake/roles/sensu-server) ###
+
+Install the Sensu Server along with dependencies (Redis, RabbitMQ and the Sensu-Core role).
+
+
 ### Misc
 
 For initial installs when you can use a password to SSH in and login as root:

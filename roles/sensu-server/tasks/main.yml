@@ -1,0 +1,10 @@
+---
+
+- name: add sensu vhost
+  command: rabbitmqctl add_vhost /sensu
+
+- name: add sensu user to rabbitmq
+  command: rabbitmqctl add_user sensu {{ rabbitmq_password }}
+
+- name: add permissions on sensu vhost to sensu user
+  command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"

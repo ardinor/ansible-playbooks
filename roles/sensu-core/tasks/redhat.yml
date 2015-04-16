@@ -1,0 +1,7 @@
+---
+
+- name: Install sensu repo
+  copy: src=../files/sensu.repo dest=/etc/yum.repos.d/sensu.repo
+
+- name: Install sensu
+  yum: name=sensu state=latest
