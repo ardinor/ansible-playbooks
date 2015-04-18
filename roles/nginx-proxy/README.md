@@ -12,3 +12,7 @@ You'll also need to bundle the Root CA and Class 1 Intermediate Server CA certif
 Then put the ca-certs.pem in files/ for Ansible to copy it across.
 
 SSL configs are based on [Mozilla SSL Configuration Generator](https://mozilla.github.io/server-side-tls/ssl-config-generator/)'s Intermediate option and this [Gist](https://gist.github.com/plentz/6737338).
+
+#### TO DO:
+
+- [HPKP](https://developer.mozilla.org/en-US/docs/Web/Security/Public_Key_Pinning) support.

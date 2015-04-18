@@ -40,6 +40,10 @@ server {
  # Bundled Root CA and Class 1 Intermediate Server CA certs
  ssl_trusted_certificate /etc/nginx/ssl/ca-certs.pem;
 
+ add_header X-Frame-Options SAMEORIGIN;
+ add_header X-Content-Type-Options nosniff;
+ add_header X-XSS-Protection "1; mode=block";
+
  #root {{ root_dir }};
  #index index.html
 
