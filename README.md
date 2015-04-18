@@ -19,8 +19,8 @@ Performs the following:
 
 ### [nginx-proxy](roles/nginx-proxy/) ###
 
-Installs and sets up nginx as a proxy using the config files in templates/
-Can use HTTPS if `ssl: true` is set in vars/main.yml and the .crt and .key files are in files/
+Installs and sets up nginx as a proxy using the config files in templates/.
+Also supports a SSL secured proxy, see the role's readme for more information.
 
 ### [Docker](roles/docker/) ###
 
