@@ -36,6 +36,9 @@ http {
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log;
 
+    # Don't send the nginx version number in error pages and Server header
+    server_tokens off;
+
     ##
     # Gzip Settings
     ##
