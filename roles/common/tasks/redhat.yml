@@ -17,6 +17,7 @@
 # Install epel, needed for fail2ban and htop
 - name: install EPEL repo
   yum: name=epel-release state=present
+  when: ansible_distribution != "Fedora"
   tags: epel
 
 - name: update packages
