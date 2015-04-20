@@ -1,0 +1,4 @@
+---
+
+- name: Install tigervnc-server
+  yum: name=tigervnc-server state=latest
