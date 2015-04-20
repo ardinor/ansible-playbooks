@@ -2,3 +2,12 @@
 
 - name: Install tigervnc-server
   yum: name=tigervnc-server state=latest
+
+- name: Copy across service file
+  template: src=vncserver@.service.j2 dest=/etc/systemd/system/vncserver@:1.service
+
+- name: Reload system daemon
+  command: systemctl daemon-reload
+
+- name: start vnc server and ensure enabled=yes
+  service: name=vncserver@:1 state=started enabled=yes
