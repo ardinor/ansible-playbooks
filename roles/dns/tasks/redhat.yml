@@ -1,0 +1,7 @@
+---
+
+- name: install bind
+  yum: name=bind state=present
+
+- name: Allow dns through the firewall
+  firewalld: service=dns permanent=true state=enabled immediate=yes

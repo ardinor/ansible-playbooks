@@ -1,7 +1,7 @@
 ---
 
-- name: install bind
-  yum: name=bind state=present
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
 
 - name: Copy across master config file
   copy: src=../files/named.conf dest=/etc/named.conf
@@ -22,10 +22,6 @@
   copy: src=../db.10.0.0 dest=/var/named/db.10.0.0
         owner=named group=named mode=0640
   notify: restart bind
-
-- name: Allow dns through the firewall
-  firewalld: service=dns permanent=true state=enabled
-  notify: restart firewalld
 
 - name: Start and enable bind (named)
   service: name=named state=started enabled=yes

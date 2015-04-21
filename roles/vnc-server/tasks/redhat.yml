@@ -13,4 +13,4 @@
   service: name=vncserver@:1 state=started enabled=yes
 
 - name: Allow vnc through the firewall
-  firewalld: port=5901 permanent=true state=enabled  immediate=yes
+  firewalld: port=5901 permanent=true state=enabled immediate=yes

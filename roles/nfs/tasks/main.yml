@@ -4,7 +4,7 @@
   yum: name=nfs-utils state=latest
 
 - name: Allow nfs through the firewall
-  firewalld: service=nfs permanent=true state=enabled  immediate=yes
+  firewalld: service=nfs permanent=true state=enabled immediate=yes
 
 - name: Install exports file
   template: src=exports.j2 dest=/etc/exports
