@@ -1,0 +1,7 @@
+---
+
+- name: Install postfix
+  yum: name=postfix state=latest
+
+- name: Allow smtp through the firewall
+  firewalld: port=smtp permanent=true state=enabled immediate=yes

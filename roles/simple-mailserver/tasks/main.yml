@@ -1,0 +1,7 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: start postfix and ensure enabled=yes
+  service: name=postfix state=started enabled=yes
