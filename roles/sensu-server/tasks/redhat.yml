@@ -1,0 +1,4 @@
+---
+
+- name: Install uchiwa dashboard
+  yum: name=uchiwa state=latest

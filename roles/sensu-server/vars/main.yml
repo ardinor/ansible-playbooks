@@ -1,3 +1,11 @@
 ---
 
 rabbitmq_password: password
+
+# If your RabbitMQ vhost or user are different than the default
+# change them here
+#rabbitmq_vhost: sensu
+#rabbitmq_user: sensu
+
+# If you want RabbitMQ to listen on a different port, change this
+#rabbitmq_listen_port: 8159

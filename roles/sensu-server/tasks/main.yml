@@ -1,10 +1,62 @@
 ---
 
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
 - name: add sensu vhost
-  command: rabbitmqctl add_vhost /sensu
+  command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
 
 - name: add sensu user to rabbitmq
-  command: rabbitmqctl add_user sensu {{ rabbitmq_password }}
+  command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
 
 - name: add permissions on sensu vhost to sensu user
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
+
+- name: Copy across CA central for RabbitMQ
+  copy: src=../files/ca_cert.pem dest=/etc/rabbitmq/ssl
+
+- name: Copy across SSL cert for RabbitMQ
+  copy: src=../files/cert.pem dest=/etc/rabbitmq/ssl
+
+- name: Copy across SSL key for RabbitMQ
+  copy: src=../files/key.pem dest=/etc/rabbitmq/ssl
+
+- name: Install RabbitMQ config file
+  template: src=rabbitmq.config.j2 dest=/etc/rabbitmq/rabbitmq.config
+  notify: restart rabbitmq
+
+- name: Make sensu SSL directory
+  file: path=/etc/sensu/ssl state=directory
+
+- name: Copy across SSL cert
+  copy: src=../files/cert.pem dest=/etc/sensu/ssl
+
+- name: Copy across SSL key
+  copy: src=../files/key.pem dest=/etc/sensu/ssl
+
+- name: Install sensu RabbitMQ config
+  template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
+
+- name: Install sensu redis config file
+  template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.jsonn
+
+- name: Install sensu api config file
+  template: src=api.json.j2 dest=/etc/sensu/conf.d/api.jsonn
+
+- name: Install sensu client config file to monitor itself
+  template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
+
+- name: Install uchiwa config file to monitor itself
+  template: src=uchiwa.json.j2 dest=/etc/sensu/conf.d/uchiwa.json
+
+- name: Start sensu-server service
+  service: name=sensu-server state=started enabled=yes
+
+- name: Start sensu-client service
+  service: name=sensu-client state=started enabled=yes
+
+- name: Start sensu-api service
+  service: name=sensu-api state=started enabled=yes
+
+- name: Start uchiwa service
+  service: name=uchiwa state=started enabled=yes

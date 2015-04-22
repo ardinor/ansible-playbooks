@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+{
+  "rabbitmq": {
+    "ssl": {
+      "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+      "private_key_file": "/etc/sensu/ssl/key.pem"
+    },
+    "host": "{{ rabbitmq_host_ip }}",
+    "port": "{{ rabbitmq_host_port }}"
+    "vhost": "/{{ rabbitmq_vhost }}",
+    "user": "{{ rabbitmq_user }}",
+    "password": "{{ rabbitmq_password }}"
+  }
+}

@@ -1,0 +1,5 @@
+---
+
+rabbitmq_vhost: sensu
+rabbitmq_user: sensu
+rabbitmq_listen_port: 8159
