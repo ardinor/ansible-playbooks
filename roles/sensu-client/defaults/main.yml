@@ -1,0 +1,4 @@
+---
+
+rabbitmq_vhost: sensu
+rabbitmq_user: sensu
