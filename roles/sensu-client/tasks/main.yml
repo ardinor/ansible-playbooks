@@ -1,7 +1,7 @@
 ---
 
-- name: Install sensu config
-  template: src=config.json.j2 dest=/etc/sensu/config.json
+- name: Install sensu RabbitMQ config
+  template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
 
 - name: Install sensu client config file
   template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
