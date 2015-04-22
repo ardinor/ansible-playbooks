@@ -1,0 +1,7 @@
+---
+
+- name: Install sensu client config file
+  template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
+
+- name: start sensu-client and ensure enabled=yes
+  service: name=sensu-client state=started enabled=yes
