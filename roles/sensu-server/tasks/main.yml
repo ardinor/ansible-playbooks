@@ -3,14 +3,25 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+- name: list rabbitmq vhosts
+  command: rabbitmqctl list_vhosts
+  register: exist_vhosts
+
 - name: add sensu vhost
   command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
+  when: exist_vhosts.stdout.find({{ rabbitmq_vhost }}) == -1
+
+- name: list rabbitmq users
+  command: rabbitmqctl list_users
+  register: exist_users
 
 - name: add sensu user to rabbitmq
   command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
+  when: exist_users.stdout.find("{{ rabbitmq_user }}") == -1
 
 - name: add permissions on sensu vhost to sensu user
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
+  when: exist_users.stdout.find("{{ rabbitmq_user }}") == -1
 
 - name: Copy across CA central for RabbitMQ
   copy: src=../files/cacert.pem dest=/etc/rabbitmq/ssl
