@@ -13,6 +13,7 @@
   apt: pkg=sudo state=present update_cache=yes
   when: ansible_os_family == "Debian"
 
+# Do we need this if the user is added to wheel?
 - name: confirm sudo is configured for deploy user
   lineinfile: dest=/etc/sudoers
               regexp="^# User privilege specification"
