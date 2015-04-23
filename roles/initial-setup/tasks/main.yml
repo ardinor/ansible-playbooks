@@ -1,0 +1,31 @@
+---
+
+- name: add deploy user
+  user: name={{ deploy_user }} groups=wheel append=yes
+
+- name: add deploy user ssh key
+  authorized_key: user={{ deploy_user }}
+                  key="{{ deploy_user_key }}"
+                  manage_dir=yes
+                  state=present
+
+- name: confirm sudo is installed
+  apt: pkg=sudo state=present update_cache=yes
+  when: ansible_os_family == "Debian"
+
+- name: confirm sudo is configured for deploy user
+  lineinfile: dest=/etc/sudoers
+              regexp="^# User privilege specification"
+              insertafter="^# User privilege specification"
+              line="{{ deploy_user }} ALL=(root) ALL"
+              state=present
+
+- name: Disable root login in sshd
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp='PermitRootLogin.*$'
+              line='PermitRootLogin no'
+              state=present
+  notify: restart sshd
+
+- debug: msg="Now login using {{ deploy_user }} and set a password for sudo."
+
