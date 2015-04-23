@@ -3,3 +3,8 @@
 rabbitmq_vhost: sensu
 rabbitmq_user: sensu
 rabbitmq_listen_port: 8159
+
+redis_port: 6379
+
+sensi_api_port: 4567
+uchiwa_port: 3000

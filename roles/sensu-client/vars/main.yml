@@ -1,5 +1,6 @@
 ---
 
+# This is the sensu-master's IP
 rabbitmq_host_ip: 127.0.0.1
 rabbitmq_host_port: 8159
 rabbitmq_password: password

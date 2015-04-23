@@ -6,13 +6,13 @@
             "name": "Sensu",
             "host": "localhost",
             "ssl": false,
-            "port": 4567,
+            "port": {{ sensi_api_port }},
             "path": "",
             "timeout": 5000
         }
     ],
     "uchiwa": {
-        "port": 3000,
+        "port": {{ uchiwa_port }},
         "stats": 10,
         "refresh": 10000
     }

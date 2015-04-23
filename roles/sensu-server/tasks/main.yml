@@ -13,7 +13,7 @@
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
 
 - name: Copy across CA central for RabbitMQ
-  copy: src=../files/ca_cert.pem dest=/etc/rabbitmq/ssl
+  copy: src=../files/cacert.pem dest=/etc/rabbitmq/ssl
 
 - name: Copy across SSL cert for RabbitMQ
   copy: src=../files/cert.pem dest=/etc/rabbitmq/ssl
