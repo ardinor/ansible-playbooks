@@ -9,7 +9,7 @@
 
 - name: add sensu vhost
   command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
-  when: exist_vhosts.stdout.find({{ rabbitmq_vhost }}) == -1
+  when: exist_vhosts.stdout.find("{{ rabbitmq_vhost }}") == -1
 
 - name: list rabbitmq users
   command: rabbitmqctl list_users
