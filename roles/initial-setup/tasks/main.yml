@@ -14,12 +14,12 @@
   when: ansible_os_family == "Debian"
 
 # Do we need this if the user is added to wheel?
-- name: confirm sudo is configured for deploy user
-  lineinfile: dest=/etc/sudoers
-              regexp="^# User privilege specification"
-              insertafter="^# User privilege specification"
-              line="{{ deploy_user }} ALL=(root) ALL"
-              state=present
+# - name: confirm sudo is configured for deploy user
+#   lineinfile: dest=/etc/sudoers
+#               regexp="^# User privilege specification"
+#               insertafter="^# User privilege specification"
+#               line="{{ deploy_user }} ALL=(root) ALL"
+#               state=present
 
 - name: Disable root login in sshd
   lineinfile: dest=/etc/ssh/sshd_config
