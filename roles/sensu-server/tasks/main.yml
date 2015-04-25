@@ -52,7 +52,7 @@
   template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.jsonn
 
 - name: Install sensu api config file
-  template: src=api.json.j2 dest=/etc/sensu/conf.d/api.jsonn
+  template: src=api.json.j2 dest=/etc/sensu/conf.d/api.json
 
 - name: Install sensu client config file to monitor itself
   template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
