@@ -1,5 +1,3 @@
-# {{ ansible_managed }}
-
 [
     {rabbit, [
     {ssl_listeners, [{{ rabbitmq_listen_port }}]},
@@ -7,6 +5,7 @@
                    {certfile,"/etc/rabbitmq/ssl/cert.pem"},
                    {keyfile,"/etc/rabbitmq/ssl/key.pem"},
                    {verify,verify_peer},
-                   {fail_if_no_peer_cert,true}]}
+                   {fail_if_no_peer_cert,true}]},
+    {comment, ["{{ ansible_managed }}"]}
   ]}
 ].
