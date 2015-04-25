@@ -23,14 +23,17 @@
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
   when: exist_users.stdout.find("{{ rabbitmq_user }}") == -1
 
+- name: Make RabbitMQ SSL directory
+  file: path=/etc/rabbitmq/ssl/ state=directory
+
 - name: Copy across CA central for RabbitMQ
-  copy: src=../files/cacert.pem dest=/etc/rabbitmq/ssl
+  copy: src=../files/cacert.pem dest=/etc/rabbitmq/ssl/cacert.pem
 
 - name: Copy across SSL cert for RabbitMQ
-  copy: src=../files/cert.pem dest=/etc/rabbitmq/ssl
+  copy: src=../files/cert.pem dest=/etc/rabbitmq/ssl/cert.pem
 
 - name: Copy across SSL key for RabbitMQ
-  copy: src=../files/key.pem dest=/etc/rabbitmq/ssl
+  copy: src=../files/key.pem dest=/etc/rabbitmq/ssl/key.pem
 
 - name: Install RabbitMQ config file
   template: src=rabbitmq.config.j2 dest=/etc/rabbitmq/rabbitmq.config
@@ -40,16 +43,16 @@
   file: path=/etc/sensu/ssl state=directory
 
 - name: Copy across SSL cert
-  copy: src=../files/cert.pem dest=/etc/sensu/ssl
+  copy: src=../files/cert.pem dest=/etc/sensu/ssl/
 
 - name: Copy across SSL key
-  copy: src=../files/key.pem dest=/etc/sensu/ssl
+  copy: src=../files/key.pem dest=/etc/sensu/ssl/
 
 - name: Install sensu RabbitMQ config
   template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
 
 - name: Install sensu redis config file
-  template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.jsonn
+  template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.json
 
 - name: Install sensu api config file
   template: src=api.json.j2 dest=/etc/sensu/conf.d/api.json
