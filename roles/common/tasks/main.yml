@@ -33,6 +33,11 @@
   tags:
     - users
 
+- name: add deploy user to ssh_users
+  user: name={{ deploy_user }} groups=ssh_users append=yes
+  tags:
+    - users
+
 - name: add pretty colourful PS1
   lineinfile: dest=/home/{{ item.name }}/.bashrc
               state=present
