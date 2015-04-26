@@ -2,6 +2,8 @@
 
 rabbitmq_password: password
 
+datacenter_name: sensu
+
 # If your RabbitMQ vhost or user are different than the default
 # change them here
 #rabbitmq_vhost: sensu

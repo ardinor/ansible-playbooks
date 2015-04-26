@@ -2,7 +2,7 @@
     "_comment": "{{ ansible_managed }}",
     "sensu": [
         {
-            "name": "Sensu",
+            "name": "{{ datacenter_name }}",
             "host": "localhost",
             "ssl": false,
             "port": {{ sensi_api_port }},
