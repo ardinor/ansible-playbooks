@@ -61,7 +61,7 @@
   template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
 
 - name: Install uchiwa config file to monitor itself
-  template: src=uchiwa.json.j2 dest=/etc/sensu/conf.d/uchiwa.json
+  template: src=uchiwa.json.j2 dest=/etc/sensu/uchiwa.json
 
 - name: Start sensu-server service
   service: name=sensu-server state=started enabled=yes
