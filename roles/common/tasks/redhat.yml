@@ -59,6 +59,6 @@
         ansible_selinux.mode == "enforcing"
 
 - name: allow new ssh port through firewall
-  firewalld: port={{ sshd_port }} permanent=true state=enabled
+  firewalld: port={{ sshd_port }}/tcp permanent=true state=enabled
   when: sshd_port != 22
   notify: restart firewalld
