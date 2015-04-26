@@ -6,3 +6,8 @@
 - name: Install rabbitmq
   yum: name=https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.1/rabbitmq-server-3.5.1-1.noarch.rpm
        state=present
+
+- name: notify SELinux of the port RabbitMQ will bind to - seems to want 100000
+  command: /usr/sbin/semanage port -a -t rabbitmq_port_t -p tcp 10000
+  register: command_result
+  failed_when: "command_result.stderr and 'already defined' not in command_result.stderr"
