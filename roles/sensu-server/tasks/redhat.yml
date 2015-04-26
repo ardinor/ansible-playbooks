@@ -2,3 +2,18 @@
 
 - name: Install uchiwa dashboard
   yum: name=uchiwa state=latest
+
+- name: notify SELinux of the port RabbitMQ will be listening on
+  command: /usr/sbin/semanage port -a -t rabbitmq_port_t -p tcp {{ rabbitmq_listen_port }}
+  register: command_result
+  failed_when: "command_result.stderr and 'already defined' not in command_result.stderr"
+
+- name: allow the rabbitmq port through firewall
+  firewalld: port={{ rabbitmq_listen_port }}/tcp permanent=true state=enabled immediate=yes
+
+#Don't think this is necessary
+#- name: allow new sensu-api port through firewall
+#  firewalld: port={{ sensi_api_port }} permanent=true state=enabled immediate=yes
+
+- name: allow uchiwa port through firewall
+  firewalld: port={{ uchiwa_port }}/tcp permanent=true state=enabled immediate=yes
