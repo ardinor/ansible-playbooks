@@ -9,7 +9,7 @@
 
 - name: add sensu vhost
   command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
-  when: exist_vhosts.stdout.find("{{ rabbitmq_vhost }}") == -1
+  when: "exist_vhosts.stdout.find('{{ rabbitmq_vhost }}') == -1"
 
 - name: list rabbitmq users
   command: rabbitmqctl list_users
@@ -17,11 +17,11 @@
 
 - name: add sensu user to rabbitmq
   command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
-  when: exist_users.stdout.find("{{ rabbitmq_user }}") == -1
+  when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
 
 - name: add permissions on sensu vhost to sensu user
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
-  when: exist_users.stdout.find("{{ rabbitmq_user }}") == -1
+  when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
 
 - name: Make RabbitMQ SSL directory
   file: path=/etc/rabbitmq/ssl/ state=directory
@@ -62,6 +62,10 @@
 
 - name: Install uchiwa config file to monitor itself
   template: src=uchiwa.json.j2 dest=/etc/sensu/uchiwa.json
+
+- name: Tell Sensu to use embedded ruby
+  lineinfile: dest=/etc/default/sensu regexp=^EMBEDDED_RUBY= line=EMBEDDED_RUBY=true
+  notify: restart sensu
 
 - name: Start sensu-server service
   service: name=sensu-server state=started enabled=yes
