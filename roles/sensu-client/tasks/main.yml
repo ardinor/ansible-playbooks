@@ -15,5 +15,8 @@
 - name: Copy across SSL key
   copy: src=../files/key.pem dest=/etc/sensu/ssl
 
+# Download and install some checks
+- include: checks.yml
+
 - name: start sensu-client and ensure enabled=yes
   service: name=sensu-client state=started enabled=yes

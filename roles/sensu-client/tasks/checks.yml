@@ -1,0 +1,19 @@
+---
+
+- name: Get the check-load plugin
+  get_url: url=https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-load.rb
+           dest=/etc/sensu/plugins/check-load.rb
+           owner=sensu
+           group=sensu
+           mode=0744
+
+- name: Get the check-cpu plugin
+  get_url: url=https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-cpu.rb
+           dest=/etc/sensu/plugins/check-cpu.rb
+           owner=sensu
+           group=sensu
+           mode=0744
+
+- name: Restart sensu-client
+  service: name=sensu-client state=restarted
+
