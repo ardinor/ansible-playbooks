@@ -4,11 +4,10 @@
     "name": "{{ ansible_hostname }}",
     "address": "{{ ansible_default_ipv4.address }}",
     "subscriptions": [
-      #"production",
       {% for group_name in group_names %}
       "{{ group_name }}",
       {% endfor %}
-      production
+      "production"
     ]
   }
 }
