@@ -50,18 +50,27 @@
 
 - name: Install sensu RabbitMQ config
   template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
+  notify: restart sensu
 
 - name: Install sensu redis config file
   template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.json
+  notify: restart sensu
 
 - name: Install sensu api config file
   template: src=api.json.j2 dest=/etc/sensu/conf.d/api.json
+  notify: restart sensu
 
 - name: Install sensu client config file to monitor itself
   template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
+  notify: restart sensu
 
-- name: Install uchiwa config file to monitor itself
+- name: Install checks config file
+  template: src=checks.json.j2 dest=/etc/sensu/conf.d/checks.json
+  notify: restart sensu
+
+- name: Install uchiwa config file
   template: src=uchiwa.json.j2 dest=/etc/sensu/uchiwa.json
+  notify: restart uchiwa
 
 - name: Tell Sensu to use embedded ruby
   lineinfile: dest=/etc/default/sensu regexp=^EMBEDDED_RUBY= line=EMBEDDED_RUBY=true

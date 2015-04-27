@@ -9,3 +9,4 @@ TO DO:
 
 - Some flag for setting dev/prod subscriptions in client.json
 - Work on checks and handlers
+- Make this depend on sensu-client? So it installs checks on itself?

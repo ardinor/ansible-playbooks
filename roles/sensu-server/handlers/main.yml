@@ -9,3 +9,6 @@
     - sensu-server
     - sensu-client
     - sensu-api
+
+- name: restart uchiwa
+  service: name=uchiwa state=restarted
