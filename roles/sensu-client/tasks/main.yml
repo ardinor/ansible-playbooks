@@ -2,9 +2,11 @@
 
 - name: Install sensu RabbitMQ config
   template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
+  notify: restart sensu-client
 
 - name: Install sensu client config file
   template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
+  notify: restart sensu-client
 
 - name: Make sensu SSL directory
   file: path=/etc/sensu/ssl state=directory
