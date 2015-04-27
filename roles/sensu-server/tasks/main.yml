@@ -39,18 +39,22 @@
   template: src=rabbitmq.config.j2 dest=/etc/rabbitmq/rabbitmq.config
   notify: restart rabbitmq
 
-- name: Make sensu SSL directory
-  file: path=/etc/sensu/ssl state=directory
+# Should be covered by dependency on sensu-client
+#- name: Make sensu SSL directory
+#  file: path=/etc/sensu/ssl state=directory
 
-- name: Copy across SSL cert
-  copy: src=../files/cert.pem dest=/etc/sensu/ssl/
+# Should be covered by dependency on sensu-client
+#- name: Copy across SSL cert
+#  copy: src=../files/cert.pem dest=/etc/sensu/ssl/
 
-- name: Copy across SSL key
-  copy: src=../files/key.pem dest=/etc/sensu/ssl/
+# Should be covered by dependency on sensu-client
+#- name: Copy across SSL key
+#  copy: src=../files/key.pem dest=/etc/sensu/ssl/
 
-- name: Install sensu RabbitMQ config
-  template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
-  notify: restart sensu
+# Should be covered by dependency on sensu-client
+#- name: Install sensu RabbitMQ config
+#  template: src=rabbitmq.json.j2 dest=/etc/sensu/rabbitmq.json
+#  notify: restart sensu
 
 - name: Install sensu redis config file
   template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.json
@@ -60,9 +64,10 @@
   template: src=api.json.j2 dest=/etc/sensu/conf.d/api.json
   notify: restart sensu
 
-- name: Install sensu client config file to monitor itself
-  template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
-  notify: restart sensu
+# Should be covered by dependency on sensu-client
+#- name: Install sensu client config file to monitor itself
+#  template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
+#  notify: restart sensu
 
 - name: Install checks config file
   template: src=checks.json.j2 dest=/etc/sensu/conf.d/checks.json
@@ -76,14 +81,10 @@
   lineinfile: dest=/etc/default/sensu regexp=^EMBEDDED_RUBY= line=EMBEDDED_RUBY=true
   notify: restart sensu
 
-- name: Start sensu-server service
-  service: name=sensu-server state=started enabled=yes
-
-- name: Start sensu-client service
-  service: name=sensu-client state=started enabled=yes
-
-- name: Start sensu-api service
-  service: name=sensu-api state=started enabled=yes
-
-- name: Start uchiwa service
-  service: name=uchiwa state=started enabled=yes
+- name: Start our sensu/uchiwa services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - sensu-server
+    - sensu-client
+    - sensu-api
+    - uchiwa

@@ -4,3 +4,4 @@ dependencies:
   - { role: redis }
   - { role: rabbitmq }
   - { role: sensu-core }
+  - { role: sensu-client }
