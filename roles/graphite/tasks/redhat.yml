@@ -1,0 +1,24 @@
+---
+
+- name: Install graphite dashboard
+  yum: name={{ item }} state=latest
+  with_items:
+    - graphite-web
+    - python-carbon
+    - python-whisper
+
+- name: Ensure the apache welcome config is group_name
+  file: path=/etc/httpd/conf.d/welcome.conf state=absent
+
+- name: check to see if graphite db exists
+  stat: path=/var/lib/graphite-web/graphite.db
+  register: graphite_db
+
+- name: create db
+  command: django-admin syncdb --settings=graphite.settings --noinput
+  when: graphite_db.stat.exists == False
+
+# Maybe load the fixtures instead...
+- name: create superuser
+  shell: echo "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'myemail@example.com', 'hunter2')" | django-admin shell --settings=graphite.settings
+  when: graphite_db.stat.exists == False
