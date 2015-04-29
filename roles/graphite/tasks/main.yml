@@ -2,3 +2,6 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- name: Start our carbon service
+  service: name=carbon-cache state=started enabled=yes

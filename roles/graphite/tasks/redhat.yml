@@ -46,5 +46,8 @@
 - name: Delete the initial user data file we uploaded
   file: path=/var/lib/graphite-web/initial_data.json state=absent
 
+- name: Delete the password generator python script we uploaded
+  file: path=/var/lib/graphite-web/generate_hashed_password.py state=absent
+
 - name: ensure ownership of db by apache
   file: path=/var/lib/graphite-web/graphite.db owner=apache group=apache
