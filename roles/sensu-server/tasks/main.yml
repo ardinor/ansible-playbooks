@@ -69,8 +69,13 @@
 #  template: src=client.json.j2 dest=/etc/sensu/conf.d/client.json
 #  notify: restart sensu
 
-- name: Install checks config file
-  template: src=checks.json.j2 dest=/etc/sensu/conf.d/checks.json
+# Done by client now
+#- name: Install checks config file
+#  template: src=checks.json.j2 dest=/etc/sensu/conf.d/checks.json
+#  notify: restart sensu
+
+- name: Install handlers config file
+  template: src=handlers.json.j2 dest=/etc/sensu/conf.d/handlers.json
   notify: restart sensu
 
 - name: Install uchiwa config file

@@ -1,17 +1,17 @@
+## DELETE ME
+
 {
   "_comment": "{{ ansible_managed }}",
 
   "checks": {
 
     "check_load": {
-      "handlers": [ "default" ],
       "command": "/etc/sensu/plugins/check-load.rb",
       "interval": 30,
       "subscribers": [ "production" ]
     },
 
     "check_cpu": {
-      "handlers": [ "default" ],
       "command": "/etc/sensu/plugins/check-cpu.rb -w 60 -c 80",
       "interval": 30,
       "subscribers": [ "production" ]
@@ -19,6 +19,7 @@
 
     "cpu_metrics": {
       "type": "metric",
+      "handlers": [ "graphite" ],
       "command": "/etc/sensu/plugins/cpu-metrics.rb",
       "subscribers": [ "production" ],
       "interval": 30,
