@@ -14,6 +14,12 @@
   stat: path=/var/lib/graphite-web/graphite.db
   register: graphite_db
 
+- name: Move across graphite-web apache config (overwrites default)
+  template: src=graphite-web.conf.j2 dest=/etc/httpd/conf.d/graphite-web.conf
+
+- name: Install graphite-web settings
+  template: src=local_settings.py.j2 dest=/etc/graphite-web/local_settings.py
+
 - name: create db
   command: django-admin syncdb --settings=graphite.settings --noinput
   when: graphite_db.stat.exists == False
