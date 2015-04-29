@@ -1,26 +1,16 @@
 ---
 
-- name: Get the check-load plugin
-  get_url: url=https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-load.rb
-           dest=/etc/sensu/plugins/check-load.rb
+- name: Get the plugins
+  get_url: url={{ item.value.url }}
+           dest=/etc/sensu/plugins/{{ item.value.file }}
            owner=sensu
            group=sensu
            mode=0744
+  with_dict: checks
+  notify: restart sensu-client
 
-- name: Get the check-cpu plugin
-  get_url: url=https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-cpu.rb
-           dest=/etc/sensu/plugins/check-cpu.rb
-           owner=sensu
-           group=sensu
-           mode=0744
-
-- name: Get the cpu-metrics plugin
-  get_url: url=https://github.com/sensu/sensu-community-plugins/raw/master/plugins/system/cpu-metrics.rb
-           dest=/etc/sensu/plugins/cpu-metrics.rb
-           owner=sensu
-           group=sensu
-           mode=0744
-
-- name: Restart sensu-client
-  service: name=sensu-client state=restarted
-
+- name: Install check on master
+  template: src=check.json.j2 dest=/etc/sensu/conf.d/{{ item.key }}.json
+  with_dict: checks
+  delegate_to: virt01
+  notify: restart sensu-server

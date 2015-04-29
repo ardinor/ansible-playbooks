@@ -2,3 +2,7 @@
 
 - name: restart sensu-client
   service: name=sensu-client state=restarted
+
+- name: restart sensu-server
+  service: name=sensu-server state=restarted
+  delegate_to: virt01

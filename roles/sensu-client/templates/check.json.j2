@@ -1,0 +1,18 @@
+{
+  "_comment": "{{ ansible_managed }}",
+
+  "checks": {
+
+    "{{ item.key }}": {
+      {% if 'metrics' in item.key %}
+      "type": "metric",
+      "handlers": [ "graphite" ],
+      {% endif %}
+      "command": "/etc/sensu/plugins/{{ item.value.file }}",
+      "interval": 30,
+      "subscribers": [ "production" ]
+    }
+
+  }
+
+}

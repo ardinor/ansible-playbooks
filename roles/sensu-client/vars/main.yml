@@ -9,3 +9,26 @@ rabbitmq_password: password
 # change them here
 #rabbitmq_vhost: sensu
 #rabbitmq_user: sensu
+
+checks:
+  "check_load":
+    file: "check-load.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-load.rb"
+  "check_cpu":
+    file: "check-cpu.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-cpu.rb"
+  "check_disk":
+    file: "check-disk.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/check-disk.rb"
+  "cpu_metrics":
+    file: "cpu-metrics.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/cpu-metrics.rb"
+  "vmstat_metrics":
+    file: "vmstat-metrics.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/vmstat-metrics.rb"
+  "memory_metrics":
+    file: "memory-metrics.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/memory-metrics.rb"
+  "load_metrics":
+    file: "load-metrics.rb"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/load-metrics.rb"
