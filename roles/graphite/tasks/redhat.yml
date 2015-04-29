@@ -10,21 +10,32 @@
 - name: Ensure the apache welcome config is group_name
   file: path=/etc/httpd/conf.d/welcome.conf state=absent
 
-- name: check to see if graphite db exists
-  stat: path=/var/lib/graphite-web/graphite.db
-  register: graphite_db
-
 - name: Move across graphite-web apache config (overwrites default)
   template: src=graphite-web.conf.j2 dest=/etc/httpd/conf.d/graphite-web.conf
 
 - name: Install graphite-web settings
   template: src=local_settings.py.j2 dest=/etc/graphite-web/local_settings.py
 
+- name: check to see if graphite db exists
+  stat: path=/var/lib/graphite-web/graphite.db
+  register: graphite_db
+
+# In Django 1.7 and onwards syncdb is deprecated and replaced by migrate
+# https://docs.djangoproject.com/en/1.7/ref/django-admin/#syncdb
 - name: create db
   command: django-admin syncdb --settings=graphite.settings --noinput
   when: graphite_db.stat.exists == False
 
-# Maybe load the fixtures instead...
-- name: create superuser
-  shell: echo "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'myemail@example.com', 'hunter2')" | django-admin shell --settings=graphite.settings
+- name: Install graphite-web settings
+  template: src=initial_data.json.j2 dest=/var/lib/graphite-web/initial_data.json
   when: graphite_db.stat.exists == False
+
+- name: merge in initial user data to graphite db
+  command: django-admin loaddata --settings=graphite.settings /var/lib/graphite-web/initial_data.json
+  when: graphite_db.stat.exists == False
+
+- name: Delete the initial user data file we uploaded
+  file: path=/var/lib/graphite-web/initial_data.json state=absent
+
+- name: ensure ownership of db by apache
+  file: path=/var/lib/graphite-web/graphite.db owner=apache group=apache

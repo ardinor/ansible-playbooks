@@ -1,0 +1,5 @@
+---
+
+superuser_name: root
+superuser_password: password
+superuser_email: root@localhost
