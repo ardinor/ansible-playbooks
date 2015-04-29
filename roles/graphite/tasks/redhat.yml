@@ -20,6 +20,15 @@
   stat: path=/var/lib/graphite-web/graphite.db
   register: graphite_db
 
+- name: Copy across django password generator
+  copy: src=../files/generate_hashed_password.py dest=/var/lib/graphite-web/generate_hashed_password.py
+  when: graphite_db.stat.exists == False
+
+- name: Generate encrypted password
+  command: python /var/lib/graphite-web/generate_hashed_password.py {{ superuser_password }}
+  register: encrypted_superuser_pass
+  when: graphite_db.stat.exists == False
+
 # In Django 1.7 and onwards syncdb is deprecated and replaced by migrate
 # https://docs.djangoproject.com/en/1.7/ref/django-admin/#syncdb
 - name: create db

@@ -3,18 +3,18 @@
   "pk": 1,
   "model": "auth.user",
   "fields": {
-    "username": "root",
+    "username": "{{ superuser_name }}",
     "first_name": "",
     "last_name": "",
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-04-29T17:03:15.509",
+    "last_login": "{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S.%N') }}",
     "groups": [],
     "user_permissions": [],
-    "password": "pbkdf2_sha256$12000$iT4RRrUbb8pH$3C1p/zmMUSEYV38v/qiGscCNGK8y3o7NwmGh6/qoFVY=",
-    "email": "root@email.com",
-    "date_joined": "2015-04-29T17:03:15.509"
+    "password": "{{ encrypted_superuser_pass.stdout }}",
+    "email": "{{ superuser_email }}",
+    "date_joined": "{{ lookup('pipe', 'date +%Y-%m-%dT%H:%M:%S.%N') }}"
   }
 }
 ]
