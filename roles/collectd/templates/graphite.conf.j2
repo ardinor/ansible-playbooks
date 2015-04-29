@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+LoadPlugin write_graphite
+
+<Plugin write_graphite>
+  <Node "example">
+    Host "localhost"
+    Port "2003"
+    #Protocol "tcp"
+    #LogSendErrors true
+    #Prefix "collectd"
+    #Postfix "collectd"
+    StoreRates true
+    AlwaysAppendDS false
+    EscapeCharacter "_"
+  </Node>
+</Plugin>

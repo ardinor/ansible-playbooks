@@ -1,0 +1,10 @@
+---
+
+- name: Install collectd
+  yum: name=collectd state=latest
+
+- name: Move across graphite config
+  template: src=graphite.conf.j2 dest=/etc/collectd.d/graphite.conf
+
+- name: Start and enable collectd
+  service: name=collectd state=started enabled=yes
