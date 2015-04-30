@@ -1,0 +1,3 @@
+
+cluster.name: graylog2
+script.disable_dynamic: true

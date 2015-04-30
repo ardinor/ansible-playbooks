@@ -1,0 +1,5 @@
+---
+
+- name: Copy across elasticsearch settings
+  copy: src=../files/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch
