@@ -20,7 +20,7 @@ Performs the following:
 ### [nginx-proxy](roles/nginx-proxy/) ###
 
 Installs and sets up nginx as a proxy using the config files in templates/.
-Also supports a SSL secured proxy, see the role's readme for more information.
+Also supports a SSL secured proxy, see the role's README for more information.
 
 ### [Docker](roles/docker/) ###
 
@@ -44,11 +44,19 @@ Installs and starts/enables [RabbitMQ](https://www.rabbitmq.com/).
 
 ### [Sensu-Core](roles/sensu-core) ###
 
-Installs Sensu Core, the core is used by clients as well as servers. But I've split out the client role from core in order to use delegate_to to add clients to the server automatically (work in progress).
+Installs [Sensu](http://sensuapp.org) Core, the core is used by clients as well as servers. But I've split out the client role from core in order to use delegate_to to add clients' checks to the server automatically.
 
 ### [Sensu-Server](roles/sensu-server) ###
 
-Install the Sensu Server along with dependencies (Redis, RabbitMQ and the Sensu-Core role).
+Install the [Sensu](http://sensuapp.org) Server along with dependencies (Redis, RabbitMQ and the Sensu-Core role) along with support for shipping metrics to [Graphite](https://github.com/graphite-project).
+
+### [Sensu-Client](roles/sensu-client) ###
+
+Install the [Sensu](http://sensuapp.org) Client along with dependencies (RabbitMQ and the Sensu-Core role) along with several checks. Checks that are installed are installed on the Sensu master server as well.
+
+### [Graphite](roles/graphite) ###
+
+Installs and configures [Graphite](https://github.com/graphite-project).
 
 
 ### Misc
