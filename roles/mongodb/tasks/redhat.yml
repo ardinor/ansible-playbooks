@@ -1,0 +1,10 @@
+---
+
+- name: Install monogodb repo
+  copy: src=../files/mongodb-org-3.0.repo dest=/etc/yum.repos.d/mongodb-org-3.0.repo
+
+- name: Install monogodb
+  yum: name=mongodb-org state=present
+
+#- name: Notify SELinux of our Monogo port (test this)
+#  command: semanage port -a -t mongod_port_t -p tcp 27017
