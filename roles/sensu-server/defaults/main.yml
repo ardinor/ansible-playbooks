@@ -1,12 +1,19 @@
 ---
 
+# RabbitMQ settings
 rabbitmq_vhost: sensu
 rabbitmq_user: sensu
 rabbitmq_listen_port: 8159
 rabbitmq_host_ip: 127.0.0.1
 rabbitmq_host_port: 8159
 
+# Redis settings
 redis_port: 6379
 
+# Sensu settings
 sensi_api_port: 4567
 uchiwa_port: 3000
+
+# Graphite settings
+graphite_host: 127.0.0.1
+graphite_port: 2003

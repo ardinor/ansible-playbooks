@@ -6,8 +6,8 @@
       "type": "tcp",
       "mutator": "only_check_output",
       "socket": {
-        "host": "127.0.0.1",
-        "port": 2003
+        "host": "{{ graphite_host }}",
+        "port": {{ graphite_port }}
       }
     }
 
