@@ -32,3 +32,6 @@ checks:
   "load_metrics":
     file: "load-metrics.rb"
     url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/load-metrics.rb"
+  "uptime_metrics":
+    file: "uptime-metrics.py"
+    url: "https://raw.githubusercontent.com/sensu/sensu-community-plugins/master/plugins/system/uptime-metrics.py"
