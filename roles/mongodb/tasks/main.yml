@@ -1,4 +1,7 @@
 ---
 
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
 - name: Start mongodb service
   service: name=mongod state=started enabled=yes
