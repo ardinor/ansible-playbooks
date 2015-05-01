@@ -1,4 +1,4 @@
 ---
 
-graylog_server_download_url: https://www.graylog.org/download/release/graylog2-server/553fed5be4b0b07ebf5592b2
-graylog_webint_download_url: https://www.graylog.org/download/release/graylog2-web-interface/553fed5be4b0b07ebf5592b2
+graylog_server_download_url: https://packages.graylog2.org/releases/graylog2-server/graylog-1.0.2.tgz
+graylog_webint_download_url: https://packages.graylog2.org/releases/graylog2-web-interface/graylog-web-interface-1.0.2.tgz

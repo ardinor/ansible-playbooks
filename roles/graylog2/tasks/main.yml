@@ -3,3 +3,15 @@
 - name: Copy across elasticsearch settings
   copy: src=../files/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
   notify: restart elasticsearch
+
+- name: Download graylog2
+  get_url: url={{ graylog_server_download_url }} dest=/tmp/graylog.tgz
+
+- name: extract graylog2
+  unarchive: src=/tmp/graylog.tgz dest=/opt/ copy=no
+
+- name: Move graylog2 to /opt
+  command: mv /tmp/graylog-1.0.1 /opt/graylog
+
+- name: Make graylog2 config dir
+  file: path=/etc/graylog/server state=directory
