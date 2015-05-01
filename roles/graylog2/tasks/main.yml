@@ -8,10 +8,18 @@
   get_url: url={{ graylog_server_download_url }} dest=/tmp/graylog.tgz
 
 - name: extract graylog2
-  unarchive: src=/tmp/graylog.tgz dest=/opt/ copy=no
+  unarchive: src=/tmp/graylog.tgz dest=/tmp copy=no
 
 - name: Move graylog2 to /opt
-  command: mv /tmp/graylog-1.0.1 /opt/graylog
+  command: mv /tmp/graylog-1.0.2 /opt/graylog
 
 - name: Make graylog2 config dir
   file: path=/etc/graylog/server state=directory
+
+- name: hash the root password
+  local_action: command echo -n {{ graylog_root_password }} | sha256sum
+  register:root_enc_pass
+
+# Still need to do the password_secret var in the template
+- name: Install graylog2 config file
+  template: src=graylog.conf.j2 dest=/etc/graylog/server/graylog.conf

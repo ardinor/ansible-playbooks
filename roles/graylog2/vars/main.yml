@@ -2,3 +2,5 @@
 
 graylog_server_download_url: https://packages.graylog2.org/releases/graylog2-server/graylog-1.0.2.tgz
 graylog_webint_download_url: https://packages.graylog2.org/releases/graylog2-web-interface/graylog-web-interface-1.0.2.tgz
+
+graylog_root_password: password
