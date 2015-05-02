@@ -1,7 +1,7 @@
 ---
 
 - name: Copy across elasticsearch settings
-  copy: src=../files/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
+  template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml
   notify: restart elasticsearch
 
 - name: Remove old version
@@ -46,3 +46,7 @@
   lineinfile: dest=/etc/graylog/server/server.conf
               regexp='^password_secret =$'
               line='password_secret = {{ password_secret.stdout }}'
+
+- name: Add our default ipv4 address to the trusted zone
+  command: firewall-cmd --zone=trusted --permanent --add-source={{ ansible_default_ipv4.address }}
+  notify: reload firewalld

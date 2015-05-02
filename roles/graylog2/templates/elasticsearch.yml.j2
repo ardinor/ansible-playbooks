@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+# For whatever wonderful reason, graylog won't connect to elasticsearch
+# when you use 127.0.0.1, it wants a different IP
+
+cluster.name: graylog2
+script.disable_dynamic: true
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: ["{{ ansible_default_ipv4.address }}"]
