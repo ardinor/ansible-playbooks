@@ -134,7 +134,7 @@ elasticsearch_max_number_of_indices = 20
 retention_strategy = delete
 
 # How many Elasticsearch shards and replicas should be used per index? Note that this only applies to newly created indices.
-elasticsearch_shards = 4
+elasticsearch_shards = 1
 elasticsearch_replicas = 0
 
 # Prefix for all Elasticsearch indices and index aliases managed by Graylog.
@@ -167,7 +167,7 @@ allow_highlighting = false
 #elasticsearch_http_enabled = false
 
 #elasticsearch_discovery_zen_ping_multicast_enabled = false
-#elasticsearch_discovery_zen_ping_unicast_hosts = 192.168.1.203:9300
+elasticsearch_discovery_zen_ping_unicast_hosts = 127.0.0.1:9300
 
 # Change the following setting if you are running into problems with timeouts during Elasticsearch cluster discovery.
 # The setting is specified in milliseconds, the default is 5000ms (5 seconds).

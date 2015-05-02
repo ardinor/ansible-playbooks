@@ -28,10 +28,21 @@
   file: path=/etc/graylog/server state=directory
 
 - name: hash the root password
-  command: echo -n {{ graylog_root_password }} | sha256sum
+  shell: echo -n {{ graylog_root_password }} | sha256sum
   register: root_enc_pass
 
 # Still need to do the password_secret var in the template
 - name: Install graylog2 config file
   template: src=graylog.conf.j2 dest=/etc/graylog/server/graylog.conf
 
+# From https://stackoverflow.com/a/23728630
+- name: generate password secret
+  command: python -c "import string; import random; print ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(96))"
+  register: password_secret
+
+# This always seems to replace the secret, need to see if we'll have problems
+# looging in or not
+- name: add password secret to graylog config
+  lineinfile: dest=/etc/graylog/server/graylog.conf
+              regexp='^password_secret =$'
+              line='password_secret = {{ password_secret.stdout }}'
