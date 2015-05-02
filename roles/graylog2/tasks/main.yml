@@ -33,7 +33,7 @@
 
 # Still need to do the password_secret var in the template
 - name: Install graylog2 config file
-  template: src=graylog.conf.j2 dest=/etc/graylog/server/graylog.conf
+  template: src=graylog.conf.j2 dest=/etc/graylog/server/server.conf
 
 # From https://stackoverflow.com/a/23728630
 - name: generate password secret
@@ -43,6 +43,6 @@
 # This always seems to replace the secret, need to see if we'll have problems
 # looging in or not
 - name: add password secret to graylog config
-  lineinfile: dest=/etc/graylog/server/graylog.conf
+  lineinfile: dest=/etc/graylog/server/server.conf
               regexp='^password_secret =$'
               line='password_secret = {{ password_secret.stdout }}'
