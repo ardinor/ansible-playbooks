@@ -4,22 +4,34 @@
   copy: src=../files/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
   notify: restart elasticsearch
 
+- name: Remove old version
+  file: path=/opt/graylog state=absent
+  when: update_graylog == true
+
+- name: Check graylog folder exist
+  stat: path=/opt/graylog
+  register: graylog_path
+
 - name: Download graylog2
   get_url: url={{ graylog_server_download_url }} dest=/tmp/graylog.tgz
+  when: graylog_path.stat.exists == False
 
 - name: extract graylog2
   unarchive: src=/tmp/graylog.tgz dest=/tmp copy=no
+  when: graylog_path.stat.exists == False
 
 - name: Move graylog2 to /opt
   command: mv /tmp/graylog-1.0.2 /opt/graylog
+  when: graylog_path.stat.exists == False
 
 - name: Make graylog2 config dir
   file: path=/etc/graylog/server state=directory
 
 - name: hash the root password
-  local_action: command echo -n {{ graylog_root_password }} | sha256sum
-  register:root_enc_pass
+  command: echo -n {{ graylog_root_password }} | sha256sum
+  register: root_enc_pass
 
 # Still need to do the password_secret var in the template
 - name: Install graylog2 config file
   template: src=graylog.conf.j2 dest=/etc/graylog/server/graylog.conf
+
