@@ -25,14 +25,16 @@
   tags:
     - update
 
-- name: install git/vim/htop/wget
+- name: install git/vim/htop/wget/yum fastestmirror/deltarpm
   yum: name={{ item }} state=present
   with_items:
     - git
     - vim
     - htop
-    - bind-utils
+    #- bind-utils - do we really need this?
     - wget
+    - yum-plugin-fastestmirror
+    - deltarpm
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
