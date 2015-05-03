@@ -12,6 +12,7 @@
     - ssh_users
     - admins
   tags:
+    - common
     - users
 
 - name: add users
@@ -20,6 +21,7 @@
     - users
     - roles
   tags:
+    - common
     - users
 
 - name: add ssh keys
@@ -31,11 +33,13 @@
     - users
     - keys
   tags:
+    - common
     - users
 
 - name: add deploy user to ssh_users
   user: name={{ deploy_user }} groups=ssh_users append=yes
   tags:
+    - common
     - users
 
 - name: add pretty colourful PS1
@@ -46,6 +50,7 @@
   with_items:
     - "{{ users }}"
   tags:
+    - common
     - users
 
 - name: add pretty colourful PS1 for root
@@ -54,6 +59,7 @@
               regexp="^PS1="
               line="PS1='\[\e[0;31m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '"
   tags:
+    - common
     - users
 
 - name: copy basic vimrc over
@@ -61,6 +67,7 @@
   with_items:
     - "{{ users }}"
   tags:
+    - common
     - users
 
 # Copy sshd config over
@@ -68,26 +75,34 @@
 - name: Install sshd config file
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
   notify: restart sshd
+  tags:
+    - common
 
 - name: start ntp
   service: name=ntpd state=started enabled=yes
   tags:
+    - common
     - ntp
 
 - name: copy fail2ban ssh jail config across
   template: src=sshd.local.j2 dest=/etc/fail2ban/jail.d/sshd.local
   notify: restart fail2ban
-  tags: fail2ban
+  tags:
+    - common
+    - fail2ban
 
 - name: copy fail2ban fail2ban jail config across
   template: src=fail2ban.local.j2 dest=/etc/fail2ban/jail.d/fail2ban.local
   notify: restart fail2ban
-  tags: fail2ban
+  tags:
+    - common
+    - fail2ban
 
 - name: copy fail2ban fail2ban filter across
   copy: src=../files/fail2ban.conf dest=/etc/fail2ban/filter.d/fail2ban.conf
   notify: restart fail2ban
   tags:
+    - common
     - fail2ban
 
 # The service will fail to start if the log doesn't exist and since we
@@ -95,9 +110,11 @@
 - name: create fail2ban.log
   file: path=/var/log/fail2ban.log state=touch
   tags:
+    - common
     - fail2ban
 
 - name: start fail2ban and ensure enabled=yes
   service: name=fail2ban state=started enabled=yes
   tags:
+    - common
     - fail2ban

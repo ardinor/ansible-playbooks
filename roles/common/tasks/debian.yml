@@ -7,6 +7,8 @@
     - vim
     - htop
     - wget
+  tags:
+    - common
 
 # Use ufw or just iptables? Probably need to install it on Debian, installed on Ubuntu afaik
 #- name: Enable ufw

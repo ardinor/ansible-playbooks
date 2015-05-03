@@ -1,28 +1,28 @@
 ---
 
 # For SELinux utilities like semanage
-- name: install policycoreutils-python
-  yum: name=policycoreutils-python state=present
+- name: install policycoreutils-python and libselinux-python
+  yum: name={{ item }} state=present
+  with_items:
+    - policycoreutils-python
+    - libselinux-python
   when: ansible_selinux != false and
         ansible_selinux.status != "disabled"
-
-- name: install libselinux-python
-  yum: name=libselinux-python state=present
-  when: ansible_selinux != false and
-        ansible_selinux.status != "disabled"
-
-- name: install yum-fastestmirror
-  yum: name=yum-plugin-fastestmirror state=present
+  tags:
+    - common
 
 # Install epel, needed for fail2ban and htop
 - name: install EPEL repo
   yum: name=epel-release state=present
   when: ansible_distribution != "Fedora"
-  tags: epel
+  tags:
+    - common
+    - epel
 
 - name: update packages
   yum: name=* state=latest
   tags:
+    - common
     - update
 
 - name: install git/vim/htop/wget/yum fastestmirror/deltarpm
@@ -35,32 +35,45 @@
     - wget
     - yum-plugin-fastestmirror
     - deltarpm
+  tags:
+    - common
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
   register: firewalld_installed
+  tags:
+    - common
 
 - name: start and enable firewalld
   service: name=firewalld state=started enabled=yes
   when: firewalld_installed.stat.isreg is defined and firewalld_installed.stat.isreg
+  tags:
+    - common
 
 - name: install ntp
   yum: name=ntp state=present
   tags:
+    - common
     - ntp
 
 # TO DO: investigate fail2ban-systemd
 - name: install fail2ban
   yum: name=fail2ban-server state=latest
-  tags: fail2ban
+  tags:
+    - common
+    - fail2ban
 
 - name: notify SELinux of a port change for SSH if we changed the port
   command: /usr/sbin/semanage port -a -t ssh_port_t -p tcp {{ sshd_port }}
   when: sshd_port != 22 and
         ansible_selinux != false and
         ansible_selinux.mode == "enforcing"
+  tags:
+    - common
 
 - name: allow new ssh port through firewall
   firewalld: port={{ sshd_port }}/tcp permanent=true state=enabled
   when: sshd_port != 22
   notify: restart firewalld
+  tags:
+    - common
