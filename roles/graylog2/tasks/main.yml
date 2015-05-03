@@ -50,3 +50,27 @@
 - name: Add our default ipv4 address to the trusted zone
   command: firewall-cmd --zone=trusted --permanent --add-source={{ ansible_default_ipv4.address }}
   notify: reload firewalld
+
+- name: Check graylog-web folder exist
+  stat: path=/opt/graylog-web-interface
+  register: graylogweb_path
+
+- name: Download graylog2-web
+  get_url: url={{ graylog_webint_download_url }} dest=/tmp/graylog_web.tgz
+  when: graylogweb_path.stat.exists == False
+
+- name: extract graylog2-web
+  unarchive: src=/tmp/graylog_web.tgz dest=/tmp copy=no
+  when: graylogweb_path.stat.exists == False
+
+- name: Move graylog2 to /opt
+  command: mv /tmp/graylog-web-interface-{{ graylog_ver }} /opt/graylog-web-interface
+  when: graylogweb_path.stat.exists == False
+
+# From https://stackoverflow.com/a/23728630
+- name: generate application secret
+  command: python -c "import string; import random; print ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(96))"
+  register: application_secret
+
+- name: Install graylog-web-interface config file
+  template: src=graylog-web-interface.conf.j2 dest=/opt/graylog-web-interface/conf/graylog-web-interface.conf
