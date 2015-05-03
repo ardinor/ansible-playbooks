@@ -1,0 +1,12 @@
+[Unit]
+Description=Graylog web interface
+BindTo=network.target
+
+[Service]
+Type=simple
+User=root
+PIDFile=/opt/graylog-web-interface/RUNNING_PID
+ExecStart=/opt/graylog-web-interface/bin/graylog-web-interface
+
+[Install]
+WantedBy=multi-user.target

@@ -74,3 +74,20 @@
 
 - name: Install graylog-web-interface config file
   template: src=graylog-web-interface.conf.j2 dest=/opt/graylog-web-interface/conf/graylog-web-interface.conf
+
+# Service scripts are altered from the ones by Filip "Hadret" Chabik
+# https://github.com/hadret/scripts-graylog2
+- name: Install graylog2 server service script
+  copy: src=../files/graylog-server.service dest=/etc/systemd/system/graylog2-server.service
+
+- name: Install graylog2-web service script
+  copy: src=../files/graylog2-web.service dest=/etc/systemd/system/graylog2-web.service
+
+- name: Reload systemd service scripts
+  command: systemctl daemon-reload
+
+- name: Start graylog2-server service
+  service: name=graylog2-server state=started enabled=yes
+
+- name: Start graylog2-web service
+  service: name=graylog2-web state=started enabled=yes
