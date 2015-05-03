@@ -1,0 +1,20 @@
+---
+
+- name: Install httpd/mod_ssl/mod_security
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+    - mod_ssl
+    - mod_security
+
+- name: Remove default autoindex.conf
+  file: path=/etc/httpd/conf.d/autoindex.conf state=absent
+
+- name: Remove default userdir.conf
+  file: path=/etc/httpd/conf.d/userdir.conf state=absent
+
+- name: Remove default welcome.conf
+  file: path=/etc/httpd/conf.d/welcome.conf state=absent
+
+- name: allow httpd port through firewall
+  firewalld: service=httpd permanent=true state=enabled immediate=yes
