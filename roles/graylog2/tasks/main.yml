@@ -27,8 +27,9 @@
 - name: Make graylog2 config dir
   file: path=/etc/graylog/server state=directory
 
+# Without the awk if prints the sum and ' -' at the end
 - name: hash the root password
-  shell: echo -n {{ graylog_root_password }} | sha256sum
+  shell: echo -n {{ graylog_root_password }} | sha256sum | awk '{print $1}'
   register: root_enc_pass
 
 # Still need to do the password_secret var in the template
