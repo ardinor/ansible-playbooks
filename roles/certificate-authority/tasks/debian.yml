@@ -1,0 +1,6 @@
+---
+
+- name: install easy-rsa
+  apt: name=easy-rsa state=present update_cache=yes
+  tags:
+    - ca

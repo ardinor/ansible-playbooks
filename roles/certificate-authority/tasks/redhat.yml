@@ -1,0 +1,6 @@
+---
+
+- name: Install easy-ca
+  yum: name=easy-ca state=present
+  tags:
+    - ca

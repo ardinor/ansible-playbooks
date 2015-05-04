@@ -1,0 +1,22 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- include: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: make easy-rsa directory
+  file: path=/etc/easy-rsa state=directory mode=0770
+  tags:
+    - ca
+
+- name: copy across easy-rsa scripts to our new home
+  command: cp -r /usr/share/easy-rsa/* /etc/easy-rsa/
+  tags:
+    - ca
+
+- name: copy across vars file
+  template: src=vars.j2 dest=/etc/easy-rsa/{{ easy_rsa_ver }}/vars
+  tags:
+    - ca
