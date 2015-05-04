@@ -31,7 +31,7 @@
     - git
     - vim
     - htop
-    #- bind-utils - do we really need this?
+    - bind-utils
     - wget
     - yum-plugin-fastestmirror
     - deltarpm
