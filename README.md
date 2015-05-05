@@ -72,3 +72,12 @@ Other useful commands:
 `--skip-tags "fail2ban"` = skip all tasks with the tag fail2ban
 
 `--ask-su-pass` = ask sudo password
+
+### To do:
+
+- create repo
+- Apache config for sensu server reverse proxy
+- ntp
+- dhcp (not dnsmasq)
+- elk stack
+- routing and hostnames (external network via VPN and internal)
