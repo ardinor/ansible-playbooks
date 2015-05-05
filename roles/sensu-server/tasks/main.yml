@@ -6,38 +6,58 @@
 - name: list rabbitmq vhosts
   command: rabbitmqctl list_vhosts
   register: exist_vhosts
+  tags:
+    - sensu-server
 
 - name: add sensu vhost
   command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
   when: "exist_vhosts.stdout.find('{{ rabbitmq_vhost }}') == -1"
+  tags:
+    - sensu-server
 
 - name: list rabbitmq users
   command: rabbitmqctl list_users
   register: exist_users
+  tags:
+    - sensu-server
 
 - name: add sensu user to rabbitmq
   command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
   when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
+  tags:
+    - sensu-server
 
 - name: add permissions on sensu vhost to sensu user
   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
   when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
+  tags:
+    - sensu-server
 
 - name: Make RabbitMQ SSL directory
   file: path=/etc/rabbitmq/ssl/ state=directory
+  tags:
+    - sensu-server
 
 - name: Copy across CA central for RabbitMQ
   copy: src=../files/cacert.pem dest=/etc/rabbitmq/ssl/cacert.pem
+  tags:
+    - sensu-server
 
 - name: Copy across SSL cert for RabbitMQ
   copy: src=../files/cert.pem dest=/etc/rabbitmq/ssl/cert.pem
+  tags:
+    - sensu-server
 
 - name: Copy across SSL key for RabbitMQ
   copy: src=../files/key.pem dest=/etc/rabbitmq/ssl/key.pem
+  tags:
+    - sensu-server
 
 - name: Install RabbitMQ config file
   template: src=rabbitmq.config.j2 dest=/etc/rabbitmq/rabbitmq.config
   notify: restart rabbitmq
+  tags:
+    - sensu-server
 
 # Should be covered by dependency on sensu-client
 #- name: Make sensu SSL directory
@@ -59,10 +79,14 @@
 - name: Install sensu redis config file
   template: src=redis.json.j2 dest=/etc/sensu/conf.d/redis.json
   notify: restart sensu
+  tags:
+    - sensu-server
 
 - name: Install sensu api config file
   template: src=api.json.j2 dest=/etc/sensu/conf.d/api.json
   notify: restart sensu
+  tags:
+    - sensu-server
 
 # Should be covered by dependency on sensu-client
 #- name: Install sensu client config file to monitor itself
@@ -77,14 +101,20 @@
 - name: Install handlers config file
   template: src=handlers.json.j2 dest=/etc/sensu/conf.d/handlers.json
   notify: restart sensu
+  tags:
+    - sensu-server
 
 - name: Install uchiwa config file
   template: src=uchiwa.json.j2 dest=/etc/sensu/uchiwa.json
   notify: restart uchiwa
+  tags:
+    - sensu-server
 
 - name: Tell Sensu to use embedded ruby
   lineinfile: dest=/etc/default/sensu regexp=^EMBEDDED_RUBY= line=EMBEDDED_RUBY=true
   notify: restart sensu
+  tags:
+    - sensu-server
 
 - name: Start our sensu/uchiwa services
   service: name={{ item }} state=started enabled=yes
@@ -93,3 +123,5 @@
     - sensu-client
     - sensu-api
     - uchiwa
+  tags:
+    - sensu-server

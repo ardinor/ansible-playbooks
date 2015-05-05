@@ -2,3 +2,5 @@
 
 - name: install gpg key
   command: wget -q http://repos.sensuapp.org/apt/pubkey.gpg -O- | sudo apt-key add -
+  tags:
+    - sensu-core

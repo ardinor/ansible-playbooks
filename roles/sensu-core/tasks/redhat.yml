@@ -2,6 +2,12 @@
 
 - name: Install sensu repo
   copy: src=../files/sensu.repo dest=/etc/yum.repos.d/sensu.repo
+  tags:
+    - sensu-core
+
 
 - name: Install sensu
   yum: name=sensu state=latest
+  tags:
+    - sensu-core
+    - packages

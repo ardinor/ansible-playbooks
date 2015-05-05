@@ -8,9 +8,13 @@
            mode=0744
   with_dict: checks
   notify: restart sensu-client
+  tags:
+    - sensu-client
 
 - name: Install check on master
   template: src=check.json.j2 dest=/etc/sensu/conf.d/{{ item.key }}.json
   with_dict: checks
   delegate_to: virt01
   notify: restart sensu-server
+  tags:
+    - sensu-client
