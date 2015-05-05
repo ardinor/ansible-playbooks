@@ -1,0 +1,8 @@
+---
+
+supported_vers:
+  - dist: "centos"
+    vers:
+      - "7"
+
+repo_name: repo.defestri.org

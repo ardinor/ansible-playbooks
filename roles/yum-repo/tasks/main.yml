@@ -1,0 +1,44 @@
+---
+
+- name: Install createrepo
+  yum: name=createrepo state=latest
+  tags:
+    - yum-repo
+
+- name: Make repo directory
+  file: path=/var/www/repo/ state=directory
+  tags:
+    - yum-repo
+
+- name: Create repo
+  command: /bin/createrepo /var/www/repo
+  tags:
+    - yum-repo
+
+- name: Create sub folders (distro)
+  file: path=/var/www/repo/{{ item.dist }} state=directory
+  with_items: supported_vers
+
+- name: Create sub folders (version)
+  file: path=/var/www/repo/{{ item.0.dist }}/{{ item.1 }} state=directory
+  with_subelements:
+    - supported_vers
+    - vers
+
+- name: Create sub folders - i386
+  file: path=/var/www/repo/{{ item.0.dist }}/{{ item.1 }}/i386 state=directory
+  with_subelements:
+    - supported_vers
+    - vers
+
+- name: Create sub folders - x86_64
+  file: path=/var/www/repo/{{ item.0.dist }}/{{ item.1 }}/x86_64 state=directory
+  with_subelements:
+    - supported_vers
+    - vers
+
+- name: Create sub folders - SRPMS
+  file: path=/var/www/repo/{{ item.0.dist }}/{{ item.1 }}/SRPMS state=directory
+  with_subelements:
+    - supported_vers
+    - vers
