@@ -3,35 +3,51 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- name: list rabbitmq vhosts
-  command: rabbitmqctl list_vhosts
-  register: exist_vhosts
-  tags:
-    - sensu-server
+# - name: list rabbitmq vhosts
+#   command: rabbitmqctl list_vhosts
+#   register: exist_vhosts
+#   tags:
+#     - sensu-server
+
+# - name: add sensu vhost
+#   command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
+#   when: "exist_vhosts.stdout.find('{{ rabbitmq_vhost }}') == -1"
+#   tags:
+#     - sensu-server
 
 - name: add sensu vhost
-  command: rabbitmqctl add_vhost /{{ rabbitmq_vhost }}
-  when: "exist_vhosts.stdout.find('{{ rabbitmq_vhost }}') == -1"
+  rabbitmq_vhost: name=/{{ rabbitmq_vhost }} state=present
   tags:
     - sensu-server
 
-- name: list rabbitmq users
-  command: rabbitmqctl list_users
-  register: exist_users
-  tags:
-    - sensu-server
+# - name: list rabbitmq users
+#   command: rabbitmqctl list_users
+#   register: exist_users
+#   tags:
+#     - sensu-server
+
+# - name: add sensu user to rabbitmq
+#   command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
+#   when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
+#   tags:
+#     - sensu-server
 
 - name: add sensu user to rabbitmq
-  command: rabbitmqctl add_user {{ rabbitmq_user }} {{ rabbitmq_password }}
-  when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
+  rabbitmq_user: user={{ rabbitmq_user }}
+                 password={{ rabbitmq_password }}
+                 vhost=/{{ rabbitmq_vhost }}
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 state=present
   tags:
     - sensu-server
 
-- name: add permissions on sensu vhost to sensu user
-  command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
-  when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
-  tags:
-    - sensu-server
+# - name: add permissions on sensu vhost to sensu user
+#   command: rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
+#   when: "exist_users.stdout.find('{{ rabbitmq_user }}') == -1"
+#   tags:
+#     - sensu-server
 
 - name: Make RabbitMQ SSL directory
   file: path=/etc/rabbitmq/ssl/ state=directory
