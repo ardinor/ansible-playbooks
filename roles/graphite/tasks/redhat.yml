@@ -7,11 +7,9 @@
     - python-carbon
     - python-whisper
 
-- name: Ensure the apache welcome config is group_name
-  file: path=/etc/httpd/conf.d/welcome.conf state=absent
-
 - name: Move across graphite-web apache config (overwrites default)
   template: src=graphite-web.conf.j2 dest=/etc/httpd/conf.d/graphite-web.conf
+  notify: restart httpd
 
 - name: Install graphite-web settings
   template: src=local_settings.py.j2 dest=/etc/graphite-web/local_settings.py
