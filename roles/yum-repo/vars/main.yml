@@ -1,8 +1,12 @@
 ---
 
 supported_vers:
-  - dist: "centos"
+  - dist: "epel"
     vers:
       - "7"
+  - dist: "fedora"
+    vers:
+      - "21"
 
 repo_name: repo.defestri.org
+repo_directory: /var/www/repo/pub/
