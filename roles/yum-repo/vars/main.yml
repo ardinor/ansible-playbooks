@@ -10,3 +10,6 @@ supported_vers:
 
 repo_name: repo.defestri.org
 repo_directory: /var/www/repo/pub/
+
+admin_email: jordan@defestri.org
+server_name: repo.defestri.org
