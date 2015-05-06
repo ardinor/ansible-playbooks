@@ -18,27 +18,41 @@
 - name: Create sub folders (distro)
   file: path={{ repo_directory }}{{ item.dist }} state=directory
   with_items: supported_vers
+  tags:
+    - yum-repo
+
 
 - name: Create sub folders (version)
   file: path={{ repo_directory }}{{ item.0.dist }}/{{ item.1 }} state=directory
   with_subelements:
     - supported_vers
     - vers
+  tags:
+    - yum-repo
+
 
 - name: Create sub folders - i386
   file: path={{ repo_directory }}{{ item.0.dist }}/{{ item.1 }}/i386 state=directory
   with_subelements:
     - supported_vers
     - vers
+  tags:
+    - yum-repo
+
 
 - name: Create sub folders - x86_64
   file: path={{ repo_directory }}{{ item.0.dist }}/{{ item.1 }}/x86_64 state=directory
   with_subelements:
     - supported_vers
     - vers
+  tags:
+    - yum-repo
+
 
 - name: Create sub folders - SRPMS
   file: path={{ repo_directory }}{{ item.0.dist }}/{{ item.1 }}/SRPMS state=directory
   with_subelements:
     - supported_vers
     - vers
+  tags:
+    - yum-repo
