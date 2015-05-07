@@ -2,3 +2,11 @@
 
 - name: Install dhcp server
   yum: name=dhcp state=present
+  tags:
+    - dhcp
+
+- name: Install dhcpd config file
+  template: src=dhcpd.conf.j2 dest=/etc/dhcp/dhcpd.conf
+  notify: restart dhcpd
+  tags:
+    - dhcp

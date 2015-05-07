@@ -4,3 +4,54 @@
 #   see /usr/share/doc/dhcp*/dhcpd6.conf.example
 #   see dhcpd.conf(5) man page
 #
+
+# IPv6 address valid lifetime
+#  (at the end the address is no longer usable by the client)
+#  (set to 30 days, the usual IPv6 default)
+default-lease-time 2592000;
+
+# IPv6 address preferred lifetime
+#  (at the end the address is deprecated, i.e., the client should use
+#   other addresses for new connections)
+#  (set to 7 days, the  usual IPv6 default)
+preferred-lifetime 604800;
+
+# T1, the delay before Renew
+#  (default is 1/2 preferred lifetime)
+#  (set to 1 hour)
+option dhcp-renewal-time 3600;
+
+# T2, the delay before Rebind (if Renews failed)
+#  (default is 3/4 preferred lifetime)
+#  (set to 2 hours)
+option dhcp-rebinding-time 7200;
+
+# Enable RFC 5007 support (same than for DHCPv4)
+allow leasequery;
+
+# Global definitions for name server address(es) and domain search list
+option dhcp6.name-servers 3ffe:501:ffff:100:200:ff:fe00:3f3e;
+option dhcp6.domain-search "test.example.com","example.com";
+
+# The delay before information-request refresh
+#  (minimum is 10 minutes, maximum one day, default is to not refresh)
+#  (set to 6 hours)
+option dhcp6.info-refresh-time 21600;
+
+# The path of the lease file
+dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
+
+# The subnet where the server is attached
+#  (i.e., the server has an address in this subnet)
+subnet6 3ffe:501:ffff:100::/64 {
+        # Two addresses available to clients
+        #  (the third client should get NoAddrsAvail)
+        range6 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11;
+
+        # Use the whole /64 prefix for temporary addresses
+        #  (i.e., direct application of RFC 4941)
+        range6 3ffe:501:ffff:100:: temporary;
+
+        # Some /64 prefixes available for Prefix Delegation (RFC 3633)
+        prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
+}

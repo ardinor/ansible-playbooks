@@ -1,5 +1,26 @@
+# {{ ansible_managed }}
 #
 # DHCP Server Configuration file.
 #   see /usr/share/doc/dhcp*/dhcpd.conf.example
 #   see dhcpd.conf(5) man page
 #
+
+option domain-name "{{ domain_name }}";
+option domain-name-servers {{ dns_servers }};
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# Use this to enble / disable dynamic dns updates globally.
+#ddns-update-style none;
+
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+#authoritative;
+
+lease-file-name "/var/lib/dhcpd/dhcpd.leases";
+
+subnet {{ subnet_id }} netmask {{ net_mask }} {
+  range {{ address_range_start }} {{ address_range_end }};
+  option routers {{ routers }},
+}
