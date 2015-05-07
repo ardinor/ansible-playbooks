@@ -1,0 +1,4 @@
+---
+
+- name: Install dhcp server
+  yum: name=dhcp state=present
