@@ -30,8 +30,8 @@ option dhcp-rebinding-time 7200;
 allow leasequery;
 
 # Global definitions for name server address(es) and domain search list
-option dhcp6.name-servers 3ffe:501:ffff:100:200:ff:fe00:3f3e;
-option dhcp6.domain-search "test.example.com","example.com";
+option dhcp6.name-servers {{ ipv6_dns_servers }};
+option dhcp6 domain-search "{{ domain_name }}";
 
 # The delay before information-request refresh
 #  (minimum is 10 minutes, maximum one day, default is to not refresh)
@@ -47,6 +47,8 @@ dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
 # No guarantee dead:beef:face is globally unique (I'm sure it isn't)
 # If you want this to be act like a private IPv4 network you should
 # block this at your gateway inbound and outbound
+# You can generate a different subnet using a tool like this site
+#  http://unique-local-ipv6.com/
 subnet6 fddd:dead:beef:face::/64 {
         # Two addresses available to clients
         #  (the third client should get NoAddrsAvail)

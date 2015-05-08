@@ -12,4 +12,7 @@ address_range_end: 192.168.1.40
 dns_servers: 192.168.1.5
 routers: 192.168.1.1
 
+ntp_servers: 192.168.1.5
 
+# The IPv6 DNS server, can be a comma delimited list
+ipv6_dns_servers: 192.168.1.5

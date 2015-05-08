@@ -10,3 +10,9 @@
   notify: restart dhcpd
   tags:
     - dhcp
+
+- name: Install dhcpd config file
+  template: src=dhcpd6.conf.j2 dest=/etc/dhcp/dhcpd6.conf
+  notify: restart dhcpd
+  tags:
+    - dhcp

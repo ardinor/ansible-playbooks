@@ -7,6 +7,7 @@
 
 option domain-name "{{ domain_name }}";
 option domain-name-servers {{ dns_servers }};
+option ntp-servers {{ ntp_servers }};
 
 default-lease-time 600;
 max-lease-time 7200;
@@ -16,7 +17,7 @@ max-lease-time 7200;
 
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
-#authoritative;
+authoritative;
 
 lease-file-name "/var/lib/dhcpd/dhcpd.leases";
 
