@@ -8,7 +8,7 @@ net_mask: 255.255.255.192
 address_range_start: 192.168.1.20
 address_range_end: 192.168.1.40
 
-# Can be just one or a comma delimited list
+# Can be just one address or a comma delimited list of addresses
 dns_servers: 192.168.1.5
 routers: 192.168.1.1
 

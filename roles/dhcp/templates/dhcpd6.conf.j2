@@ -43,15 +43,19 @@ dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
 
 # The subnet where the server is attached
 #  (i.e., the server has an address in this subnet)
-subnet6 3ffe:501:ffff:100::/64 {
+# FD00::/8 is for unique local addresses
+# No guarantee dead:beef:face is globally unique (I'm sure it isn't)
+# If you want this to be act like a private IPv4 network you should
+# block this at your gateway inbound and outbound
+subnet6 fddd:dead:beef:face::/64 {
         # Two addresses available to clients
         #  (the third client should get NoAddrsAvail)
-        range6 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11;
+        #range6 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11;
 
         # Use the whole /64 prefix for temporary addresses
         #  (i.e., direct application of RFC 4941)
-        range6 3ffe:501:ffff:100:: temporary;
+        range6 fddd:dead:beef:face::/64 temporary;
 
         # Some /64 prefixes available for Prefix Delegation (RFC 3633)
-        prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
+        #prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
 }
