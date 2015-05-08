@@ -33,6 +33,9 @@ allow leasequery;
 option dhcp6.name-servers {{ ipv6_dns_servers }};
 option dhcp6 domain-search "{{ domain_name }}";
 
+# NTP servers can support SNTP as well? Double check
+option dhcp6.sntp-servers {{ ipv6_ntp_servers }};
+
 # The delay before information-request refresh
 #  (minimum is 10 minutes, maximum one day, default is to not refresh)
 #  (set to 6 hours)
@@ -61,3 +64,12 @@ subnet6 fddd:dead:beef:face::/64 {
         # Some /64 prefixes available for Prefix Delegation (RFC 3633)
         #prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
 }
+
+# Example static ip
+#host otherclient {
+        # This host entry is hopefully matched if the client supplies a DUID-LL
+        # or DUID-LLT containing this MAC address.
+#        hardware ethernet 01:00:80:a2:55:67;
+
+#        fixed-address6 3ffe:501:ffff:100::4321;
+#}

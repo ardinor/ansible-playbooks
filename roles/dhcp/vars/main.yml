@@ -15,4 +15,5 @@ routers: 192.168.1.1
 ntp_servers: 192.168.1.5
 
 # The IPv6 DNS server, can be a comma delimited list
-ipv6_dns_servers: 192.168.1.5
+ipv6_dns_servers: fddd:dead:beef:face:dead:beef:face:0005
+ipv6_ntp_servers: fddd:dead:beef:face:dead:beef:face:0005

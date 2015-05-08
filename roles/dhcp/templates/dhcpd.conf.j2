@@ -21,7 +21,14 @@ authoritative;
 
 lease-file-name "/var/lib/dhcpd/dhcpd.leases";
 
+# Default subnet
 subnet {{ subnet_id }} netmask {{ net_mask }} {
   range {{ address_range_start }} {{ address_range_end }};
   option routers {{ routers }},
 }
+
+# Fixed host example
+#host fantasia {
+#  hardware ethernet 08:00:07:26:c0:a5;
+#  fixed-address 10.0.0.1;
+#}
