@@ -70,6 +70,7 @@
         ansible_selinux.mode == "enforcing"
   tags:
     - common
+    - sshd
 
 - name: allow new ssh port through firewall
   firewalld: port={{ sshd_port }}/tcp permanent=true state=enabled
@@ -77,3 +78,4 @@
   notify: restart firewalld
   tags:
     - common
+    - sshd
