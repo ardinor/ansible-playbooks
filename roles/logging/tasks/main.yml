@@ -1,34 +1,12 @@
 ---
 
-- name: Get the logspout policy module from Github
-  get_url:
-    url="https://raw.githubusercontent.com/ardinor/selinux-modules/master/logspout/logspout.te"
-    dest="/tmp/logspout.te"
-    mode=0400
-  when: docker_logging == true
-  tags:
-    - docker-logging
-
-- name: Turn the logspout policy module .te to a .mod file
-  command: checkmodule -M -m -o /tmp/logspout.mod logspout.te
-  when: docker_logging == true
-  tags:
-    - docker-logging
-
-- name: Turn the logspout policy module .mod into a .pp
-  command: semodule_package -o /tmp/logspout.pp -m /tmp/logspout.mod
-  when: docker_logging == true
-  tags:
-    - docker-logging
-
-- name: Load the logspout policy module
-  command: semodule -i /tmp/logspout.pp
-  when: docker_logging == true
-  tags:
-    - docker-logging
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
 
 - name: make /var/mojibake
   file: path=/var/mojibake state=directory
+  tags:
+    - docker_logging
 
 - name: Pull down Docker compose file
   get_url:
@@ -37,7 +15,7 @@
     mode=0400
   when: docker_logging == true
   tags:
-    - docker-logging
+    - docker_logging
 
 - name: Start logspout and logstash containers
   shell: /usr/local/bin/docker-compose up -d
@@ -45,3 +23,5 @@
     chdir: /var/logging/
   when: docker_logging == true
   environment: compose_env
+  tags:
+    - docker_logging
