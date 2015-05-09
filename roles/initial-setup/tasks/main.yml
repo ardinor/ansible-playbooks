@@ -2,16 +2,22 @@
 
 - name: add deploy user
   user: name={{ deploy_user }} groups=wheel append=yes
+  tags:
+    - initial
 
 - name: add deploy user ssh key
   authorized_key: user={{ deploy_user }}
                   key="{{ deploy_user_key }}"
                   manage_dir=yes
                   state=present
+  tags:
+    - initial
 
 - name: confirm sudo is installed
   apt: pkg=sudo state=present update_cache=yes
   when: ansible_os_family == "Debian"
+  tags:
+    - initial
 
 # Do we need this if the user is added to wheel?
 # - name: confirm sudo is configured for deploy user
@@ -27,6 +33,9 @@
               line='PermitRootLogin no'
               state=present
   notify: restart sshd
+  tags:
+    - initial
+    - sshd
 
 - debug: msg="Now login using {{ deploy_user }} and set a password for sudo."
 
