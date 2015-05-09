@@ -1,0 +1,11 @@
+---
+
+- name: Install kibana4 service file
+  copy: src=../files/kibana4.service dest=/etc/systemd/system/kibana4.service
+  tags:
+    - kibana
+
+- name: reload systemd service files
+  command: systemctl daemon-reload
+  tags:
+    - kibana
