@@ -15,5 +15,15 @@
   tags:
     - kibana
 
+- name: add kibana user
+  user: name=kibana home=/opt/kibana/ system=yes
+  tags:
+    - kibana
+
+- name: ensure correct permissions on /opt/kibana
+  file: path=/opt/kibana/ owner=kibana group=kibana mode=0740
+  tags:
+    - kibana
+
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
