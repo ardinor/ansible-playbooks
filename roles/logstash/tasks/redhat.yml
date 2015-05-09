@@ -1,0 +1,13 @@
+---
+
+- name: Install logstash repo
+  copy: src=../files/logstash.repo dest=/etc/yum.repos.d/logstash.repo
+  tags:
+    - logstash
+    - repo
+
+- name: Install logstash
+  yum: name=logstash state=present
+  tags:
+    - logstash
+    - packages
