@@ -1,3 +1,3 @@
 ### Kibana ###
 
-Installs the [Kibana 4](https://www.elastic.co/products/kibana) for searching and visualising logs. This role itself just installs it with no configuration. It's solely used as a dependency by the [elk stack](../roles/elk-stack/) role.
+Installs the [Kibana 4](https://www.elastic.co/products/kibana) for searching and visualising logs. This role itself just installs it with no configuration. It's solely used as a dependency by the [elk stack](../elk-stack/) role.
