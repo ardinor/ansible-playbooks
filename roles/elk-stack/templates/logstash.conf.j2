@@ -2,10 +2,13 @@
 
 input {
   file {
+    # Local syslog
     type => "syslog"
 
     # Wildcards work, here :)
-    path => [ "/var/log/*.log", "/var/log/messages", "/var/log/syslog" ]
+    # /var/log/secure?
+    path => [ "/var/log/*.log", "/var/log/messages", "/var/log/syslog",
+              "/var/log/httpd/*.log" ]
     #sincedb_path => "/opt/logstash/sincedb-access"
   }
   redis {
@@ -14,11 +17,6 @@ input {
     data_type => "list"
     key => "logstash"
   }
-  syslog {
-    type => "syslog"
-    port => "5544"
-  }
-
 }
 
 filter {
@@ -26,5 +24,5 @@ filter {
 }
 
 output {
- elasticsearch { bind_host => "127.0.0.1" }
+  elasticsearch { bind_host => "127.0.0.1" }
 }
