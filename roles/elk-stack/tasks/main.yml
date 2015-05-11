@@ -6,6 +6,7 @@
   tags:
     - elk_stack
     - config_files
+    - elasticsearch
 
 - name: Install logstash config file
   template: src=logstash.conf.j2 dest=/etc/logstash/conf.d/logstash.conf
@@ -13,3 +14,12 @@
   tags:
     - elk_stack
     - config_files
+    - logstash
+
+- name: Install kibana config file
+  template: src=kibana.yml.j2 dest=/opt/kibana/config/kibana.yml
+  notify: restart kibana
+  tags:
+    - elk_stack
+    - config_files
+    - kibana

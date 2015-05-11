@@ -1,0 +1,4 @@
+---
+
+# To change the kibana port, add this line, otherwise it defaults to 5601
+# kibana_port:
