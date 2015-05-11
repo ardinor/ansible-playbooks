@@ -1,3 +1,6 @@
 # {{ ansible_managed }}
 
 network.host: localhost
+
+# Set a custom port to listen for HTTP traffic, defaults to 9200:
+http.port: {{ elasticsearch_port }}
