@@ -1,0 +1,7 @@
+---
+
+- name: Install elasticsearch config
+  template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml
+  notify: restart elasticsearch
+  tags:
+    - elk_stack
