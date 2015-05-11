@@ -5,3 +5,11 @@
   notify: restart elasticsearch
   tags:
     - elk_stack
+    - config_files
+
+- name: Install logstash config file
+  template: src=logstash.conf.j2 dest=/etc/logstash/conf.d/logstash.conf
+  notify: restart logstash
+  tags:
+    - elk_stack
+    - config_files
