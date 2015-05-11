@@ -2,3 +2,6 @@
 
 # To change the kibana port, add this line, otherwise it defaults to 5601
 # kibana_port:
+
+# To change the elasticsearch port, add this line, otherwise it defaults to 9200
+# kibana_port:
