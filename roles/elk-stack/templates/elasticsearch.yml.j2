@@ -1,6 +1,10 @@
 # {{ ansible_managed }}
 
+# Config docs
+# http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#settings
+
 network.host: localhost
 
 # Set a custom port to listen for HTTP traffic, defaults to 9200:
+# http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html
 http.port: {{ elasticsearch_port }}
