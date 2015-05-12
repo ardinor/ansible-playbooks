@@ -18,3 +18,6 @@
 
 - name: allow httpd port through firewall
   firewalld: service=httpd permanent=true state=enabled immediate=yes
+
+- name: start httpd services
+  service: name=httpd state=started enabled=yes
