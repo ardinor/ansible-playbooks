@@ -4,3 +4,4 @@ dependencies:
   - { role: elasticsearch }
   - { role: logstash }
   - { role: kibana }
+  - { role: httpd }

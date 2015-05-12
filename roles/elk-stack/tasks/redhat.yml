@@ -1,0 +1,9 @@
+---
+
+- name: Check if httpd can network_connect SEBoolean is set
+  command: "sestatus -b | grep 'httpd_can_network_connect ' | awk '{print $2}'"
+  register: httpd_boolean
+
+- name: Allow httpd to connect to network ports (so we can proxy kibana)
+  command: setsebool -P httpd_can_network_connect 1
+  when: httpd_boolean.stdout == 'off'

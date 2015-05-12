@@ -23,3 +23,6 @@
     - elk_stack
     - config_files
     - kibana
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
