@@ -26,3 +26,22 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- name: Add acl to allow logstash group to read /var/log/messages
+  acl: name=/var/log/messages entity=logstash etype=group
+       permissions="r" state=present
+
+- name: Add acl to allow logstash to read httpd log dir and log files
+  acl: name=/var/log/httpd/ entity=logstash etype=group
+       permissions="rx" state=present
+
+- acl: name=/var/log/httpd/access_log entity=logstash etype=group
+       permissions="r" state=present
+
+- acl: name=/var/log/httpd/error_log entity=logstash etype=group
+       permissions="r" state=present
+
+- name: Add acl to allow logstash to read fail2ban log file
+  acl: name=/var/log/fail2ban.log entity=logstash etype=group
+       permissions="r" state=present
+

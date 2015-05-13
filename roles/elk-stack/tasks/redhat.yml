@@ -7,3 +7,7 @@
 - name: Allow httpd to connect to network ports (so we can proxy kibana)
   command: setsebool -P httpd_can_network_connect 1
   when: httpd_boolean.stdout == 'off'
+
+- name: Add acl to allow logstash to read yum log file
+  acl: name=/var/log/yum.log entity=logstash etype=group
+       permissions="r" state=present
