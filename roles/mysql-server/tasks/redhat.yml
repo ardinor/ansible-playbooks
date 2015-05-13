@@ -1,0 +1,19 @@
+---
+
+- name: Install MariaDB repo for CentOS 7
+  copy: src=../files/centos7.repo dest=/etc/yum.repos.d/mariadb.repo
+  tags:
+    - mariadb
+
+- name: Install MariaDB server and client
+  action: yum name={{ item }}
+  with_items:
+    - MariaDB-server
+    - MariaDB-client
+  tags:
+    - mariadb
+
+- name: Start the MariaDB service
+  action: service name=mariadb state=started
+  tags:
+    - mariadb
