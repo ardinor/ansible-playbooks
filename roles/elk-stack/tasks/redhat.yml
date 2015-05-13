@@ -8,6 +8,10 @@
   command: setsebool -P httpd_can_network_connect 1
   when: httpd_boolean.stdout == 'off'
 
+- name: Install kibana Apache config file
+  template: src=kibana.conf.j2 dest=/etc/httpd/conf.d/kibana.conf
+  notify: restart httpd
+
 - name: Add acl to allow logstash to read yum log file
   acl: name=/var/log/yum.log entity=logstash etype=group
        permissions="r" state=present

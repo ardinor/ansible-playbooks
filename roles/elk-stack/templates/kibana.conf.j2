@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+# Manual changes made to this file are quite likely to be overwritten
+# Make changes to the Ansible template then re-provision
+
+# Apache reverse proxy for Kibana
+
+<VirtualHost *:80>
+
+  ServerName kibana.{{ ansible_hostname }}
+  ServerAlias kibana
+
+  ProxyRequests off
+  ProxyPreserveHost on
+
+  ProxyPass /kibana/ http://127.0.0.1:{{ kibana_port }}/
+  ProxyPassReverse /kibana/ http://127.0.0.1:{{ kibana_port }}/
+
+</VirtualHost>
