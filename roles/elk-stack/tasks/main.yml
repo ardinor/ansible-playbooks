@@ -45,3 +45,9 @@
   acl: name=/var/log/fail2ban.log entity=logstash etype=group
        permissions="r" state=present
 
+- name: Start and enabled services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - elasticsearch
+    - logstash
+    - kibana4
