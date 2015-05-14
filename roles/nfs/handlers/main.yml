@@ -1,0 +1,7 @@
+---
+
+# I think you just need to restart nfs-server... double check though
+- name: restart nfs
+  service: name={{ item }} state=restarted
+  with_items:
+    - nfs-server

@@ -9,7 +9,7 @@
 - name: Install exports file
   template: src=exports.j2 dest=/etc/exports
             owner=root group=root mode=0622
-  notify: restart nginx
+  notify: restart nfs
 
 # Can't enable nfs-lock and nfs-idmap?
 - name: start nfs services
