@@ -35,6 +35,7 @@
     - wget
     - yum-plugin-fastestmirror
     - deltarpm
+    - screen
   tags:
     - common
 
