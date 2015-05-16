@@ -43,6 +43,8 @@
 - name: Install mysql config file
   template: src=my.cnf.j2 dest=/etc/my.cnf.d/server.cnf
   notify: restart mysql
+  tags:
+    - mariadb
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
