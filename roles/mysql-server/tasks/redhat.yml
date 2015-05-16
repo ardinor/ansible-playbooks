@@ -6,12 +6,13 @@
     - mariadb
 
 - name: Install MariaDB server and client
-  action: yum name={{ item }}
+  yum: name={{ item }} state=latest
   with_items:
     - MariaDB-server
     - MariaDB-client
   tags:
     - mariadb
+    - packages
 
 # 'localhost' needs to be the last item for idempotency, see
 # http://ansible.cc/docs/modules.html#mysql-user

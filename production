@@ -1,2 +1,5 @@
-[mojibake-hosts]
-traum
+#[mojibake-hosts]
+#traum
+
+[mysql-server]
+akhlys

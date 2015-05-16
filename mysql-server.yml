@@ -1,0 +1,8 @@
+---
+
+- hosts: mysql-server
+  sudo: True
+
+  roles:
+    - common
+    - mysql-server
