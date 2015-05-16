@@ -4,6 +4,7 @@
   copy: src=../files/centos7.repo dest=/etc/yum.repos.d/mariadb.repo
   tags:
     - mariadb
+    - repo
 
 - name: Install MariaDB server and client
   yum: name={{ item }} state=latest
@@ -27,17 +28,17 @@
     - mariadb
 
 - name: delete anonymous MySQL server user for $server_hostname
-  action: mysql_user user="" host="{{ server_hostname }}" state="absent"
+  mysql_user: user="" host="{{ server_hostname }}" state="absent"
   tags:
     - mariadb
 
 - name: delete anonymous MySQL server user for localhost
-  action: mysql_user user="" state="absent"
+  mysql_user: user="" state="absent"
   tags:
     - mariadb
 
 - name: remove the MySQL test database
-  action: mysql_db db=test state=absent
+  mysql_db: db=test state=absent
   tags:
     - mariadb
 
@@ -46,6 +47,7 @@
   notify: restart mysql
   tags:
     - mariadb
+    - config_files
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
@@ -59,6 +61,7 @@
         and mysql_port == 3306
   tags:
     - mariadb
+    - firewall
 
 - name: Allow msql through the firewall
   firewalld: port={{ mysql_port }}/tcp permanent=true state=enabled immediate=yes
@@ -68,8 +71,9 @@
         and mysql_port != 3306
   tags:
     - mariadb
+    - firewall
 
 - name: Start the MariaDB service
-  action: service name=mariadb state=started
+  service: name=mariadb state=started
   tags:
     - mariadb

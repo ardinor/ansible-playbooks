@@ -4,15 +4,18 @@
   yum: name=dhcp state=present
   tags:
     - dhcp
+    - packages
 
 - name: Install dhcpd config file
   template: src=dhcpd.conf.j2 dest=/etc/dhcp/dhcpd.conf
   notify: restart dhcpd
   tags:
     - dhcp
+    - config_files
 
 - name: Install dhcpd config file
   template: src=dhcpd6.conf.j2 dest=/etc/dhcp/dhcpd6.conf
   notify: restart dhcpd
   tags:
     - dhcp
+    - config_files

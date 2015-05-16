@@ -78,12 +78,14 @@
   tags:
     - common
     - sshd
+    - config_files
 
 - name: start ntp
   service: name=ntpd state=started enabled=yes
   tags:
     - common
     - ntp
+    - packages
 
 - name: copy fail2ban ssh jail config across
   template: src=sshd.local.j2 dest=/etc/fail2ban/jail.d/sshd.local
@@ -91,6 +93,7 @@
   tags:
     - common
     - fail2ban
+    - config_files
 
 - name: copy fail2ban fail2ban jail config across
   template: src=fail2ban.local.j2 dest=/etc/fail2ban/jail.d/fail2ban.local
@@ -98,6 +101,7 @@
   tags:
     - common
     - fail2ban
+    - config_files
 
 - name: copy fail2ban fail2ban filter across
   copy: src=../files/fail2ban.conf dest=/etc/fail2ban/filter.d/fail2ban.conf
@@ -105,6 +109,7 @@
   tags:
     - common
     - fail2ban
+    - config_files
 
 # The service will fail to start if the log doesn't exist and since we
 # haven't started the service before it won't. First touch it

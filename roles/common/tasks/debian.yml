@@ -9,6 +9,7 @@
     - wget
   tags:
     - common
+    - packages
 
 # Use ufw or just iptables? Probably need to install it on Debian, installed on Ubuntu afaik
 #- name: Enable ufw
