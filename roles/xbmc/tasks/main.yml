@@ -3,11 +3,13 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+# Since we've set our DB not to resolve host names (in my.cnf) we need to use
+# the IP address we'll be connecting from as the host
 - name: add kodi user to the database
   mysql_user: user={{ db_user }} password={{ db_pass }} priv=*.*:ALL state=present
+              host={{ ansible_default_ipv4.address }}
+              login_user=root login_password={{ mysql_root_password }}
   tags:
     - xbmc
     - database
-  delegate_to: {{ db_server }}
-
-
+  delegate_to: "{{ db_server }}"

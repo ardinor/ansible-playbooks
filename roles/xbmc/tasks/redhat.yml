@@ -6,4 +6,8 @@
     - xbmc
     - packages
 
-  #/usr/share/kodi/userdata/advancedsettings.xml
+- name: Install advancedsettings config file
+  template: src=advancedsettings.xml.j2 dest=/usr/share/kodi/userdata/advancedsettings.xml
+  tags:
+    - xbmc
+    - config_files
