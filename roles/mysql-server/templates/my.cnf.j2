@@ -1,11 +1,52 @@
 # {{ ansible_managed }}
+# Based off  /usr/share/mysql/my-small.cnf
+
+[client]
+port = {{ mysql_port }}
+user = root
+password = {{ mysql_root_password }}
 
 [mysqld]
+port        = {{ mysql_port }}
+socket      = /var/lib/mysql/mysql.sock
+skip-external-locking
+key_buffer_size = 16K
+max_allowed_packet = 1M
+table_open_cache = 4
+sort_buffer_size = 64K
+read_buffer_size = 256K
+read_rnd_buffer_size = 256K
+net_buffer_length = 2K
+thread_stack = 240K
 default-character-set=utf8
 character-set-server=utf8
 skip-host-cache
 skip-name-resolve
 
-[client]
-user=root
-password={{ mysql_root_password }}
+# Replication Master Server (default)
+# Uncomment if you want to log updates
+# binary logging is required for replication
+# log-bin=mysql-bin
+
+# binary logging format - mixed recommended
+# binlog_format=mixed
+
+# required unique id between 1 and 2^32 - 1
+# defaults to 1 if master-host is not set
+# but will not function as a master if omitted
+server-id   = 1
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+key_buffer_size = 8M
+sort_buffer_size = 8M
+
+
+[mysqlhotcopy]
+interactive-timeout
