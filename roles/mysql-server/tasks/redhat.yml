@@ -11,36 +11,10 @@
   with_items:
     - MariaDB-server
     - MariaDB-client
+    - MySQL-python
   tags:
     - mariadb
     - packages
-
-# 'localhost' needs to be the last item for idempotency, see
-# http://ansible.cc/docs/modules.html#mysql-user
-- name: update mysql root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysql_root_password }}
-  with_items:
-    - {{ ansible_hostname }}
-    - 127.0.0.1
-    - ::1
-    - localhost
-  tags:
-    - mariadb
-
-- name: delete anonymous MySQL server user for $server_hostname
-  mysql_user: user="" host="{{ server_hostname }}" state="absent"
-  tags:
-    - mariadb
-
-- name: delete anonymous MySQL server user for localhost
-  mysql_user: user="" state="absent"
-  tags:
-    - mariadb
-
-- name: remove the MySQL test database
-  mysql_db: db=test state=absent
-  tags:
-    - mariadb
 
 - name: Install mysql config file
   template: src=my.cnf.j2 dest=/etc/my.cnf.d/server.cnf
@@ -48,6 +22,42 @@
   tags:
     - mariadb
     - config_files
+
+- name: Start the MariaDB service
+  service: name=mysql state=started
+  tags:
+    - mariadb
+
+# 'localhost' needs to be the last item for idempotency, see
+# http://ansible.cc/docs/modules.html#mysql-user
+- name: update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password={{ mysql_root_password }}
+              login_user=root login_password={{ mysql_root_password }}
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  tags:
+    - mariadb
+
+- name: delete anonymous MySQL server user
+  mysql_user: user="" host="{{ ansible_hostname }}" state="absent"
+              login_user=root login_password={{ mysql_root_password }}
+  tags:
+    - mariadb
+
+- name: delete anonymous MySQL server user for localhost
+  mysql_user: user="" state="absent"
+              login_user=root login_password={{ mysql_root_password }}
+  tags:
+    - mariadb
+
+- name: remove the MySQL test database
+  mysql_db: db=test state=absent
+            login_user=root login_password={{ mysql_root_password }}
+  tags:
+    - mariadb
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
@@ -72,8 +82,3 @@
   tags:
     - mariadb
     - firewall
-
-- name: Start the MariaDB service
-  service: name=mariadb state=started
-  tags:
-    - mariadb

@@ -4,7 +4,8 @@
 [client]
 port = {{ mysql_port }}
 user = root
-password = {{ mysql_root_password }}
+password = "{{ mysql_root_password }}"
+default-character-set=utf8
 
 [mysqld]
 port        = {{ mysql_port }}
@@ -19,8 +20,9 @@ read_buffer_size = 256K
 read_rnd_buffer_size = 256K
 net_buffer_length = 2K
 thread_stack = 240K
-default-character-set=utf8
-character-set-server=utf8
+collation-server = utf8_unicode_ci
+init-connect='SET NAMES utf8'
+character-set-server = utf8
 skip-host-cache
 skip-name-resolve
 
@@ -43,6 +45,7 @@ max_allowed_packet = 16M
 
 [mysql]
 no-auto-rehash
+default-character-set=utf8
 
 [myisamchk]
 key_buffer_size = 8M
