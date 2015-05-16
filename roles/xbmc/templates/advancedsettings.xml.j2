@@ -1,0 +1,22 @@
+<!--{{ ansible_managed }} -->
+
+<advancedsettings>
+  <videodatabase>
+    <type>mysql</type>
+    <host>{{ db_server }}</host>
+    <port>{{ db_port }}</port>
+    <user>{{ db_user }}</user>
+    <pass>{{ db_pass }}</pass>
+  </videodatabase>
+  <musicdatabase>
+    <type>mysql</type>
+    <host>{{ db_server }}</host>
+    <port>{{ db_port }}</port>
+    <user>{{ db_user }}</user>
+    <pass>{{ db_pass }}</pass>
+  </musicdatabase>
+  <videolibrary>
+    <importwatchedstate>true</importwatchedstate>
+    <importresumepoint>true</importresumepoint>
+  </videolibrary>
+</advancedsettings>

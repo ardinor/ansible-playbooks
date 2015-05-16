@@ -1,0 +1,13 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: add kodi user to the database
+  mysql_user: user={{ db_user }} password={{ db_pass }} priv=*.*:ALL state=present
+  tags:
+    - xbmc
+    - database
+  delegate_to: {{ db_server }}
+
+

@@ -1,0 +1,9 @@
+---
+
+- name: Install xbmc (kodi)
+  yum: name=kodi state=latest
+  tags:
+    - xbmc
+    - packages
+
+  #/usr/share/kodi/userdata/advancedsettings.xml

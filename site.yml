@@ -10,3 +10,4 @@
 - include: mojibake-hosts.yml
 - include: sensu-master.yml
 - include: mysql-server.yml
+- include: xbmc.yml
