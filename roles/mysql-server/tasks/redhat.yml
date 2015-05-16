@@ -67,7 +67,7 @@
   firewalld: service=mysql permanent=true state=enabled immediate=yes
   when: firewalld_installed.stat.isreg is defined
         and firewalld_installed.stat.isreg
-        and allow_network == 'true'
+        and allow_network == true
         and mysql_port == 3306
   tags:
     - mariadb
