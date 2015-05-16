@@ -22,15 +22,23 @@
     - 127.0.0.1
     - ::1
     - localhost
+  tags:
+    - mariadb
 
 - name: delete anonymous MySQL server user for $server_hostname
   action: mysql_user user="" host="{{ server_hostname }}" state="absent"
+  tags:
+    - mariadb
 
 - name: delete anonymous MySQL server user for localhost
   action: mysql_user user="" state="absent"
+  tags:
+    - mariadb
 
 - name: remove the MySQL test database
   action: mysql_db db=test state=absent
+  tags:
+    - mariadb
 
 - name: Start the MariaDB service
   action: service name=mariadb state=started
