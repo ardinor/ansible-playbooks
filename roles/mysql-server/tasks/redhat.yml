@@ -40,6 +40,32 @@
   tags:
     - mariadb
 
+- name: Install mysql config file
+  template: src=my.cnf.j2 dest=/etc/my.cnf.d/server.cnf
+  notify: restart mysql
+
+- name: check firewalld installed
+  stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
+  register: firewalld_installed
+
+- name: Allow msql through the firewall
+  firewalld: service=mysql permanent=true state=enabled immediate=yes
+  when: firewalld_installed.stat.isreg is defined
+        and firewalld_installed.stat.isreg
+        and allow_network == 'true'
+        and mysql_port == 3306
+  tags:
+    - mariadb
+
+- name: Allow msql through the firewall
+  firewalld: port={{ mysql_port }}/tcp permanent=true state=enabled immediate=yes
+  when: firewalld_installed.stat.isreg is defined
+        and firewalld_installed.stat.isreg
+        and allow_network == 'true'
+        and mysql_port != 3306
+  tags:
+    - mariadb
+
 - name: Start the MariaDB service
   action: service name=mariadb state=started
   tags:
