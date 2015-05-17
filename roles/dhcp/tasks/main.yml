@@ -2,3 +2,9 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- name: start and enable dhcp
+  service: name=dhcp state=started enabled=yes
+  tags:
+    - dhcp
+    - services
