@@ -4,7 +4,9 @@
   when: ansible_os_family == "RedHat"
 
 # Since we've set our DB not to resolve host names (in my.cnf) we need to use
-# the IP address we'll be connecting from as the host
+# the IP address we'll be connecting from as the host.
+# Uses delegate_to to connect to the DB server and run the command instead of
+# on the server we're installing this role on.
 - name: add kodi user to the database
   mysql_user: user={{ db_user }} password={{ db_pass }} priv=*.*:ALL state=present
               host={{ ansible_default_ipv4.address }}
