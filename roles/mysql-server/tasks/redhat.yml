@@ -4,6 +4,7 @@
   copy: src=../files/centos7.repo dest=/etc/yum.repos.d/mariadb.repo
   tags:
     - mariadb
+    - mysql
     - repo
 
 - name: Install MariaDB server and client
@@ -14,6 +15,7 @@
     - MySQL-python
   tags:
     - mariadb
+    - mysql
     - packages
 
 - name: Install mysql config file
@@ -27,6 +29,7 @@
   service: name=mysql state=started
   tags:
     - mariadb
+    - mysql
 
 # 'localhost' needs to be the last item for idempotency, see
 # http://ansible.cc/docs/modules.html#mysql-user
@@ -40,24 +43,28 @@
     - localhost
   tags:
     - mariadb
+    - mysql
 
 - name: delete anonymous MySQL server user
   mysql_user: user="" host="{{ ansible_hostname }}" state="absent"
               login_user=root login_password={{ mysql_root_password }}
   tags:
     - mariadb
+    - mysql
 
 - name: delete anonymous MySQL server user for localhost
   mysql_user: user="" state="absent"
               login_user=root login_password={{ mysql_root_password }}
   tags:
     - mariadb
+    - mysql
 
 - name: remove the MySQL test database
   mysql_db: db=test state=absent
             login_user=root login_password={{ mysql_root_password }}
   tags:
     - mariadb
+    - mysql
 
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
@@ -71,6 +78,7 @@
         and mysql_port == 3306
   tags:
     - mariadb
+    - mysql
     - firewall
 
 - name: Allow msql through the firewall
@@ -81,4 +89,5 @@
         and mysql_port != 3306
   tags:
     - mariadb
+    - mysql
     - firewall
