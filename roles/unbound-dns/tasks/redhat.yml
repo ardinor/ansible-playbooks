@@ -1,0 +1,8 @@
+---
+
+- name: Install unbound server
+  yum: name=unbound state=present
+  tags:
+    - unbound
+    - dns
+    - packages
