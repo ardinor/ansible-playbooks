@@ -35,6 +35,8 @@ server:
 	# specify 0.0.0.0 and ::0 to bind to all available interfaces.
 	# specify every interface on a new 'interface:' labelled line.
 	# The listen interfaces are not changed on reload, only on restart.
+	interface: 127.0.0.1
+	interface: ::1
 	# interface: 0.0.0.0
 	# interface: ::0
 	# interface: 192.0.2.153
@@ -241,7 +243,7 @@ server:
 
 	# file to read root hints from.
 	# get one from ftp://FTP.INTERNIC.NET/domain/named.cache
-	# root-hints: ""
+	root-hints: "/etc/unbound/root.hints"
 
 	# enable to not answer id.server and hostname.bind queries.
 	# hide-identity: no

@@ -2,3 +2,10 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- name: start and enable unbound
+  service: name=unbound state=started enabled=yes
+  tags:
+    - unbound
+    - dns
+    - services
