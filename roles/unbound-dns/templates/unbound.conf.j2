@@ -159,18 +159,18 @@ server:
 	# infra-cache-numhosts: 10000
 
 	# Enable IPv4, "yes" or "no".
-	# do-ip4: yes
+	do-ip4: yes
 
 	# Enable IPv6, "yes" or "no".
-	# do-ip6: yes
+	do-ip6: yes
 
 	# Enable UDP, "yes" or "no".
 	# NOTE: if setting up an unbound on tls443 for public use, you might want to
 	# disable UDP to avoid being used in DNS amplification attacks.
-	# do-udp: yes
+	do-udp: no
 
 	# Enable TCP, "yes" or "no".
-	# do-tcp: yes
+	do-tcp: yes
 
 	# upstream connections use TCP only (and no UDP), "yes" or "no"
 	# useful for tunneling scenarios, default no.
@@ -232,7 +232,7 @@ server:
 
 	# Log to syslog(3) if yes. The log facility LOG_DAEMON is used to
 	# log to, with identity "unbound". If yes, it overrides the logfile.
-	# use-syslog: yes
+	use-syslog: yes
 
 	# print UTC timestamp in ascii to logfile, default is epoch in seconds.
 	log-time-ascii: yes
@@ -248,10 +248,10 @@ server:
 	root-hints: "/etc/unbound/root.hints"
 
 	# enable to not answer id.server and hostname.bind queries.
-	# hide-identity: no
+	hide-identity: yes
 
 	# enable to not answer version.server and version.bind queries.
-	# hide-version: no
+	hide-version: yes
 
 	# the identity to report. Leave "" or default to return hostname.
 	# identity: ""
@@ -303,12 +303,12 @@ server:
 	# Protects against 'DNS Rebinding' (uses browser as network proxy).
 	# Only 'private-domain' and 'local-data' names are allowed to have
 	# these private addresses. No default.
-	# private-address: 10.0.0.0/8
-	# private-address: 172.16.0.0/12
-	# private-address: 192.168.0.0/16
-	# private-address: 192.254.0.0/16
-	# private-address: fd00::/8
-	# private-address: fe80::/10
+	private-address: 10.0.0.0/8
+	private-address: 172.16.0.0/12
+	private-address: 192.168.0.0/16
+	private-address: 192.254.0.0/16
+	private-address: fd00::/8
+	private-address: fe80::/10
 
 	# Allow the domain (and its subdomains) to contain private addresses.
 	# local-data statements are allowed to contain private addresses too.
