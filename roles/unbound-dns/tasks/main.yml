@@ -3,6 +3,20 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+- name: Check if the certs are set for remote config
+  stat: path=/etc/unbound/unbound_server.key
+  register: unbound_cert
+  tags:
+    - unbound
+    - dns
+
+- name: Generate certs for unbound remote control
+  command: unbound-control-setup
+  when: unbound_cert.stat.exists == False
+  tags:
+    - unbound
+    - dns
+
 - name: Install resolv.conf config file
   template: src=resolv.conf.j2 dest=/etc/resolv.conf
   tags:

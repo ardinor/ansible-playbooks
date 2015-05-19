@@ -3,3 +3,6 @@
 # Local domain name for insertion in /etc/resolv.conf
 # This is needed to use DNS for local machines without needing the FQDN
 local_domain:
+
+# To enable remote administration of the unbound server (but only on localhost)
+enable_remote_control: yes
