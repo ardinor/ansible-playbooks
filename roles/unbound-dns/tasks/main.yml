@@ -3,6 +3,17 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+# ftp://ftp.internic.net/domain/named.cache.md5
+- name: download named.cache from internic
+  get_url: url=ftp://ftp.internic.net/domain/named.cache dest=/etc/unbound/root.hints
+
+- name: download named.cache.md5 from internic
+  get_url: url=ftp://ftp.internic.net/domain/named.cache.md5 dest=/etc/unbound/root.hints.md5
+
+- name: check md5
+  command: /usr/bin/md5sum -C /etc/unbound/root.hints.md5
+  # error when this doesn't equal
+
 - name: Check if the certs are set for remote config
   stat: path=/etc/unbound/unbound_server.key
   register: unbound_cert
@@ -11,7 +22,7 @@
     - dns
 
 - name: Generate certs for unbound remote control
-  command: unbound-control-setup
+  command: /usr/sbin/unbound-control-setup
   when: unbound_cert.stat.exists == False
   tags:
     - unbound
