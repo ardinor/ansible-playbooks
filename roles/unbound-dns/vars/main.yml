@@ -1,0 +1,5 @@
+---
+
+# Local domain name for insertion in /etc/resolv.conf
+# This is needed to use DNS for local machines without needing the FQDN
+local_domain:

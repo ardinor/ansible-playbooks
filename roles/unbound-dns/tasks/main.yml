@@ -3,6 +3,21 @@
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
 
+- name: Install resolv.conf config file
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf
+  tags:
+    - unbound
+    - dns
+    - config_files
+
+- name: Install unbound config file
+  template: src=unbound.conf.j2 dest=/etc/unbound/unbound.conf
+  notify: restart unbound
+  tags:
+    - unbound
+    - dns
+    - config_files
+
 - name: start and enable unbound
   service: name=unbound state=started enabled=yes
   tags:
