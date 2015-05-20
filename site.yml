@@ -11,3 +11,4 @@
 - include: sensu-master.yml
 - include: mysql-server.yml
 - include: xbmc.yml
+- include: dns.yml

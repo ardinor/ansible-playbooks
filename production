@@ -6,3 +6,6 @@ akhlys
 
 [xbmc]
 reverie
+
+[unbound-local-dns]
+nosos
