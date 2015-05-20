@@ -4,6 +4,7 @@
   user: name={{ deploy_user }} groups=wheel append=yes
   tags:
     - initial
+    - users
 
 - name: add deploy user ssh key
   authorized_key: user={{ deploy_user }}
@@ -12,20 +13,29 @@
                   state=present
   tags:
     - initial
+    - users
+    - keys
 
 - name: confirm sudo is installed
   apt: pkg=sudo state=present update_cache=yes
   when: ansible_os_family == "Debian"
   tags:
     - initial
+    - packages
+    - sudo
 
-# Do we need this if the user is added to wheel?
-# - name: confirm sudo is configured for deploy user
-#   lineinfile: dest=/etc/sudoers
-#               regexp="^# User privilege specification"
-#               insertafter="^# User privilege specification"
-#               line="{{ deploy_user }} ALL=(root) ALL"
-#               state=present
+# Add the deploy user to the sudoers file and set that they don't
+# need a password to use sudo
+- name: confirm sudo is configured for deploy user
+  lineinfile: dest=/etc/sudoers
+              regexp="^# User privilege specification"
+              insertafter="^# User privilege specification"
+              line="{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL"
+              state=present
+  when: internal is defined and internal == 'true'
+  tags:
+    - initial
+    - sudo
 
 - name: Disable root login in sshd
   lineinfile: dest=/etc/ssh/sshd_config

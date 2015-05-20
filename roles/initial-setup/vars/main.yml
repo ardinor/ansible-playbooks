@@ -1,4 +1,4 @@
 ---
 
 deploy_user: deploy
-deploy_user_key: /home/jordan/keys/deploy.pub
+deploy_user_key: /home/deploy/keys/deploy.pub
