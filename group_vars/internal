@@ -1,3 +1,5 @@
 ---
 
+# Set the internal value so that hosts in our internal
+# group can be seen as such during roles.
 internal: true

@@ -47,5 +47,7 @@
     - initial
     - sshd
 
+# Maybe look at allowing deploy user from localnetwork only when interal
+
 - debug: msg="Now login using {{ deploy_user }} and set a password for sudo."
 
