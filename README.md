@@ -58,6 +58,10 @@ Install the [Sensu](http://sensuapp.org) Client along with dependencies (RabbitM
 
 Installs and configures [Graphite](https://github.com/graphite-project).
 
+### [Unbound Local DNS Resolver](/roles/unbound-local-dns) ###
+
+Installs Unbound DNS as a local resolver
+
 
 ### Misc
 
