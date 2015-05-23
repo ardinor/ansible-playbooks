@@ -4,6 +4,7 @@
   yum: name={{ nginx_rpm_url }} state=present
   tags:
     - nginx
+    - repo
 
 - name: Install nginx
   yum: name=nginx state=latest

@@ -1,0 +1,33 @@
+---
+
+- name: Install rpmforge repo
+  yum: name={{ repoforge_url }} state=present
+  tags:
+    - smokeping
+    - repo
+
+- name: Install packages required to build smokeping
+  yum: name={{ item }} state=present
+  with_items:
+    - mod_fcgid
+    - httpd-devel
+    - rrdtool
+    - fping
+    - wget
+    - curl
+    - bind-utils
+    - gcc
+    - make
+    - perl
+    - perl-Net-Telnet
+    - perl-Net-DNS
+    - perl-LDAP
+    - perl-libwww-perl
+    - perl-IO-Socket-SSL
+    - perl-Socket6
+    - perl-CGI-SpeedyCGI
+    - perl-FCGI
+    - perl-CGI-SpeedyCGI
+    - perl-ExtUtils-MakeMaker
+    - perl-RadiusPerl
+    - perl-RRD-Simple
