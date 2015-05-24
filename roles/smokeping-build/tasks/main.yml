@@ -1,4 +1,7 @@
 ---
 
+- name: Add smokeping user
+  user: name=smokeping home=/opt/smokeping system=yes
+
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
