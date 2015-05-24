@@ -2,7 +2,9 @@
 
 - name: Add smokeping home directory which is readable by apache
   file: path=/opt/smokeping owner=smokeping group=apache
-        state=directory mode=0760
+        state=directory mode=0750
+  tags:
+    - smokeping
 
 - name: Install rpmforge repo
   yum: name={{ repoforge_url }} state=present

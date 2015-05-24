@@ -2,6 +2,19 @@
 
 - name: Add smokeping user
   user: name=smokeping home=/opt/smokeping system=yes
+  tags:
+    - smokeping
+    - users
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- name: Download smokeping
+  get_url: url={{ smokeping_url }} dest=/tmp/smokeping.tar.gz
+  tags:
+    - smokeping
+
+- name: extract smokeping
+  unarchive: src=/tmp/smokeping.tar.gz dest=/opt/ copy=no
+  tags:
+    - smokeping
