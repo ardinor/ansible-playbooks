@@ -1,0 +1,7 @@
+---
+
+- hosts: unbound-local-dns
+  sudo: True
+
+  roles:
+    - unbound-local-dns

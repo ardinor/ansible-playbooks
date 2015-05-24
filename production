@@ -10,7 +10,5 @@ reverie
 [unbound-local-dns]
 nosos
 
-[internal]
-akhlys
-reverie
-nosos
+[internal:children]
+unbound-local-dns

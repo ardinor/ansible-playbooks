@@ -8,7 +8,7 @@
 
 - name: add deploy user ssh key
   authorized_key: user={{ deploy_user }}
-                  key="{{ deploy_user_key }}"
+                  key="{{ lookup('file', deploy_user_key) }}"
                   manage_dir=yes
                   state=present
   tags:
@@ -25,14 +25,15 @@
     - sudo
 
 # Add the deploy user to the sudoers file and set that they don't
-# need a password to use sudo
+# need a password to use sudo for internal servers only
+# internal is set in group_vars/internal
+# lineinfile needs to be fully quoted because of the colon
+# The deploy user while still be able to sudo on systems
+# which are not classed as internal as it is part of the
+# wheel group.
 - name: confirm sudo is configured for deploy user
-  lineinfile: dest=/etc/sudoers
-              regexp="^# User privilege specification"
-              insertafter="^# User privilege specification"
-              line="{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL"
-              state=present
-  when: internal is defined and internal == 'true'
+  lineinfile: "dest=/etc/sudoers state=present regexp='^# User privilege specification' insertafter='^# User privilege specification' line='{{ deploy_user }} ALL=(ALL) NOPASSWD: ALL'"
+  when: internal is defined and internal
   tags:
     - initial
     - sudo
