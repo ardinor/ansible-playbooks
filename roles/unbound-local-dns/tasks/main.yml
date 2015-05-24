@@ -6,13 +6,22 @@
 # ftp://ftp.internic.net/domain/named.cache.md5
 - name: download named.cache from internic
   get_url: url=ftp://ftp.internic.net/domain/named.cache dest=/etc/unbound/root.hints
+  tags:
+    - unbound
+    - dns
 
 - name: download named.cache.md5 from internic
   get_url: url=ftp://ftp.internic.net/domain/named.cache.md5 dest=/etc/unbound/root.hints.md5
+  tags:
+    - unbound
+    - dns
 
 - name: check md5
   command: /usr/bin/md5sum -C /etc/unbound/root.hints.md5
   # error when this doesn't equal
+  tags:
+    - unbound
+    - dns
 
 - name: Check if the certs are set for remote config
   stat: path=/etc/unbound/unbound_server.key
