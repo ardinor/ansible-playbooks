@@ -89,6 +89,7 @@
 
 - name: copy fail2ban ssh jail config across
   template: src=sshd.local.j2 dest=/etc/fail2ban/jail.d/sshd.local
+  when: internal is not defined or internal is false
   notify: restart fail2ban
   tags:
     - common
@@ -97,6 +98,7 @@
 
 - name: copy fail2ban fail2ban jail config across
   template: src=fail2ban.local.j2 dest=/etc/fail2ban/jail.d/fail2ban.local
+  when: internal is not defined or internal is false
   notify: restart fail2ban
   tags:
     - common
@@ -105,6 +107,7 @@
 
 - name: copy fail2ban fail2ban filter across
   copy: src=../files/fail2ban.conf dest=/etc/fail2ban/filter.d/fail2ban.conf
+  when: internal is not defined or internal is false
   notify: restart fail2ban
   tags:
     - common
@@ -115,12 +118,14 @@
 # haven't started the service before it won't. First touch it
 - name: create fail2ban.log
   file: path=/var/log/fail2ban.log state=touch
+  when: internal is not defined or internal is false
   tags:
     - common
     - fail2ban
 
 - name: start fail2ban and ensure enabled=yes
   service: name=fail2ban state=started enabled=yes
+  when: internal is not defined or internal is false
   tags:
     - common
     - fail2ban
