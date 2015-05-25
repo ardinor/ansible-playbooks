@@ -1,6 +1,8 @@
 # {{ ansible_managed }}
 
-#ListenAddress
+{% if internal is defined and internal %}
+ListenAddress {{ ansible_default_ipv4.address }}
+{% endif %}
 {% if sshd_port != 22 %}
 Port {{ sshd_port }}
 {% endif %}
