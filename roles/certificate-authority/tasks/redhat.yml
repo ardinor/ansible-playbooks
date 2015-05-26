@@ -1,7 +1,7 @@
 ---
 
-- name: Install easy-ca
-  yum: name=easy-ca state=present
+- name: Install easy-rsa
+  yum: name=easy-rsa state=present
   tags:
     - ca
     - packages
