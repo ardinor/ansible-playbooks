@@ -8,16 +8,18 @@
 
 - name: make easy-rsa directory
   file: path=/etc/easy-rsa state=directory mode=0770
+  register: easy_rsa_dir
   tags:
     - ca
 
 - name: copy across easy-rsa scripts to our new home
-  command: cp -r /usr/share/easy-rsa/* /etc/easy-rsa/
+  command: "cp -r /usr/share/easy-rsa/{{ easy_rsa_ver }}/* /etc/easy-rsa/"
+  when: easy_rsa_dir.stat.exists == False
   tags:
     - ca
 
 - name: copy across vars file
-  template: src=vars.j2 dest=/etc/easy-rsa/{{ easy_rsa_ver }}/vars
+  template: src=vars.j2 dest=/etc/easy-rsa/vars
   tags:
     - ca
     - config_files
