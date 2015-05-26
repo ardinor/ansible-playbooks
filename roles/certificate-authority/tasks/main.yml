@@ -20,3 +20,4 @@
   template: src=vars.j2 dest=/etc/easy-rsa/{{ easy_rsa_ver }}/vars
   tags:
     - ca
+    - config_files
