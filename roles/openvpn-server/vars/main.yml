@@ -1,0 +1,8 @@
+---
+
+# The subnet the server itself will sit on the the IP range it will give
+# out to clients
+serve_subnet: 192.168.5.0 255.255.255.0
+
+# The local subnet to which the server will push a route to clients
+local_subnet: 192.168.1.0 255.255.255.0

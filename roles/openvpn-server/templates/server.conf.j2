@@ -98,7 +98,8 @@ dh /etc/openvpn/dh2048.pem
 # Each client will be able to reach the server
 # on 10.8.0.1. Comment this line out if you are
 # ethernet bridging. See the man page for more info.
-server 10.8.0.0 255.255.255.0
+# default: server 10.8.0.0 255.255.255.0
+server {{ serve_subnet }}
 
 # Maintain a record of client <-> virtual IP address
 # associations in this file.  If OpenVPN goes down or
@@ -138,7 +139,7 @@ ifconfig-pool-persist ipp.txt
 # to know to route the OpenVPN client
 # address pool (10.8.0.0/255.255.255.0)
 # back to the OpenVPN server.
-;push "route 192.168.10.0 255.255.255.0"
+push "route {{ local_subnet }}"
 ;push "route 192.168.20.0 255.255.255.0"
 
 # To assign specific IP addresses to specific
