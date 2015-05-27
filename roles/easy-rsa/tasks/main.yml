@@ -6,9 +6,11 @@
 - include: debian.yml
   when: ansible_os_family == "Debian"
 
+- stat: path=/etc/easy-rsa/ get_md5=no
+  register: easy_rsa_dir
+
 - name: make easy-rsa directory
   file: path=/etc/easy-rsa state=directory mode=0770
-  register: easy_rsa_dir
   tags:
     - ca
 

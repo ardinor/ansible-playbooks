@@ -1,0 +1,7 @@
+---
+
+- hosts: openvpn-server
+  sudo: True
+
+  roles:
+    - openvpn-server
