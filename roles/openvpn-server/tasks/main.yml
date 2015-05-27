@@ -2,3 +2,13 @@
 
 - include: redhat.yml
   when: ansible_os_family == "RedHat"
+
+- stat: path=/etc/openvpn/ta.key get_md5=no
+  register: ta_key
+
+- name: Generate HMAC handshake protection key
+  command: openvpn --genkey --secret /etc/openvpn/ta.key
+  when: ta_key.stat.exists == False
+  tags:
+    - openvpn
+
