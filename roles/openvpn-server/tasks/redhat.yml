@@ -1,7 +1,0 @@
----
-
-- name: Install openvpn
-  yum: name=openvpn state=present
-  tags:
-    - openvpn
-    - packages

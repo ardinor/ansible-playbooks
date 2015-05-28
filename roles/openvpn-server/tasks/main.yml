@@ -1,7 +1,11 @@
 ---
 
-- include: redhat.yml
+- name: Install openvpn
+  yum: name=openvpn state=present
   when: ansible_os_family == "RedHat"
+  tags:
+    - openvpn
+    - packages
 
 - stat: path=/etc/openvpn/ta.key get_md5=no
   register: ta_key
