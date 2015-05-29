@@ -6,3 +6,6 @@ serve_subnet: 192.168.5.0 255.255.255.0
 
 # The local subnet to which the server will push a route to clients
 local_subnet: 192.168.1.0 255.255.255.0
+
+# To allow clients to communicate to one another
+# client_to_client: true

@@ -207,7 +207,9 @@ push "route {{ local_subnet }}"
 # To force clients to only see the server, you
 # will also need to appropriately firewall the
 # server's TUN/TAP interface.
-;client-to-client
+{% if client_to_client %}
+client-to-client
+{% endif %}
 
 # Uncomment this directive if multiple clients
 # might connect with the same certificate/key

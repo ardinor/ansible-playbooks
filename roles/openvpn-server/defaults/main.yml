@@ -4,3 +4,5 @@ listen_port: 1194
 
 # server name
 server: server
+
+client_to_client: false
