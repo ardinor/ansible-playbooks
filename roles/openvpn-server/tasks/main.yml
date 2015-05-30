@@ -22,6 +22,18 @@
 - name: Create ca and server keys
   shell: "source /etc/easy-rsa/vars && /etc/easy-rsa/clean-all && /etc/easy-rsa/build-ca && /etc/easy-rsa/build-key-server {{ server }}"
 
+- name: Copy across CA cert
+  copy: src=../files/ca.crt dest=/etc/openvpn/ca.crt
+
+- name: Copy across server cert
+  copy: "src=../files/{{ server }}.crt dest=/etc/openvpn/{{ server }}.crt"
+
+- name: Copy across server key
+  copy: "src=../files/{{ server }}.key dest=/etc/openvpn/{{ server }}.key"
+
+- name: Copy across our dh
+  copy: src=../files/dh2048.pem dest=/etc/openvpn/dh2048.pem
+
 - name: Move across openvpn server config
   template: src=server.conf.j2 dest=/etc/openvpn/server.conf
   tags:
