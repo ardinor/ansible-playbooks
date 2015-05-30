@@ -16,12 +16,6 @@
   tags:
     - openvpn
 
-- stat: path=ca /etc/openvpn/ca.crt get_md5=no
-  register: ca_crt
-
-- name: Create ca and server keys
-  shell: "source /etc/easy-rsa/vars && /etc/easy-rsa/clean-all && /etc/easy-rsa/build-ca && /etc/easy-rsa/build-key-server {{ server }}"
-
 - name: Copy across CA cert
   copy: src=../files/ca.crt dest=/etc/openvpn/ca.crt
 
