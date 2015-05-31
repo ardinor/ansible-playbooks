@@ -1,0 +1,9 @@
+---
+
+- name: Install openvpn
+  yum: name=openvpn state=present
+  when: ansible_os_family == "RedHat"
+  tags:
+    - openvpn
+    - vpn-client
+    - packages
