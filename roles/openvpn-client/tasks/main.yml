@@ -4,6 +4,11 @@
   yum: name=openvpn state=present
   when: ansible_os_family == "RedHat"
   tags:
-    - openvpn
-    - vpn-client
+    - openvpn-client
     - packages
+
+- name: Move across openvpn client config
+  template: src=client.conf.j2 dest=/etc/openvpn/client.conf
+  tags:
+    - openvpn-client
+    - config_files
