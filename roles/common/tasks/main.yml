@@ -57,7 +57,7 @@
   lineinfile: dest=/home/{{ deploy_user }}/.bashrc
               state=present
               regexp="^PS1="
-              line="PS1='\[\e[0;36m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;33m\]\$\[\e[m\] \[\e[1;37m\]'"
+              line="PS1='\[\e[0;35m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;34m\]\$\[\e[m\] \[\e[1;37m\]'"
   tags:
     - common
     - users
