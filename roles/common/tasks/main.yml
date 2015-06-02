@@ -53,6 +53,15 @@
     - common
     - users
 
+- name: add pretty colourful PS1 for deploy user
+  lineinfile: dest=/home/{{ deploy_user }}/.bashrc
+              state=present
+              regexp="^PS1="
+              line="PS1='\[\e[0;36m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;33m\]\$\[\e[m\] \[\e[1;37m\]'"
+  tags:
+    - common
+    - users
+
 - name: add pretty colourful PS1 for root
   lineinfile: dest=/root/.bashrc
               state=present
