@@ -1,5 +1,8 @@
-#[mojibake-hosts]
-#traum
+[mojibake-hosts]
+tenebrae
+
+[znc]
+letum
 
 [mysql-server]
 akhlys

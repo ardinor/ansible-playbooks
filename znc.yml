@@ -1,0 +1,7 @@
+---
+
+- hosts: znc
+  sudo: True
+
+  roles:
+    - znc

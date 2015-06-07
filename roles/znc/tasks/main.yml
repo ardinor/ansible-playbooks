@@ -21,7 +21,7 @@
 # Immediate was added in Ansible 1.9, if you're using an earlier version
 # you'll need to restart firewalld
 - name: Allow znc through the firewall
-  firewalld: port={{ item }}/tcp permanent=true state=enabled immediate=yes
+  firewalld: "port={{ item }}/tcp permanent=true state=enabled immediate=yes"
   with_items:
     - znc_port
 
