@@ -15,3 +15,7 @@ nosos
 
 [internal:children]
 unbound-local-dns
+
+[external:children]
+mojibake-hosts
+znc

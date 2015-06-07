@@ -5,3 +5,9 @@
 
   roles:
     - openvpn-server
+
+- hosts: external
+  sudo: True
+
+  roles:
+    - openvpn-client
