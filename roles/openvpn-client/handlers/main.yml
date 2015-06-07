@@ -1,0 +1,5 @@
+---
+
+- name: restart openvpn-client
+  service: name=openvpn@client.service state=restarted
+  when: ansible_os_family == "RedHat"
