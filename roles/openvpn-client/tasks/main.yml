@@ -37,3 +37,10 @@
   copy: "src={{ tls_key }} dest=/etc/openvpn/ta.key"
   tags:
     - openvpn-client
+
+- name: Start the openvpn client service
+  service: name=openvpn@client.service state=started enabled=yes
+  when: ansible_os_family == "RedHat"
+  tags:
+    - openvpn-client
+    - services
