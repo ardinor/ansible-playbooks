@@ -1,0 +1,7 @@
+---
+
+key_dir: /home/jordan/keys
+vpn_ca_crt: "{{ key_dir }}/ca.crt"
+server_crt: "{{ key_dir }}/tenebrae.crt"
+server_key: "{{ key_dir }}/tenebrae.key"
+tls_key: "{{ key_dir }}/ta.key"
