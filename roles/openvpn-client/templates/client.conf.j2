@@ -1,13 +1,6 @@
 ##############################################
-# Sample client-side OpenVPN 2.0 config file #
-# for connecting to multi-client server.     #
-#                                            #
-# This configuration can be used by multiple #
-# clients, however each client should have   #
-# its own cert and key files.                #
-#                                            #
-# On Windows, you might want to rename this  #
-# file so it has a .ovpn extension           #
+# {{ ansible_managed }}
+# OpenVPN config for {{ ansible_hostname }} to {{ remote_server }}
 ##############################################
 
 # Specify that we are a client and that we
@@ -110,12 +103,22 @@ tls-auth /etc/openvpn/ta.key 1
 # Select a cryptographic cipher.
 # If the cipher option is used on the server
 # then you must also specify it here.
-;cipher x
+cipher AES-256-CBC
+
+# Size of cipher key in bits (optional).
+# If unspecified, defaults to cipher-specific default.
+# The --show-ciphers option (see below) shows all available OpenSSL ciphers,
+# their default key sizes, and whether the key size can be changed.
+# Use care in changing a cipher's default key size. Many ciphers have not
+# been extensively cryptanalyzed with non-standard key lengths,
+# and a larger key may offer no real guarantee of greater security,
+# or may even reduce security.
+keysize 256
 
 # Enable compression on the VPN link.
 # Don't enable this unless it is also
 # enabled in the server config file.
-comp-lzo
+;comp-lzo
 
 # Set log file verbosity.
 verb 3
