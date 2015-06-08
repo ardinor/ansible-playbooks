@@ -1,4 +1,4 @@
-[mojibake-hosts]
+[mojibake]
 tenebrae
 
 [znc]
@@ -17,5 +17,5 @@ nosos
 unbound-local-dns
 
 [external:children]
-mojibake-hosts
+mojibake
 znc

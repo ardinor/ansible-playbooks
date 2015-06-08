@@ -1,6 +1,6 @@
 ---
 
-key_dir: /home/jordan/keys
+key_dir: /home/jordan/Keys
 vpn_ca_crt: "{{ key_dir }}/OpenVPN/epiales.crt"
 server_crt: "{{ key_dir }}/OpenVPN/tenebrae.crt"
 server_key: "{{ key_dir }}/OpenVPN/tenebrae.key"

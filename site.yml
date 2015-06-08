@@ -7,7 +7,8 @@
 #     - group_by: key=os_{{ ansible_distribution }}
 
 - include: common.yml
-- include: mojibake-hosts.yml
+- include: openvpn.yml
+- include: mojibake.yml
 - include: sensu-master.yml
 - include: mysql-server.yml
 - include: xbmc.yml
