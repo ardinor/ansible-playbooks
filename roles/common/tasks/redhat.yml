@@ -68,7 +68,7 @@
 # TO DO: investigate fail2ban-systemd
 - name: install fail2ban
   yum: name=fail2ban-server state=latest
-  when: internal is not defined or internal is false
+  when: internal is not defined or internal != True
   tags:
     - common
     - fail2ban

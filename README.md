@@ -26,7 +26,7 @@ Also supports a SSL secured proxy, see the role's README for more information.
 
 Installs, starts and enables Docker, also installs Docker Compose.
 
-### [Mojibake](roles/mojibake-site/) ###
+### [Mojibake](roles/mojibake-docker/) ###
 
 Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) using Docker.
 

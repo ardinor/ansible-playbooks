@@ -6,6 +6,7 @@
 #  tasks:
 #     - group_by: key=os_{{ ansible_distribution }}
 
+- include: initial.yml
 - include: common.yml
 - include: openvpn.yml
 - include: mojibake.yml

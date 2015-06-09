@@ -1,0 +1,8 @@
+---
+
+- hosts: initial
+  sudo: True
+
+  roles:
+    - initial-setup
+    - common
