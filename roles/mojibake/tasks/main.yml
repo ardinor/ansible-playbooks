@@ -1,0 +1,63 @@
+---
+
+- name: install git
+  yum: name=git state=present
+  when: ansible_os_family == "RedHat"
+
+- name: install git
+  apt: name=git state=present
+  when: ansible_os_family == "Debian"
+
+# TO DO: Investigate if this is necessary
+- name: Change SELinux to allow Docker to connect to TCP sockets
+  command: /usr/sbin/setsebool -P docker_connect_any 1
+  when: selinux_enabled == true
+
+- name: Change SELinux to allow nginx to connect to other network sockets
+  command: /usr/sbin/setsebool -P httpd_can_network_connect 1
+  when: selinux_enabled == true
+
+- name: Pull down mojibake code to get the static files for nginx
+  git: repo=https://github.com/ardinor/mojibake.git
+       dest=/tmp/mojibake
+
+- name: Remove existing static files (if any)
+  command: rm -rf /var/www/defestri/static
+
+# Pack javascript?
+
+- name: Move static files over to /var/www/defestri
+  command: mv /tmp/mojibake/mojibake/static/ /var/www/defestri/static
+  notify: restart nginx
+
+- name: Change ownership of static files
+  command: chown -R www-data:www-data /var/www/defestri
+
+- name: Restore the correct SELinux context to our files
+  command: /usr/sbin/restorecon -R /var/www/defestri
+  when: selinux_enabled == true
+
+- name: Remove unncessary mojibake code
+  command: rm -rf /tmp/mojibake
+
+- name: make /var/mojibake
+  file: path=/var/mojibake state=directory
+
+- name: pull down ardinor/centos-mariadb - ensure we have the latest
+  command: docker pull ardinor/centos-mariadb:latest
+
+- name: pull down ardinor/mojibake-python - ensure we have the latest
+  command: docker pull ardinor/mojibake-python:latest
+
+- name: Pull down Docker compose file
+  get_url:
+    url="https://raw.githubusercontent.com/ardinor/dockerfiles/master/Compose%20files/mojibake/docker-compose.yml"
+    dest="/var/mojibake/docker-compose.yml"
+    mode=0400
+    force=yes
+
+- name: Start mojibake and related containers
+  shell: /usr/local/bin/docker-compose up -d
+  args:
+    chdir: /var/mojibake/
+  environment: compose_env
