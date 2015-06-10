@@ -11,6 +11,6 @@
 - include: openvpn.yml
 - include: mojibake.yml
 - include: sensu-master.yml
-- include: mysql-server.yml
+- include: db.yml
 - include: xbmc.yml
 - include: dns.yml

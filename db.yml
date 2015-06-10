@@ -6,3 +6,10 @@
   roles:
     - common
     - mysql-server
+
+- hosts: postgre-server
+  sudo: True
+
+  roles:
+    - common
+    - postgresql
