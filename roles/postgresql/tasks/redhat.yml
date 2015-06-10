@@ -1,0 +1,12 @@
+---
+
+- name: exclude postgre stuff from the base repos
+  lineinfile: "dest=/etc/yum.repos.d/CentOS-Base.repo state=present regexp='^[base]' insertafter='^gpgkey=*' line='exclude=postgresql*'"
+  tags:
+    - postgre-sql
+    - packages
+
+- lineinfile: "dest=/etc/yum.repos.d/CentOS-Base.repo state=present regexp='^[updates]' insertafter='^gpgkey=*' line='exclude=postgresql*'"
+  tags:
+    - postgre-sql
+    - packages
