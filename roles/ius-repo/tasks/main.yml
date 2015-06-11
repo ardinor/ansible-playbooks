@@ -2,6 +2,7 @@
 
 - name: Install ius community repo
   yum: name={{ ius_rpm_url }} state=present
+  when: ansible_os_family == "RedHat"
   tags:
     - ius
     - repo

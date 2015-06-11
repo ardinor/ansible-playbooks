@@ -1,11 +1,17 @@
 ---
 
-- name: install git
-  yum: name=git state=present
+- name: install requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - git
+    - python34u
   when: ansible_os_family == "RedHat"
 
 - name: install git
-  apt: name=git state=present
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    #- python3
   when: ansible_os_family == "Debian"
 
 - name: Change SELinux to allow apache/nginx to connect to other network sockets
@@ -38,3 +44,6 @@
 
 - name: make /var/mojibake
   file: path=/var/mojibake state=directory
+
+- name: make mojibake virtual environment
+  command: pyvenv-3.4 /opt/mojibake/venv
