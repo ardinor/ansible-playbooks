@@ -1,0 +1,7 @@
+---
+
+- name: Install ius community repo
+  yum: name={{ ius_rpm_url }} state=present
+  tags:
+    - ius
+    - repo
