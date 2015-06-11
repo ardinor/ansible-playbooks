@@ -8,13 +8,12 @@
   apt: name=git state=present
   when: ansible_os_family == "Debian"
 
-- name: Change SELinux to allow nginx to connect to other network sockets
+- name: Change SELinux to allow apache/nginx to connect to other network sockets
   command: /usr/sbin/setsebool -P httpd_can_network_connect 1
   when: selinux_enabled == true
 
 - name: Pull down mojibake code to get the static files for nginx
-  git: repo=https://github.com/ardinor/mojibake.git
-       dest=/tmp/mojibake
+  git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/
 
 - name: Remove existing static files (if any)
   command: rm -rf /var/www/defestri/static
@@ -22,7 +21,7 @@
 # Pack javascript?
 
 - name: Move static files over to /var/www/defestri
-  command: mv /tmp/mojibake/mojibake/static/ /var/www/defestri/static
+  command: mv /opt/mojibake/mojibake/static/ /var/www/defestri/static
   notify: restart nginx
 
 - name: Change ownership of static files
@@ -32,8 +31,8 @@
   command: /usr/sbin/restorecon -R /var/www/defestri
   when: selinux_enabled == true
 
-- name: Remove unncessary mojibake code
-  command: rm -rf /tmp/mojibake
+- name: Remove unncessary mojibake static files code
+  command: rm -rf /opt/mojibake/mojibake/static/
 
 - name: make /var/mojibake
   file: path=/var/mojibake state=directory

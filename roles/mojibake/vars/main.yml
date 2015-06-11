@@ -2,4 +2,4 @@
 # The port Mojibake itself will run on
 mojibake_port: 5000
 
-selinux_enabled: false
+selinux_enabled: true

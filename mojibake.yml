@@ -6,5 +6,5 @@
   roles:
     # Since mojibake-site has dependencies (common/docker/nginx)
     # they are run first and don't need to be in here
-    - mojibake-docker
+    - mojibake
     #- { name: sensu-client, rabbitmq_host_ip: 10.0.0.5 }
