@@ -13,12 +13,14 @@
   when: selinux_enabled == true
 
 - name: Pull down mojibake code to get the static files for nginx
-  git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/
+  git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
 
 - name: Remove existing static files (if any)
   command: rm -rf /var/www/defestri/static
 
 # Pack javascript?
+- name: Ensure /var/www/defestri/static exists
+  file: path=/var/www/defestri/static state=directory
 
 - name: Move static files over to /var/www/defestri
   command: mv /opt/mojibake/mojibake/static/ /var/www/defestri/static
