@@ -6,6 +6,9 @@
     - git
     - python34u
   when: ansible_os_family == "RedHat"
+  tags:
+    - mojibake
+    - packages
 
 - name: install git
   apt: name={{ item }} state=present
@@ -13,40 +16,67 @@
     - git
     #- python3
   when: ansible_os_family == "Debian"
+  tags:
+    - mojibake
+    - packages
 
 - name: Change SELinux to allow apache/nginx to connect to other network sockets
   command: /usr/sbin/setsebool -P httpd_can_network_connect 1
   when: selinux_enabled == true
+  tags:
+    - mojibake
+    - selinux
 
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
+  tags:
+    - mojibake
 
 - name: Remove existing static files (if any)
   command: rm -rf /var/www/defestri/static
+  tags:
+    - mojibake
 
 # Pack javascript?
 - name: Ensure /var/www/defestri/static exists
   file: path=/var/www/defestri/static state=directory
+  tags:
+    - mojibake
 
 - name: Move static files over to /var/www/defestri
   command: mv /opt/mojibake/mojibake/static/ /var/www/defestri/static
   notify: restart nginx
+  tags:
+    - mojibake
 
 - name: Change ownership of static files
   command: chown -R www-data:www-data /var/www/defestri
+  tags:
+    - mojibake
 
 - name: Restore the correct SELinux context to our files
   command: /usr/sbin/restorecon -R /var/www/defestri
   when: selinux_enabled == true
+  tags:
+    - mojibake
+    - selinux
 
 - name: Remove unncessary mojibake static files code
   command: rm -rf /opt/mojibake/mojibake/static/
+  tags:
+    - mojibake
 
 - name: make /var/mojibake
   file: path=/var/mojibake state=directory
+  tags:
+    - mojibake
 
 - name: make mojibake virtual environment
   command: pyvenv-3.4 /opt/mojibake/venv
+  tags:
+    - mojibake
 
 - name: Use pip to install our reuqired python libraries
   pip: requirements=/opt/mojibake/requirements.txt virtualenv=/opt/mojibake/venv
+  tags:
+    - mojibake
