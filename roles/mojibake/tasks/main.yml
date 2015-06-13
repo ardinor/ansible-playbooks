@@ -48,5 +48,5 @@
 - name: make mojibake virtual environment
   command: pyvenv-3.4 /opt/mojibake/venv
 
-- name: pip install
-  command: pip install -r /opt/mojibake/requirements.txt
+- name: Use pip to install our reuqired python libraries
+  pip: requirements=/opt/mojibake/requirements.txt virtualenv=/opt/mojibake/venv
