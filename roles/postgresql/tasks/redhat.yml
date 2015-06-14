@@ -4,12 +4,12 @@
   lineinfile: "dest=/etc/yum.repos.d/CentOS-Base.repo state=present regexp='^[base]' insertafter='^gpgkey=*' line='exclude=postgresql*'"
   tags:
     - postgre-sql
-    - packages
+    - repo
 
 - lineinfile: "dest=/etc/yum.repos.d/CentOS-Base.repo state=present regexp='^[updates]' insertafter='^gpgkey=*' line='exclude=postgresql*'"
   tags:
     - postgre-sql
-    - packages
+    - repo
 
 - name: Install PostgreSQL repo
   yum: name={{ postgre_repo_url }} state=present
