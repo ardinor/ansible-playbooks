@@ -1,0 +1,4 @@
+---
+
+# URL to download the PostgreSQL repo
+postgre_repo_url: http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
