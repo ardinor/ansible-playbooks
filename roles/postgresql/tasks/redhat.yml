@@ -13,7 +13,12 @@
 
 - name: Install PostgreSQL repo
   yum: name={{ postgre_repo_url }} state=present
-  when: ansible_os_family == "RedHat"
   tags:
     - postgre-sql
     - repo
+
+- name: Install PostgreSQL server 9.4
+  yum: name=postgresql94-server state=present
+  tags:
+    - postgre-sql
+    - packages
