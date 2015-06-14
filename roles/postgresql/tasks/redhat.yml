@@ -10,3 +10,10 @@
   tags:
     - postgre-sql
     - packages
+
+- name: Install PostgreSQL repo
+  yum: name={{ postgre_repo_url }} state=present
+  when: ansible_os_family == "RedHat"
+  tags:
+    - postgre-sql
+    - repo
