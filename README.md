@@ -85,3 +85,8 @@ Other useful commands:
 - dhcp (not dnsmasq)
 - elk stack
 - routing and hostnames (external network via VPN and internal)
+
+### Incomplete:
+
+- postgre-sql
+- mojibake (without Docker)
