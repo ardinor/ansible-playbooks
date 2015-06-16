@@ -25,3 +25,16 @@
   tags:
     - postgre-sql
     - packages
+
+- name: check if postgresql initdb has been run before
+  stat: path=/var/lib/pgsql/9.4/data/postgresql.conf get_md5=no
+  register: initdb_run
+  tags:
+    - postgre-sql
+
+- name: init postgre sql DBs
+  command: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  when: initdb_run.stat.isreg is undefined or (initdb_run.stat.isreg) == false
+  tags:
+    - postgre-sql
+    - initdb
