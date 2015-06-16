@@ -38,3 +38,9 @@
   tags:
     - postgre-sql
     - initdb
+
+- name: start postgresql 9.4 server
+  service: name=postgresql-9.4 state=started enabled=yes
+  tags:
+    - postgre-sql
+    - services
