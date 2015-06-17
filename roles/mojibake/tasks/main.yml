@@ -1,6 +1,6 @@
 ---
 
-- name: install requirements
+- name: install package requirements
   yum: name={{ item }} state=present
   with_items:
     - git
@@ -10,7 +10,7 @@
     - mojibake
     - packages
 
-- name: install git
+- name: install package requirements
   apt: name={{ item }} state=present
   with_items:
     - git
