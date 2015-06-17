@@ -3,3 +3,8 @@
 mojibake_port: 5000
 
 selinux_enabled: true
+
+# db_user: mojibake
+# db_pass: mojibake
+# admin_user: mojibake
+# admin_pass: mojibake
