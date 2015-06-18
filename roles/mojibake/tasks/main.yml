@@ -27,6 +27,19 @@
     - mojibake
     - selinux
 
+- name: Create the mojibake db
+  postgresql_db: name={{ db_name }}
+                 encoding='UTF-8'
+                 lc_collate='de_DE.UTF-8'
+                 lc_ctype='de_DE.UTF-8'
+  tags:
+    - mojibake
+
+- name: Create mojibake db user/password
+  postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_pass }} priv=ALL
+  tags:
+    - mojibake
+
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
   tags:
