@@ -1,0 +1,4 @@
+---
+
+- name: restart kerberos-server
+  service: name=rsyslog state=restarted
