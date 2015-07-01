@@ -1,3 +1,7 @@
 ---
 
 realm: DOMAIN.COM
+# Kerberos Distribution Center server
+kdc_server: kdc.domain.com
+
+domain: domain.com
