@@ -6,3 +6,15 @@
     - krb5-server
     - krb5-workstation
     - pam_krb5
+  tags:
+    - kerberos-server
+    - packages
+
+- name: Install kerberos realm config file
+  template: src=kdc.conf.j2 dest=/var/kerberos/krb5kdc/kdc.conf
+            owner=root group=root mode=0600
+  notify: restart mysql
+  tags:
+    - kerberos-server
+    - config_files
+# chmod 600
