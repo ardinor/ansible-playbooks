@@ -1,0 +1,8 @@
+---
+
+- hosts: kerberos-server
+  sudo: True
+
+  roles:
+    #- common
+    - kerberos-server
