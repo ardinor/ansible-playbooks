@@ -1,4 +1,7 @@
 ---
 
 - name: restart kerberos-server
-  service: name=rsyslog state=restarted
+  service: name={{ item }} state=restarted
+  with_items:
+    - krb5kdc
+    - kadmin

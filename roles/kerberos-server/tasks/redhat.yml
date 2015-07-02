@@ -25,3 +25,20 @@
   tags:
     - kerberos-server
     - config_files
+
+- name: Install kerberos admin acl config file
+  template: src=kadm5.acl.j2 dest=/var/kerberos/krb5kdc/kadm5.acl
+            owner=root group=root mode=0600
+  notify: restart kerberos-server
+  tags:
+    - kerberos-server
+    - config_files
+
+- name: start and enable kerberos services
+  service: name={{ item }} state=restarted
+  with_items:
+    - krb5kdc
+    - kadmin
+  tags:
+    - kerberos-server
+    - services
