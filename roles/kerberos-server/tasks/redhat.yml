@@ -34,11 +34,14 @@
     - kerberos-server
     - config_files
 
-- name: start and enable kerberos services
-  service: name={{ item }} state=restarted
-  with_items:
-    - krb5kdc
-    - kadmin
-  tags:
-    - kerberos-server
-    - services
+# Doesn't seem to be a way to create the database in any kind of unattended way...
+# The database is /var/kerberos/krb5kdc/principal
+
+# - name: start and enable kerberos services
+#   service: name={{ item }} state=restarted
+#   with_items:
+#     - krb5kdc
+#     - kadmin
+#   tags:
+#     - kerberos-server
+#     - services
