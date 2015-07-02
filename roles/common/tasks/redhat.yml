@@ -58,6 +58,7 @@
     - common
     - firewall
 
+# TO DO: Look at chrony instead of ntp for RHEL7 family
 - name: install ntp
   yum: name=ntp state=present
   tags:

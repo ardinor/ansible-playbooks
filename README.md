@@ -81,7 +81,7 @@ Other useful commands:
 
 - create repo
 - Apache config for sensu server reverse proxy
-- ntp
+- ntp - instead look at chrony for RHEL7 family
 - dhcp (not dnsmasq)
 - elk stack
 - routing and hostnames (external network via VPN and internal)
