@@ -14,12 +14,12 @@
   notify: restart bind
 
 - name: Copy over site DNS config
-  copy: src=../db.site.com dest=/var/named/db.site.com
+  copy: src=../db.int.defestri.org.j2 dest=/var/named/db.site.com
         owner=named group=named mode=0640
   notify: restart bind
 
 - name: Copy over reverse DNS config
-  copy: src=../db.10.0.0 dest=/var/named/db.10.0.0
+  copy: src=../db.reverse.j2 dest=/var/named/db.192.168.1
         owner=named group=named mode=0640
   notify: restart bind
 
