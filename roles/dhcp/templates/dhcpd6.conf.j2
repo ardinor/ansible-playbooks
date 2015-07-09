@@ -18,13 +18,13 @@ preferred-lifetime 604800;
 
 # T1, the delay before Renew
 #  (default is 1/2 preferred lifetime)
-#  (set to 1 hour)
-option dhcp-renewal-time 3600;
+#  (set to 3 days)
+option dhcp-renewal-time 259200;
 
 # T2, the delay before Rebind (if Renews failed)
 #  (default is 3/4 preferred lifetime)
-#  (set to 2 hours)
-option dhcp-rebinding-time 7200;
+#  (set to 4 days)
+option dhcp-rebinding-time 345600;
 
 # Enable RFC 5007 support (same than for DHCPv4)
 allow leasequery;
@@ -47,29 +47,43 @@ dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
 # The subnet where the server is attached
 #  (i.e., the server has an address in this subnet)
 # FD00::/8 is for unique local addresses
-# No guarantee dead:beef:face is globally unique (I'm sure it isn't)
+# No guarantee dece:a5ed:beef is globally unique (I'm sure it isn't)
 # If you want this to be act like a private IPv4 network you should
 # block this at your gateway inbound and outbound
 # You can generate a different subnet using a tool like this site
 #  http://unique-local-ipv6.com/
-subnet6 fddd:dead:beef:face::/64 {
+subnet6 fddd:dece:a5ed:beef::/64 {
         # Two addresses available to clients
         #  (the third client should get NoAddrsAvail)
         #range6 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11;
 
         # Use the whole /64 prefix for temporary addresses
         #  (i.e., direct application of RFC 4941)
-        range6 fddd:dead:beef:face::/64 temporary;
+        range6 fddd:dece:a5ed:beef::/64 temporary;
 
         # Some /64 prefixes available for Prefix Delegation (RFC 3633)
         #prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
 }
 
-# Example static ip
-#host otherclient {
+# Static IPv6s
+host oneiros {
         # This host entry is hopefully matched if the client supplies a DUID-LL
         # or DUID-LLT containing this MAC address.
-#        hardware ethernet 01:00:80:a2:55:67;
+        hardware ethernet 01:00:80:a2:55:67;
+        fixed-address6 fddd:dece:a5ed:beef::2/64;
+}
 
-#        fixed-address6 3ffe:501:ffff:100::4321;
-#}
+host nosos {
+        hardware ethernet 01:00:80:a2:55:67;
+        fixed-address6 fddd:dece:a5ed:beef::4/64;
+}
+
+host stygere {
+        hardware ethernet 01:00:80:a2:55:67;
+        fixed-address6 fddd:dece:a5ed:beef::6/64;
+}
+
+host lachesis {
+        hardware ethernet 01:00:80:a2:55:67;
+        fixed-address6 fddd:dece:a5ed:beef::7/64;
+}
