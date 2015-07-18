@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+interface ens18
+{
+    AdvManagedFlag on;
+    AdvSendAdvert on;
+    #AdvAutonomous off;
+    AdvOtherConfigFlag on;
+    MinRtrAdvInterval 3;
+    MaxRtrAdvInterval 60;
+};

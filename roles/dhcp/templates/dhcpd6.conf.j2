@@ -31,7 +31,7 @@ allow leasequery;
 
 # Global definitions for name server address(es) and domain search list
 option dhcp6.name-servers {{ ipv6_dns_servers }};
-option dhcp6 domain-search "{{ domain_name }}";
+option dhcp6.domain-search "{{ domain_name }}";
 
 # NTP servers can support SNTP as well? Double check
 option dhcp6.sntp-servers {{ ipv6_ntp_servers }};
@@ -44,6 +44,8 @@ option dhcp6.info-refresh-time 21600;
 # The path of the lease file
 dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
 
+authoritative;
+
 # The subnet where the server is attached
 #  (i.e., the server has an address in this subnet)
 # FD00::/8 is for unique local addresses
@@ -52,14 +54,12 @@ dhcpv6-lease-file-name "/var/lib/dhcpd/dhcpd6.leases";
 # block this at your gateway inbound and outbound
 # You can generate a different subnet using a tool like this site
 #  http://unique-local-ipv6.com/
-subnet6 fddd:dece:a5ed:beef::/64 {
+subnet6 fddd:c0ff:eede:cade::/64 {
         # Two addresses available to clients
         #  (the third client should get NoAddrsAvail)
         #range6 3ffe:501:ffff:100::10 3ffe:501:ffff:100::11;
 
-        # Use the whole /64 prefix for temporary addresses
-        #  (i.e., direct application of RFC 4941)
-        range6 fddd:dece:a5ed:beef::/64 temporary;
+        range6 fddd:c0ff:eede:cade::/64;
 
         # Some /64 prefixes available for Prefix Delegation (RFC 3633)
         #prefix6 3ffe:501:ffff:100:: 3ffe:501:ffff:111:: /64;
@@ -70,20 +70,20 @@ host oneiros {
         # This host entry is hopefully matched if the client supplies a DUID-LL
         # or DUID-LLT containing this MAC address.
         hardware ethernet 01:00:80:a2:55:67;
-        fixed-address6 fddd:dece:a5ed:beef::2/64;
+        fixed-address6 fddd:c0ff:eede:cade::2/64;
 }
 
 host nosos {
         hardware ethernet 01:00:80:a2:55:67;
-        fixed-address6 fddd:dece:a5ed:beef::4/64;
+        fixed-address6 fddd:c0ff:eede:cade::4/64;
 }
 
 host stygere {
         hardware ethernet 01:00:80:a2:55:67;
-        fixed-address6 fddd:dece:a5ed:beef::6/64;
+        fixed-address6 fddd:c0ff:eede:cade::6/64;
 }
 
 host lachesis {
         hardware ethernet 01:00:80:a2:55:67;
-        fixed-address6 fddd:dece:a5ed:beef::7/64;
+        fixed-address6 fddd:c0ff:eede:cade::7/64;
 }

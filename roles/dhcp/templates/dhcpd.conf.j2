@@ -13,13 +13,30 @@ default-lease-time 600;
 max-lease-time 7200;
 
 # Use this to enble / disable dynamic dns updates globally.
-#ddns-update-style none;
+ddns-updates on;
+ddns-update-style iterim;
+ignore client-updates;
+ddns-domainname "int.defestri.org.";
+ddns-rev-domainname "1.168.192.in-addr.arpa.";
+
 
 # If this DHCP server is the official DHCP server for the local
 # network, the authoritative directive should be uncommented.
 authoritative;
 
 lease-file-name "/var/lib/dhcpd/dhcpd.leases";
+
+include "/etc/rndc.key";
+
+zone int.defestri.org. {
+  primary 127.0.0.1;
+  key "rndc-key";
+}
+
+zone 1.168.192.in-addr.arpa. {
+  primary 127.0.0.1;
+  key "rndc-key";
+}
 
 # Default subnet
 subnet {{ subnet_id }} netmask {{ net_mask }} {
