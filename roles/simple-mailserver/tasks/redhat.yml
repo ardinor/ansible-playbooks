@@ -1,7 +1,11 @@
 ---
 
 - name: Install postfix
-  yum: name=postfix state=latest
+  yum: name={{ item }} state=latest
+  with_items:
+    - postfix
+    - dovecot
+    - dovecot-msql
 
 - name: Allow smtp through the firewall
   firewalld: port=smtp permanent=true state=enabled immediate=yes
