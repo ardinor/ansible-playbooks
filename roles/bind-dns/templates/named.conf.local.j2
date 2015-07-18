@@ -1,6 +1,14 @@
+
+include "/etc/rndc.key";
+
 zone "int.defestri.org" {
         type master;
-        file "/var/named/db.int.defestri.org";
-        // to allow transfer to slave
-        //allow-transfer { 192.0.2.2; };
+        file "int.defestri.org.zone";
+        allow-update { key "rndc-key"; };
+};
+
+zone "1.168.192.in-addr.arpa" {
+        type master;
+        file "int.defestri.org.revzone";
+        allow-update { key "rndc-key"; };
 };

@@ -6,3 +6,9 @@ https://www.digitalocean.com/community/tutorials/how-to-install-the-bind-dns-ser
 
 https://www.digitalocean.com/community/tutorials/how-to-setup-dnssec-on-an-authoritative-bind-dns-server--2
 
+For DDNS
+
+chmod g+w /var/named
+setsebool -P named_write_master_zones 1
+
+rndc-confgen -a to generate key
