@@ -5,6 +5,7 @@
   with_items:
     - git
     - python34u
+    - libpqxx-devel
   when: ansible_os_family == "RedHat"
   tags:
     - mojibake
@@ -14,11 +15,18 @@
   apt: name={{ item }} state=present
   with_items:
     - git
-    #- python3
+    - python3
   when: ansible_os_family == "Debian"
   tags:
     - mojibake
     - packages
+
+- name: create mojibake user account
+  user: name=mojibake comment="Mojibake Application Account" system=yes
+        home=/opt/mojibake/
+  tags:
+    - mojibake
+    - users
 
 - name: Change SELinux to allow apache/nginx to connect to other network sockets
   command: /usr/sbin/setsebool -P httpd_can_network_connect 1
@@ -30,8 +38,8 @@
 - name: Create the mojibake db
   postgresql_db: name={{ db_name }}
                  encoding='UTF-8'
-                 lc_collate='de_DE.UTF-8'
-                 lc_ctype='de_DE.UTF-8'
+                 lc_collate='en_AU.UTF-8'
+                 lc_ctype='en_AU.UTF-8'
   tags:
     - mojibake
 
@@ -80,7 +88,13 @@
     - mojibake
 
 - name: make /var/mojibake
-  file: path=/var/mojibake state=directory
+  file: path=/var/mojibake state=directory owner=mojibake group=mojibake mode=0600
+  tags:
+    - mojibake
+
+- name: copy across mojibake settings file
+  copy: src=../files/mojibake_settings dest=/var/lib/mojibake/.mojibake_settings
+        owner=mojibake group=mojibake mode=0600
   tags:
     - mojibake
 
@@ -89,7 +103,12 @@
   tags:
     - mojibake
 
-- name: Use pip to install our reuqired python libraries
+- name: Use pip to install our required python libraries
   pip: requirements=/opt/mojibake/requirements.txt virtualenv=/opt/mojibake/venv
+  tags:
+    - mojibake
+
+- name: ensure ownership is correct
+  command: chown -R mojibake:mojibake /opt/mojibake
   tags:
     - mojibake

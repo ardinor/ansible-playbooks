@@ -1,0 +1,15 @@
+[Unit]
+Description=Mojibake site service
+After=syslog.target
+
+[Service]
+Type=simple
+User=mojibake
+Group=mojibake
+WorkingDirectory=/opt/mojibake/mojibake
+ExecStart=/opt/mojibake/mojibake/tornado_srv.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
