@@ -1,6 +1,6 @@
 ### Ansible Playbooks ###
 
-Ansible playbooks I've made, work in progress at the moment.
+Ansible playbooks I've made, work in progress at the moment. Generally aimed at CentOS 7.
 
 ### [Common](roles/common/) ###
 
