@@ -6,6 +6,7 @@
     - git
     - python34u
     - libpqxx-devel
+    - python-psycopg2   # for the ansible/postgre commands
   when: ansible_os_family == "RedHat"
   tags:
     - mojibake
