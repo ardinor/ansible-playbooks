@@ -3,4 +3,5 @@
 dependencies:
   - { role: common }
   - { role: ius-repo }
+  - { role: postgresql }
   #- { role: nginx-proxy }
