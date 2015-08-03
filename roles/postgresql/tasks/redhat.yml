@@ -39,6 +39,13 @@
     - postgre-sql
     - initdb
 
+- name: copy across pg_hba configs
+  template: src=pg_hba.conf.j2 dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+  notify: restart postgresql
+  tags:
+    - postgre-sql
+    - configs
+
 - name: start postgresql 9.4 server
   service: name=postgresql-9.4 state=started enabled=yes
   tags:
