@@ -33,7 +33,7 @@
     - postgre-sql
 
 - name: init postgre sql DBs
-  command: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  command: /usr/pgsql-9.4/bin/postgresql94-setup initdb --locale en_AU.UTF-8 -E UTF8
   when: initdb_run.stat.isreg is undefined or (initdb_run.stat.isreg) == false
   tags:
     - postgre-sql
