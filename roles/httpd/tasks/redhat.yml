@@ -17,7 +17,7 @@
   file: path=/etc/httpd/conf.d/welcome.conf state=absent
 
 - name: allow httpd port through firewall
-  firewalld: service=httpd permanent=true state=enabled immediate=yes
+  firewalld: service=http permanent=true state=enabled immediate=yes
 
 - name: start httpd services
   service: name=httpd state=started enabled=yes
