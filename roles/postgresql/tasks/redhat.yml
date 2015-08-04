@@ -32,8 +32,9 @@
   tags:
     - postgre-sql
 
-- name: init postgre sql DBs
-  command: /usr/pgsql-9.4/bin/postgresql94-setup initdb --locale en_AU.UTF-8 -E UTF8
+  # Needs to be run as the user who will run the process, hence the su
+- name: init postgre sql DBs with the correct encoding
+  command: su - postgres -c "/usr/pgsql-9.4/bin/initdb --locale en_AU.UTF-8 -E UTF8 -D '/var/lib/pgsql/9.4/data'"
   when: initdb_run.stat.isreg is undefined or (initdb_run.stat.isreg) == false
   tags:
     - postgre-sql
