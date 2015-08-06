@@ -44,6 +44,17 @@
     - common
     - packages
 
+- name: install development environment packages
+  yum: name={{ item }} state=present
+  with_items:
+    - setroubleshoot-server
+  when: development is defined and development == True
+  tags:
+    - common
+    - packages
+    - development-environ
+    - selinux
+
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
   register: firewalld_installed
