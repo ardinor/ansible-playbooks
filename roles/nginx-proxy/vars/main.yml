@@ -1,10 +1,13 @@
 ---
 
+# user nginx - default on CentOS 7
+nginx_user: www-data
+
 # The site url without www
 site_url: defestri.org
 
 # If we want the server we're deploying to use ssl, if not a different config will be used
-ssl: true
+ssl: false
 # SSL cert directory
 #ssl_cert_dir: /etc/nginx/ssl
 ssl_cert_dir: /etc/pki/tls/certs
@@ -18,6 +21,6 @@ root_dir: /var/www/defestri/
 proxy_pass_port: 5000
 
 site_directory: /var/www/defestri
-site_log_directory: /var/www/defestri/logs
-access_log: /var/www/defestri/logs/access.log
-error_log: /var/www/defestri/logs/error.log
+site_log_directory: /var/log/nginx/defestri/
+access_log: /var/log/nginx/defestri/access.log
+error_log: /var/log/nginx/defestri/error.log
