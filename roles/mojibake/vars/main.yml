@@ -9,3 +9,5 @@ db_user: mojibake
 db_pass: mojibake
 admin_user: mojibake
 admin_pass: mojibake
+
+httpd_user: www-data

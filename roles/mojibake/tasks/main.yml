@@ -5,8 +5,12 @@
   with_items:
     - git
     - python34u
+    - python34u-devel
     - libpqxx-devel
+    - postgresql-devel
     - python-psycopg2   # for the ansible/postgre commands
+    # gcc installs cpp glibc-devel glibc-headers kernel-headers libmpc mpfr
+    - gcc
   when: ansible_os_family == "RedHat"
   tags:
     - mojibake
@@ -72,7 +76,12 @@
     - mojibake
 
 - name: Change ownership of static files
-  file: path=/var/www/defestri owner=www-data group=www-data recurse=yes
+  file:
+    path: /var/www/defestri
+    mode: u=rwX,g=rX,o=rX
+    owner: "{{ httpd_user }}"
+    group: "{{ httpd_user }}"
+    recurse: yes
   tags:
     - mojibake
 
@@ -88,13 +97,13 @@
   tags:
     - mojibake
 
-- name: make /var/mojibake
-  file: path=/var/mojibake state=directory owner=mojibake group=mojibake mode=0600
+- name: make /etc/mojibake
+  file: path=/etc/mojibake state=directory owner=mojibake group=mojibake mode=0600
   tags:
     - mojibake
 
 - name: copy across mojibake settings file
-  copy: src=../files/mojibake_settings dest=/var/lib/mojibake/.mojibake_settings
+  copy: src=../files/mojibake_settings dest=/etc/mojibake/.mojibake_settings
         owner=mojibake group=mojibake mode=0600
   tags:
     - mojibake
@@ -106,10 +115,17 @@
 
 - name: Use pip to install our required python libraries
   pip: requirements=/opt/mojibake/requirements.txt virtualenv=/opt/mojibake/venv
+  environment:
+    PATH: /usr/pgsql-9.4/bin:{{ ansible_env.PATH }}
   tags:
     - mojibake
 
 - name: ensure ownership is correct
-  command: chown -R mojibake:mojibake /opt/mojibake
+  file:
+    path: /opt/mojibake
+    mode: u=rwX,g=rX,o=rX
+    owner: mojibake
+    group: mojibake
+    recurse: yes
   tags:
     - mojibake
