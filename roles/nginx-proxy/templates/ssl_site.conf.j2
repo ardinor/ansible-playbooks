@@ -2,19 +2,31 @@
 
 server {
  listen 80;
+ {% if internal is defined and internal %}
+ server_name {{ develop_url }};
+ {% else %}
  server_name {{ site_url }};
+ {% endif %}
  return 301 https://$host$request_uri;
 }
 
 server {
  listen 80;
+ {% if internal is defined and internal %}
+ server_name www.{{ develop_url }};
+ {% else %}
  server_name www.{{ site_url }};
- return 301 https://{{ site_url }}$request_uri;
+ {% endif %}
+ return 301 https://$host$request_uri;
 }
 
 server {
  listen 443 deferred ssl spdy;
+ {% if internal is defined and internal %}
+ server_name {{ develop_url }};
+ {% else %}
  server_name {{ site_url }};
+ {% endif %}
 
  ssl_certificate {{ ssl_cert_location }};
  ssl_certificate_key {{ ssl_private_key_location }};

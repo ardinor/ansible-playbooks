@@ -24,3 +24,6 @@ site_directory: /var/www/defestri
 site_log_directory: /var/log/nginx/defestri/
 access_log: /var/log/nginx/defestri/access.log
 error_log: /var/log/nginx/defestri/error.log
+
+# The site's development url, used for testing locally
+develop_url: dev.defestri.org

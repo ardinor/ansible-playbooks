@@ -2,13 +2,21 @@
 
 server {
  listen 80;
+ {% if internal is defined and internal %}
+ server_name www.{{ develop_url }};
+ {% else %}
  server_name www.{{ site_url }};
+ {% endif %}
  return 301 http://$host$request_uri;
 }
 
 server {
  listen 80;
+ {% if internal is defined and internal %}
+ server_name {{ develop_url }};
+ {% else %}
  server_name {{ site_url }};
+ {% endif %}
 
  keepalive_timeout 70;
 
