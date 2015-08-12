@@ -6,8 +6,10 @@ After=syslog.target
 Type=simple
 User=mojibake
 Group=mojibake
-WorkingDirectory=/opt/mojibake/mojibake
-ExecStart=/opt/mojibake/mojibake/tornado_srv.py
+WorkingDirectory=/opt/mojibake
+Environment=VIRTUAL_ENV="/opt/mojibake/venv"
+Environment=PATH="$VIRTUAL_ENV/bin:$PATH"
+ExecStart=/opt/mojibake/tornado_srv.py
 StandardOutput=syslog
 StandardError=syslog
 

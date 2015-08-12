@@ -98,7 +98,7 @@
     - mojibake
 
 - name: make /etc/mojibake
-  file: path=/etc/mojibake state=directory owner=mojibake group=mojibake mode=0600
+  file: path=/etc/mojibake state=directory owner=mojibake group=mojibake mode=0700
   tags:
     - mojibake
 
@@ -129,3 +129,11 @@
     recurse: yes
   tags:
     - mojibake
+
+- name: copy across mojibake service file
+  copy: src=../files/mojibake.service dest=/etc/systemd/system/mojibake.service
+  tags:
+    - mojibake
+
+
+# run python manage.py create (or make an import option?)
