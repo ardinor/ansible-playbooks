@@ -1,0 +1,33 @@
+---
+
+- name: install ipa-client packages
+  yum: name={{ item }} state=present
+  with_items:
+    - ipa-client
+    - oddjob-mkhomedir
+  when: ansible_distribution != "Fedora"
+  tags:
+    - ipa-client
+    - packages
+
+- name: install ipa-client packages
+  yum: name={{ item }} state=present
+  with_items:
+    - freeipa-client
+    - oddjob-mkhomedir
+  when: ansible_distribution == "Fedora"
+  tags:
+    - ipa-client
+    - packages
+
+
+- name: start oddjobd
+  service: name=oddjobd state=started enabled=yes
+  tags:
+    - ipa-client
+    - services
+
+- name: update authconfig to use oddjob to make home dirs
+  command: authconfig --enablemkhomedir --update
+  tags:
+    - ipa-client
