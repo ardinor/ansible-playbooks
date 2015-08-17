@@ -42,13 +42,48 @@
     - common
     - users
 
-- name: add pretty colourful PS1
+- name: add pretty colourful PS1 - RHEL
   lineinfile: dest=/home/{{ item.name }}/.bashrc
               state=present
               regexp="^PS1="
               line="PS1='\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'"
   with_items:
     - "{{ users }}"
+  when: ansible_os_family == "RedHat"
+  tags:
+    - common
+    - users
+
+- name: add pretty colourful PS1 in /etc/skel - RHEL
+  lineinfile: dest=/etc/skel/.bashrc
+              state=present
+              regexp="^PS1="
+              line="PS1='\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'"
+  when: ansible_os_family == "RedHat"
+  tags:
+    - common
+    - users
+
+# This needs testing as, if I recall correctly, Debian already has a PS1 set up in .bashrc
+# we don't want that one
+- name: add pretty colourful PS1 - Debian
+  lineinfile: dest=/home/{{ item.name }}/.bashrc
+              state=present
+              regexp="^PS1="
+              line="PS1='\[\e[0;33m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'"
+  with_items:
+    - "{{ users }}"
+  when: ansible_os_family == "Debian"
+  tags:
+    - common
+    - users
+
+- name: add pretty colourful PS1 in /etc/skel - Debian
+  lineinfile: dest=/etc/skel/.bashrc
+              state=present
+              regexp="^PS1="
+              line="PS1='\[\e[0;33m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'"
+  when: ansible_os_family == "Debian"
   tags:
     - common
     - users

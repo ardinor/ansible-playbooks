@@ -70,6 +70,7 @@
     - firewall
 
 # TO DO: Look at chrony instead of ntp for RHEL7 family
+# Or disable chrony if it's already installed?
 - name: install ntp
   yum: name=ntp state=present
   tags:
