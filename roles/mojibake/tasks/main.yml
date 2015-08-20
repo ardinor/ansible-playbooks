@@ -70,7 +70,7 @@
     - mojibake
 
 - name: Move static files over to /var/www/defestri
-  command: mv /opt/mojibake/mojibake/static/ /var/www/defestri/static
+  command: mv /opt/mojibake/mojibake/static/ /var/www/defestri
   notify: restart nginx
   tags:
     - mojibake
