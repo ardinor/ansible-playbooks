@@ -11,6 +11,7 @@
     - python-psycopg2   # for the ansible/postgre commands
     # gcc installs cpp glibc-devel glibc-headers kernel-headers libmpc mpfr
     - gcc
+    - supervisor
   when: ansible_os_family == "RedHat"
   tags:
     - mojibake
@@ -25,6 +26,11 @@
   tags:
     - mojibake
     - packages
+
+- name: Pull down mojibake code to get the static files for nginx
+  git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
+  tags:
+    - mojibake
 
 - name: create mojibake user account
   user: name=mojibake comment="Mojibake Application Account" system=yes
@@ -50,11 +56,6 @@
 
 - name: Create mojibake db user/password
   postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_pass }} priv=ALL
-  tags:
-    - mojibake
-
-- name: Pull down mojibake code to get the static files for nginx
-  git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
   tags:
     - mojibake
 
@@ -130,10 +131,20 @@
   tags:
     - mojibake
 
-- name: copy across mojibake service file
-  copy: src=../files/mojibake.service dest=/etc/systemd/system/mojibake.service
+# - name: copy across mojibake service file
+#   copy: src=../files/mojibake.service dest=/etc/systemd/system/mojibake.service
+#   tags:
+#     - mojibake
+
+# run python manage.py create (or make an import option?)
+
+- name: copy across mojibake supervisor config file
+  copy: src=../files/mojibake.ini dest=/etc/supervisord.d/mojibake.ini
+  notify: restart supervisord
   tags:
     - mojibake
 
-
-# run python manage.py create (or make an import option?)
+- name: start supervisord and ensure enabled=yes
+  service: name=supervisord state=started enabled=yes
+  tags:
+    - mojibake
