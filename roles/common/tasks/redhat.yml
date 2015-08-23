@@ -24,6 +24,7 @@
 
 - name: update packages
   yum: name=* state=latest
+  when: development is not defined or development == False
   tags:
     - common
     - update
