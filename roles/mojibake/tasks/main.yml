@@ -59,6 +59,20 @@
   tags:
     - mojibake
 
+- name: copy across db dump if we've been given one
+  copy: src={{db _file }} dest=/tmp/db.dump
+  when: db_file is defined
+  tags:
+    - mojibake
+    - db_restore
+
+- name: restore database
+  shell: psql -U{{db_user }} {{ db_name }} < /tmp/db.dump
+  when: db_file is defined
+  tags:
+    - mojibake
+    - db_restore
+
 - name: Remove existing static files (if any)
   command: rm -rf /var/www/defestri/static
   tags:

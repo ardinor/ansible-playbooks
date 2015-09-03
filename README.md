@@ -38,6 +38,10 @@ Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) u
 
 Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake). Uses PostgreSQL.
 
+To copy across a database backup and have it automatically restored, pass the path to the database dump as an extra variable:
+
+--extra-vars "db_file=/path/to/db.db"
+
 ### [Redis](roles/redis/) ###
 
 Installs and starts/enables [Redis](http://redis.io/)
