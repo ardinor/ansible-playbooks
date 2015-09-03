@@ -56,6 +56,20 @@
     - development-environ
     - selinux
 
+- name: ensure /etc/locale.conf exists
+  file: path=/etc/locale.conf state=touch
+  tags:
+    - common
+    - locale
+
+- name: ensure en_AU.utf8 set as default locale
+  lineinfile: dest=/etc/locale.conf
+              state=present
+              line="LANG=en_AU.utf8"
+  tags:
+    - common
+    - locale
+
 - name: check firewalld installed
   stat: path=/usr/lib/systemd/system/firewalld.service get_md5=no
   register: firewalld_installed
