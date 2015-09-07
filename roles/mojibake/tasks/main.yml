@@ -11,7 +11,7 @@
     - python-psycopg2   # for the ansible/postgre commands
     # gcc installs cpp glibc-devel glibc-headers kernel-headers libmpc mpfr
     - gcc
-    - supervisor
+    # - supervisor
   when: ansible_os_family == "RedHat"
   tags:
     - mojibake
@@ -147,20 +147,26 @@
   tags:
     - mojibake
 
-# - name: copy across mojibake service file
-#   copy: src=../files/mojibake.service dest=/etc/systemd/system/mojibake.service
-#   tags:
-#     - mojibake
+- name: copy across mojibake service file
+  copy: src=../files/mojibake.service dest=/etc/systemd/system/mojibake.service
+  notify: daemon-reload
+  tags:
+    - mojibake
+
+- name: start mojibake and ensure enabled=yes
+  service: name=mojibake state=started enabled=yes
+  tags:
+    - mojibake
 
 # run python manage.py create (or make an import option?)
 
-- name: copy across mojibake supervisor config file
-  copy: src=../files/mojibake.ini dest=/etc/supervisord.d/mojibake.ini
-  notify: restart supervisord
-  tags:
-    - mojibake
+# - name: copy across mojibake supervisor config file
+#   copy: src=../files/mojibake.ini dest=/etc/supervisord.d/mojibake.ini
+#   notify: restart supervisord
+#   tags:
+#     - mojibake
 
-- name: start supervisord and ensure enabled=yes
-  service: name=supervisord state=started enabled=yes
-  tags:
-    - mojibake
+# - name: start supervisord and ensure enabled=yes
+#   service: name=supervisord state=started enabled=yes
+#   tags:
+#     - mojibake

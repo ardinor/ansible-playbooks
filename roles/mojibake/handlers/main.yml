@@ -3,5 +3,9 @@
 - name: restart nginx
   service: name=nginx state=restarted
 
-- name: restart supervisord
-  service: name=supervisord state=restarted
+# - name: restart supervisord
+#   service: name=supervisord state=restarted
+
+- name: daemon-reload
+  command: /bin/systemctl daemon-reload
+
