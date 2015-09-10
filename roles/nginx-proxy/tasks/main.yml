@@ -29,22 +29,29 @@
   when: ssl == true
 
 - name: Copy across SSL certificate
-  copy: src=../files/server.crt dest={{ ssl_cert_location }}
+  copy: src=../files/server.crt dest={{ ssl_cert_location }}{{ site_url }}.crt
         owner=root group=root mode=0400
   with_items:
     - ssl_cert_location
   when: ssl == true
 
 - name: Copy across SSL key
-  copy: src=../files/server.key dest={{ ssl_private_key_location }}
+  copy: src=../files/server.key dest={{ ssl_private_key_location }}{{ site_url }}.key
         owner=root group=root mode=0400
   with_items:
     - ssl_private_key_location
   when: ssl == true
 
 - name: Copy across bundled CA certs
-  copy: src=../files/ca-bundle.pem dest=/etc/nginx/ssl/ca-certs.pem
+  copy: src=../files/ca-bundle.pem dest={{ ssl_cert_location }}{{ site_url }}.ca-certs.pem
         owner=root group=root mode=0400
+  when: ssl == true
+
+- name: Make SSL cert directory
+  file: path=/etc/nginx/ssl/ state=directory
+        owner=root group=root mode=0400
+  with_items:
+    - ssl_cert_dir
   when: ssl == true
 
 # This will only be run when the file does not exist
@@ -53,15 +60,15 @@
   when: ssl == true
 
 - name: Install SSL site config file
-  template: src=ssl_site.conf.j2 dest=/etc/nginx/sites-available/site.conf
+  template: src=ssl_site.conf.j2 dest=/etc/nginx/sites-available/{{ site_url }}.conf
   when: ssl == true
 
 - name: Install site config file
-  template: src=site.conf.j2 dest=/etc/nginx/sites-available/site.conf
+  template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ site_url }}.conf
   when: ssl == false
 
 - name: Link site config to sites-enabled
-  file: src=/etc/nginx/sites-available/site.conf dest=/etc/nginx/sites-enabled/site.conf
+  file: src=/etc/nginx/sites-available/{{ site_url }}.conf dest=/etc/nginx/sites-enabled/{{ site_url }}.conf
         state=link
   notify: restart nginx
 

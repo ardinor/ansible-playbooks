@@ -7,18 +7,19 @@ nginx_user: www-data
 site_url: defestri.org
 
 # If we want the server we're deploying to use ssl, if not a different config will be used
-ssl: false
+ssl: true
 # SSL cert directory
-#ssl_cert_dir: /etc/nginx/ssl
 ssl_cert_dir: /etc/pki/tls/certs
 # If we're using SSL, where the SSL Cert is located on the server
-ssl_cert_location: /etc/nginx/ssl/server.crt
+# server.crt
+ssl_cert_location: /etc/pki/tls/private/
 # If we're using SSL, where the SSL Private Key is located on the server
-ssl_private_key_location: /etc/nginx/ssl/server.key
+# server.key
+ssl_private_key_location: /etc/pki/tls/private/
 
 root_dir: /var/www/defestri/
 
-proxy_pass_port: 5000
+proxy_pass_port: 8000
 
 site_directory: /var/www/defestri
 site_log_directory: /var/log/nginx/defestri/

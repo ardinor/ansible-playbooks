@@ -28,8 +28,8 @@ server {
  server_name {{ site_url }};
  {% endif %}
 
- ssl_certificate {{ ssl_cert_location }};
- ssl_certificate_key {{ ssl_private_key_location }};
+ ssl_certificate {{ ssl_cert_location }}{{ site_url }}.crt;
+ ssl_certificate_key {{ ssl_private_key_location }}{{ site_url }}.key;
 
  add_header Strict-Transport-Security max-age=15768000;
 
@@ -50,11 +50,13 @@ server {
  ssl_stapling on;
  ssl_stapling_verify on;
  # Bundled Root CA and Class 1 Intermediate Server CA certs
- ssl_trusted_certificate /etc/nginx/ssl/ca-certs.pem;
+ ssl_trusted_certificate {{ ssl_cert_location }}{{ site_url }}.ca-certs.pem;
 
  add_header X-Frame-Options SAMEORIGIN;
  add_header X-Content-Type-Options nosniff;
  add_header X-XSS-Protection "1; mode=block";
+
+ add_header X-Powered-By "";
 
  #root {{ root_dir }};
  #index index.html
