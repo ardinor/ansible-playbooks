@@ -41,6 +41,7 @@
     - yum-plugin-fastestmirror
     - deltarpm
     - screen
+    - at
   tags:
     - common
     - packages
