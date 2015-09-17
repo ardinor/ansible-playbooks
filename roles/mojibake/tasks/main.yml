@@ -41,7 +41,8 @@
 
 - name: Change SELinux to allow apache/nginx to connect to other network sockets
   command: /usr/sbin/setsebool -P httpd_can_network_connect 1
-  when: selinux_enabled == true
+  when: ansible_selinux != false and
+        ansible_selinux.status != "disabled"
   tags:
     - mojibake
     - selinux
@@ -136,6 +137,10 @@
     PATH: /usr/pgsql-9.4/bin:{{ ansible_env.PATH }}
   tags:
     - mojibake
+
+# compile translations
+# source ~/venv/bin/activate
+# pybabel compile -d mojibake/translations
 
 - name: ensure ownership is correct
   file:
