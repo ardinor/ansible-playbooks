@@ -6,6 +6,9 @@ nginx_user: www-data
 # The site url without www
 site_url: defestri.org
 
+# If we want to listen for IPv6 connections as well
+ipv6: true
+
 # If we want the server we're deploying to use ssl, if not a different config will be used
 ssl: true
 # SSL cert directory

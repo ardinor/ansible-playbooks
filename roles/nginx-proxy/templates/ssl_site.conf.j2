@@ -2,6 +2,9 @@
 
 server {
  listen 80;
+ {% if ipv6 %}
+ listen [::]:80;
+ {% endif %}
  {% if internal is defined and internal %}
  server_name {{ develop_url }};
  {% else %}
@@ -12,6 +15,9 @@ server {
 
 server {
  listen 80;
+ {% if ipv6 %}
+ listen [::]:80;
+ {% endif %}
  {% if internal is defined and internal %}
  server_name www.{{ develop_url }};
  {% else %}
@@ -22,6 +28,9 @@ server {
 
 server {
  listen 443 deferred ssl spdy;
+ {% if ipv6 %}
+ listen [::]:443 deferred ssl spdy;
+ {% endif %}
  {% if internal is defined and internal %}
  server_name {{ develop_url }};
  {% else %}
