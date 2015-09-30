@@ -1,0 +1,7 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Start our jenkins service
+  service: name=jenkins state=started enabled=yes

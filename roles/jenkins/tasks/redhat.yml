@@ -1,0 +1,31 @@
+---
+
+- name: Download jenkins repo
+  get_url: url=http://pkg.jenkins-ci.org/redhat/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo
+  tags:
+    - jenkins
+    - repo
+
+- name: Import jenkins repo signing key
+  command: rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+  tags:
+    - jenkins
+    - gpg-key
+
+- name: Install jenkins
+  yum: name=jenkins state=present
+  tags:
+    - jenkins
+    - packages
+
+- name: Allow http through the firewall
+  firewalld: service=http permanent=yes state=enabled immediate=yes
+  tags:
+    - jenkins
+    - firewall
+
+- name: Allow port 8080 through the firewall
+  firewalld: port=8080/tcp permanent=yes state=enabled immediate=yes
+  tags:
+    - jenkins
+    - firewall
