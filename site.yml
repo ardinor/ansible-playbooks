@@ -16,3 +16,9 @@
 - include: xbmc.yml
 - include: dns.yml
 - include: jenkins.yml
+
+- hosts: smokeping-build
+  sudo: True
+
+  roles:
+    - smokeping-build

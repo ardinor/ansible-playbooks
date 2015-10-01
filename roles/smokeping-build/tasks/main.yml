@@ -18,3 +18,19 @@
   unarchive: src=/tmp/smokeping.tar.gz dest=/opt/ copy=no
   tags:
     - smokeping
+
+- command: /opt/smokeping-2.6.11/configure --prefix=/opt/smokeping
+- command: /opt/smokeping-2.6.11/make install
+
+- name: Make required directories
+  file: path={{ item }} state=directory
+  with_items:
+    - /opt/smokeping/data
+    - /opt/smokeping/var
+    - /opt/smokeping/cache
+  tags:
+    - smokeping-build
+
+# build here
+# - command: /opt/smokeping-2.6.11/setup/build-perl-modules.sh /opt/smokeping/thirdparty
+# set $PERL5LIB to /opt/smokeping/thirdparty

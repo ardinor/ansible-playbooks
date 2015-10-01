@@ -33,7 +33,12 @@
     - perl-Socket6
     - perl-CGI-SpeedyCGI
     - perl-FCGI
-    - perl-CGI-SpeedyCGI
     - perl-ExtUtils-MakeMaker
-    - perl-RadiusPerl
-    - perl-RRD-Simple
+    - rrdtool-perl
+    - perl-Sys-Syslog
+    # - perl-CPAN
+    # - perl-RadiusPerl
+    # - perl-RRD-Simple
+
+# - cpanm: name=Perl-RADIUS
+# - cpanm: name=RRD::Simple
