@@ -22,33 +22,13 @@ Performs the following:
 Installs and sets up nginx as a proxy using the config files in templates/.
 Also supports a SSL secured proxy, see the role's README for more information.
 
-### [Docker](roles/docker/) ###
-
-Installs, starts and enables Docker, also installs Docker Compose.
-
-### [Docker-Logging](roles/docker-logging/) ###
-
-Ansible playbook for settings up logging on the server. Deploys a [Logspout](https://github.com/gliderlabs/logspout) Docker container for collecting Docker container logs and a [logstash](http://logstash.net/) Docker container for collecting logs (from both Logspout and the host itself) in order to ship them off to a central logging server.
-
-### [Mojibake-Docker](roles/mojibake-docker/) ###
-
-Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) using Docker.
-
 ### [Mojibake](roles/mojibake/) ###
 
-Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake). Uses PostgreSQL.
+Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake), the Flask application on which my website runs. Uses PostgreSQL as the database backend.
 
 To copy across a database backup and have it automatically restored, pass the path to the database dump as an extra variable:
 
 --extra-vars "db_file=/path/to/db.db"
-
-### [Redis](roles/redis/) ###
-
-Installs and starts/enables [Redis](http://redis.io/)
-
-### [RabbitMQ](roles/rabbitmq) ###
-
-Installs and starts/enables [RabbitMQ](https://www.rabbitmq.com/).
 
 ### [Sensu-Core](roles/sensu-core) ###
 
@@ -66,10 +46,33 @@ Install the [Sensu](http://sensuapp.org) Client along with dependencies (RabbitM
 
 Installs and configures [Graphite](https://github.com/graphite-project).
 
+### [ELK Stack](roles/elk-stack) ###
+
+Installs and configures the ELK stack (Elasticsearch, Logstash & Kibana).
+
 ### [Unbound Local DNS Resolver](/roles/unbound-local-dns) ###
 
 Installs Unbound DNS as a local resolver
 
+### [Docker](roles/docker/) ###
+
+Installs, starts and enables Docker, also installs Docker Compose.
+
+### [Docker-Logging](roles/docker-logging/) ###
+
+Ansible playbook for settings up logging on the server. Deploys a [Logspout](https://github.com/gliderlabs/logspout) Docker container for collecting Docker container logs and a [logstash](http://logstash.net/) Docker container for collecting logs (from both Logspout and the host itself) in order to ship them off to a central logging server.
+
+### [Mojibake-Docker](roles/mojibake-docker/) ###
+
+Ansible playbook for deploying [Mojibake](https://github.com/ardinor/mojibake) using Docker.
+
+### [Redis](roles/redis/) ###
+
+Installs and starts/enables [Redis](http://redis.io/)
+
+### [RabbitMQ](roles/rabbitmq) ###
+
+Installs and starts/enables [RabbitMQ](https://www.rabbitmq.com/).
 
 ### Misc
 
@@ -93,8 +96,3 @@ Other useful commands:
 - dhcp (not dnsmasq)
 - elk stack
 - routing and hostnames (external network via VPN and internal)
-
-### Incomplete:
-
-- postgre-sql
-- mojibake (without Docker)
