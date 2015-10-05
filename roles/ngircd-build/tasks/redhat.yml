@@ -1,0 +1,63 @@
+---
+
+- name: install package requirements
+  yum: name={{ item }} state=present
+  with_items:
+    - autoconf
+    - automake
+    - expect
+    - gcc
+    - glibc-devel
+    - gnutls-devel
+    - libident-devel
+    - make
+    - pam-devel
+    - tcp_wrappers-devel
+    - telnet
+    - zlib-devel
+    - openssl-devel
+
+./configure --prefix=/home/rpmbuild/ircd/build --with-openssl --enable-ipv6 --with-syslog --with-zlib
+make
+make install  # make DESTDIR=/tmp/project install
+
+# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+#               state=present
+#               regexp="^;MotdFile = "
+#               line=";MotdFile = :ETCDIR:/ngircd.motd"
+
+# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+#               state=present
+#               regexp="^;IncludeDir ="
+#               line=";IncludeDir = :ETCDIR:/conf.d"
+
+# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+#               state=present
+#               regexp="^;CertFile ="
+#               line=";CertFile = :ETCDIR:/ssl/server-cert.pem"
+
+# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+#               state=present
+#               regexp="^;DHFile ="
+#               line=";DHFile = :ETCDIR:/ssl/dhparams.pem"
+
+- replace: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+           regexp="/home/rpmbuild/ircd/build/share/*"
+           replace=":DOCDIR:"
+
+- replace: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+           regexp="/home/rpmbuild/ircd/build/etc/*"
+           replace=":ETCDIR:"
+
+- lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+              state=present
+              regexp="^;ServerGID ="
+              line="ServerGID = ngircd"
+
+- lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
+              state=present
+              regexp="^;ServerUID ="
+              line="ServerUID = ngircd"
+
+fpm -s dir -t rpm -C /home/rpmbuild/ircd/build --name ngircd --version 22.1 --iteration 1 --description "Next Generation IRC Daemon"
+--after-install <script>

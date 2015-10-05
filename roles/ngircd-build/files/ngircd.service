@@ -1,0 +1,11 @@
+[Unit]
+Description=Next Generation IRC Daemon
+Documentation=man:ngircd(8) man:ngircd.conf(5) http://ngircd.barton.de/documentation.php.en
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/ngircd -n
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
