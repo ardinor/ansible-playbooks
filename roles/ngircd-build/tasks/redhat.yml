@@ -17,6 +17,8 @@
     - zlib-devel
     - openssl-devel
 
+# install rpmbuild, rpm-sign
+
 - name: add rpmbuild users
   user: name=rpmbuild
   tags:
@@ -69,4 +71,14 @@
               regexp="^;ServerUID ="
               line="ServerUID = ngircd"
 
+# copy across post-install
+# copy across service script
 
+# fpm -s dir -t rpm -C /home/rpmbuild/ircd/build --name ngircd --version 22.1 --iteration 1 --description "Next Generation IRC Daemon"
+# --after-install <script>
+
+# - name: delete rpmbuild user
+#   user: name=rpmbuild state=absent remove=yes
+#   tags:
+#     - ngircd-build
+#     - build-user
