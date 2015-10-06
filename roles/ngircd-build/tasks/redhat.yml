@@ -17,29 +17,39 @@
     - zlib-devel
     - openssl-devel
 
-./configure --prefix=/home/rpmbuild/ircd/build --with-openssl --enable-ipv6 --with-syslog --with-zlib
-make
-make install  # make DESTDIR=/tmp/project install
+- name: add rpmbuild users
+  user: name=rpmbuild
+  tags:
+    - ngircd-build
+    - build-user
 
-# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
-#               state=present
-#               regexp="^;MotdFile = "
-#               line=";MotdFile = :ETCDIR:/ngircd.motd"
+- name: download ngircd
+  get_url: url={{ download_url }} dest=/home/rpmbuild/ngircd.tar.gz
+  tags:
+    - ngircd-build
 
-# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
-#               state=present
-#               regexp="^;IncludeDir ="
-#               line=";IncludeDir = :ETCDIR:/conf.d"
+- name: download ngircd
+  unarchive: src=/home/rpmbuild/ngircd.tar.gz dest=/home/rpmbuild/ircd copy=no
+  tags:
+    - ngircd-build
 
-# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
-#               state=present
-#               regexp="^;CertFile ="
-#               line=";CertFile = :ETCDIR:/ssl/server-cert.pem"
+- name: configure ngircd as rpmbuild
+  shell: "/home/rpmbuild/ircd/ngircd-22.1/configure --prefix=/home/rpmbuild/ircd/build --with-openssl --enable-ipv6 --with-syslog --with-zlib"
+  sudo_user: rpmbuild
+  tags:
+    - ngircd-build
 
-# - lineinfile: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
-#               state=present
-#               regexp="^;DHFile ="
-#               line=";DHFile = :ETCDIR:/ssl/dhparams.pem"
+- name: make ngircd as rpmbuild
+  shell: "/home/rpmbuild/ircd/ngircd-22.1/make"
+  sudo_user: rpmbuild
+  tags:
+    - ngircd-build
+
+- name: make install ngircd as rpmbuild
+  shell: "/home/rpmbuild/ircd/ngircd-22.1/make install" # make install DESTDIR=/tmp/project install
+  sudo_user: rpmbuild
+  tags:
+    - ngircd-build
 
 - replace: dest=/home/rpmbild/ircd/build/etc/ngircd.conf
            regexp="/home/rpmbuild/ircd/build/share/*"
@@ -59,5 +69,4 @@ make install  # make DESTDIR=/tmp/project install
               regexp="^;ServerUID ="
               line="ServerUID = ngircd"
 
-fpm -s dir -t rpm -C /home/rpmbuild/ircd/build --name ngircd --version 22.1 --iteration 1 --description "Next Generation IRC Daemon"
---after-install <script>
+
