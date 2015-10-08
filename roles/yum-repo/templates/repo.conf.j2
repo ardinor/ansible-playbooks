@@ -3,13 +3,18 @@
 <VirtualHost *:80>
 
         ServerAdmin {{ admin_email }}
-        ServerName {{ server_name }}
-        DocumentRoot {{ repo_directory }}
+        {% if internal is defined and internal %}
+        ServerName {{ develop_url }};
+        {% else %}
+        ServerName {{ server_name }};
+        {% endif %}
+        DocumentRoot {{ repo_base }}
 
         <Directory {{ repo_directory }}>
 
             <IfModule mod_authz_core.c>
                 # Apache 2.4
+                Options Indexes
                 Require all granted
             </IfModule>
             <IfModule !mod_authz_core.c>
@@ -21,21 +26,3 @@
 
         </Directory>
 </VirtualHost>
-
-# Is this section necessary?
-<Directory {{ repo_directory }}>
-
-        AllowOverride None
-        Options None
-
-        <IfModule mod_authz_core.c>
-            # Apache 2.4
-            Require all granted
-        </IfModule>
-        <IfModule !mod_authz_core.c>
-            # Apache 2.2
-            Order allow,deny
-            Allow from all
-        </IfModule>
-
-</Directory>

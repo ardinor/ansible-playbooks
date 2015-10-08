@@ -22,3 +22,9 @@
 
   roles:
     - smokeping-build
+
+- hosts: yum-repo
+  sudo: True
+
+  roles:
+    - yum-repo
