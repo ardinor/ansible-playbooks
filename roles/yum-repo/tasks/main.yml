@@ -58,7 +58,7 @@
     - yum-repo
 
 - name: Install httpd config
-  template: src=repo.conf.j2 dest=/etc/httpd/conf.d/repo.conf
+  template: src=repo.conf.j2 dest=/etc/httpd/conf.d/{{ repo_name }}.conf
   notify: restart httpd
   tags:
     - yum-repo

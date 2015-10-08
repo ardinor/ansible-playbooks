@@ -1,0 +1,13 @@
+---
+
+supported_vers:
+  - dist: "epel"
+    vers:
+      - "7"
+
+server_name: repo.org
+repo_name: repo.org
+repo_base: /var/www/repo
+repo_directory: "{{ repo_base }}/pub/"
+
+admin_email: admin@repo.org

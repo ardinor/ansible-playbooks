@@ -1,4 +1,17 @@
 ---
 
 internal: True
+
 development: true
+
+server_name: repo.int.defestri.org
+repo_name: repo.defestri.org
+repo_base: /var/www/repo
+repo_directory: "{{ repo_base }}/pub/"
+
+admin_email: jordan@defestri.org
+
+supported_vers:
+  - dist: "epel"
+    vers:
+      - "7"

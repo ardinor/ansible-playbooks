@@ -2,27 +2,23 @@
 
 <VirtualHost *:80>
 
-        ServerAdmin {{ admin_email }}
-        {% if internal is defined and internal %}
-        ServerName {{ develop_url }};
-        {% else %}
-        ServerName {{ server_name }};
-        {% endif %}
-        DocumentRoot {{ repo_base }}
+    ServerAdmin {{ admin_email }}
+    ServerName {{ server_name }};
+    DocumentRoot {{ repo_base }}
 
-        <Directory {{ repo_directory }}>
+    <Directory {{ repo_directory }}>
 
-            <IfModule mod_authz_core.c>
-                # Apache 2.4
-                Options Indexes
-                Require all granted
-            </IfModule>
-            <IfModule !mod_authz_core.c>
-                # Apache 2.2
-                Options Indexes
-                Order allow,deny
-                Allow from all
-            </IfModule>
+        <IfModule mod_authz_core.c>
+            # Apache 2.4
+            Options Indexes
+            Require all granted
+        </IfModule>
+        <IfModule !mod_authz_core.c>
+            # Apache 2.2
+            Options Indexes
+            Order allow,deny
+            Allow from all
+        </IfModule>
 
-        </Directory>
+    </Directory>
 </VirtualHost>

@@ -1,6 +1,6 @@
 [{{ repo_name }}]
 name={{ repo_name }} - $basearch
-baseurl=http://repo.defestri.org/pub/epel/7/$basearch
+baseurl=http://{{ server_name }}/pub/epel/7/$basearch
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-DEFESTRI
 gpgcheck=1
 enabled=1

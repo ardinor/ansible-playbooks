@@ -1,17 +1,19 @@
 ---
 
-supported_vers:
-  - dist: "epel"
-    vers:
-      - "7"
-  # - dist: "fedora"
-  #   vers:
-  #     - "21"
+# These are the variables you'll want to define either here or in your
+# host variables
 
-repo_name: repo.defestri.org
-repo_base: /var/www/repo
-repo_directory: "{{ repo_base }}/pub/"
+# supported_vers:
+#   - dist: "epel"
+#     vers:
+#       - "7"
+#    - dist: "fedora"
+#      vers:
+#        - "21"
 
-admin_email: jordan@defestri.org
-server_name: repo.defestri.org
-develop_url: repo.int.defestri.org
+# server_name: repo.org
+# repo_name: repo.org
+# repo_base: /var/www/repo
+# repo_directory: "{{ repo_base }}/pub/"
+
+# admin_email: admin@repo.org
