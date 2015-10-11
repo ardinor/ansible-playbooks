@@ -90,7 +90,11 @@ Other useful commands:
 
 ### Vagrant & libvirt
 
-If you get sick of the password prompts you can use policy kit to give yourself access to libvirt, following the steps [here](http://wiki.libvirt.org/page/SSHPolicyKitSetup)
+To use libvirt with Vagrant, `vagrant plugin install vagrant-libvirt`. For more info see the plugin author's [Github](https://github.com/pradels/vagrant-libvirt).
+
+Another useful plugin is vagrant-hostsupdater, to install it `vagrant plugin install vagrant-hostsupdater`. This plugin automatically updates your /etc/hosts with the name of the VM.
+
+If you get sick of the password prompts you can use policy kit to give yourself access to libvirt, following the steps [here](http://wiki.libvirt.org/page/SSHPolicyKitSetup).
 
 ### To do:
 

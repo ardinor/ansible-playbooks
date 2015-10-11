@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define :test_vm do |test_vm|
     test_vm.vm.network 'private_network', ip: '192.168.33.10'
-    test_vm.vm.hostname = "test.defestri.dev"
+    test_vm.vm.hostname = "test.dev.int.defestri.org"
   end
 
 end
