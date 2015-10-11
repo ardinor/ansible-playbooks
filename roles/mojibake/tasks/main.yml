@@ -43,7 +43,7 @@
 
 - name: create mojibake user account
   user: name=mojibake comment="Mojibake Application Account" system=yes
-        home=/opt/mojibake/
+        home=/opt/mojibake/ state=present
   tags:
     - mojibake
     - users
@@ -63,11 +63,13 @@
                  lc_ctype='en_AU.UTF-8'
   tags:
     - mojibake
+    - db
 
 - name: Create mojibake db user/password
   postgresql_user: db={{ db_name }} name={{ db_user }} password={{ db_pass }} priv=ALL
   tags:
     - mojibake
+    - db
 
 - name: copy across db dump if we've been given one
   copy:

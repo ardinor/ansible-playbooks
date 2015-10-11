@@ -1,0 +1,19 @@
+---
+
+- name: Import grafana repo signing key
+  command: rpm --import https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana
+  tags:
+    - grafana
+    - gpg-key
+
+- name: Install grafana repo
+  copy: src=../files/grafana.repo dest=/etc/yum.repos.d/grafana.repo
+  tags:
+    - grafana
+    - repo
+
+- name: Install grafana
+  yum: name=grafana state=present
+  tags:
+    - grafana
+    - packages

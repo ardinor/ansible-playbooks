@@ -1,7 +1,7 @@
 ---
 
 - name: install Docker
-  yum: name=docker state=latest
+  yum: name=docker state=present
   tags:
     - docker
 

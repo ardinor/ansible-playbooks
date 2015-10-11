@@ -1,7 +1,7 @@
 ---
 
 - name: Install collectd
-  yum: name=collectd state=latest
+  yum: name=collectd state=present
 
 - name: Move across graphite config
   template: src=graphite.conf.j2 dest=/etc/collectd.d/graphite.conf

@@ -16,6 +16,8 @@
     - telnet
     - zlib-devel
     - openssl-devel
+    - rpmbuild
+    - rpm-sign
 
 # install rpmbuild, rpm-sign
 
@@ -36,7 +38,7 @@
     - ngircd-build
 
 - name: configure ngircd as rpmbuild
-  shell: "/home/rpmbuild/ircd/ngircd-22.1/configure --prefix=/home/rpmbuild/ircd/build --with-openssl --enable-ipv6 --with-syslog --with-zlib"
+  shell: "/home/rpmbuild/ircd/ngircd-22.1/configure --prefix= --with-openssl --enable-ipv6 --with-syslog --with-zlib"
   sudo_user: rpmbuild
   tags:
     - ngircd-build
@@ -48,7 +50,7 @@
     - ngircd-build
 
 - name: make install ngircd as rpmbuild
-  shell: "/home/rpmbuild/ircd/ngircd-22.1/make install" # make install DESTDIR=/tmp/project install
+  shell: "/home/rpmbuild/ircd/ngircd-22.1/make install DESTDIR=/home/rpmbuild/ircd/build" # make install DESTDIR=/tmp/project install
   sudo_user: rpmbuild
   tags:
     - ngircd-build
@@ -71,11 +73,21 @@
               regexp="^;ServerUID ="
               line="ServerUID = ngircd"
 
-# copy across post-install
-# copy across service script
+- name: create our systemd service dir
+  file: path=/home/rpmbild/ircd/build/etc/systemd/system/ state=directory
 
-# fpm -s dir -t rpm -C /home/rpmbuild/ircd/build --name ngircd --version 22.1 --iteration 1 --description "Next Generation IRC Daemon"
-# --after-install <script>
+- name: copy across post-install file
+  copy: src=../files/post-install.sh dest=/home/rpmbild/ircd/post-install.sh
+        owner=rpmbuild group=rpmbuild mode=0660
+
+- name: copy across mojibake settings file
+  copy: src=../files/ngircd.service
+        dest=/home/rpmbild/ircd/build/usr/lib/systemd/system/ngircd.service
+        owner=rpmbuild group=rpmbuild mode=0660
+  tags:
+    - mojibake
+
+# fpm -s dir -t rpm -C /home/rpmbuild/ircd/build --name ngircd --version 22.1 --iteration 1 --description "Next Generation IRC Daemon" --after-install post-install.sh
 
 # - name: delete rpmbuild user
 #   user: name=rpmbuild state=absent remove=yes
