@@ -88,6 +88,10 @@ Other useful commands:
 
 `--ask-su-pass` = ask sudo password
 
+### Vagrant & libvirt
+
+If you get sick of the password prompts you can use policy kit to give yourself access to libvirt, following the steps [here](http://wiki.libvirt.org/page/SSHPolicyKitSetup)
+
 ### To do:
 
 - create repo
