@@ -22,13 +22,13 @@
     - epel
     - packages
 
-- name: update packages
-  yum: name=* state=latest
-  when: development is not defined or development == False
-  tags:
-    - common
-    - update
-    - packages
+# - name: update packages
+#   yum: name=* state=latest
+#   when: development is not defined or development == False
+#   tags:
+#     - common
+#     - update
+#     - packages
 
 - name: install git/vim/htop/wget/yum fastestmirror/deltarpm
   yum: name={{ item }} state=present

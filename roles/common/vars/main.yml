@@ -1,7 +1,5 @@
 ---
 
-deploy_user: deploy
-
 # default password, generate using passlib, below is a sample
 # python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
 

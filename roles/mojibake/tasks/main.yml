@@ -27,6 +27,15 @@
     - mojibake
     - packages
 
+# http://hakunin.com/six-ansible-practices
+- name: ensure github.com is a known host
+  lineinfile:
+    dest: /{{ deploy_user }}/.ssh/known_hosts
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+    regexp: "^github\\.com"
+
 - name: Pull down mojibake code to get the static files for nginx
   git: repo=https://github.com/ardinor/mojibake.git dest=/opt/mojibake/ version=master force=yes
   tags:
