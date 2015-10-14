@@ -94,9 +94,12 @@
     - ntp
     - packages
 
-# TO DO: investigate fail2ban-systemd
-- name: install fail2ban
-  yum: name=fail2ban-server state=latest
+- name: install fail2ban server and components
+  yum: name={{ item }} state=present
+  with_items:
+    - fail2ban-server
+    - fail2ban-firewalld
+    - fail2ban-systemd
   when: internal is not defined or internal != True
   tags:
     - common
