@@ -1,0 +1,6 @@
+
+[DEFAULT]
+
+{% if ansible_os_family == "RedHat" %}
+backend = systemd
+{% endif %}
