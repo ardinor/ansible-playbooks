@@ -10,12 +10,10 @@
 - include: common.yml
 - include: auth.yml
 - include: openvpn.yml
-- include: mojibake.yml
-- include: sensu-master.yml
 - include: db.yml
-- include: xbmc.yml
 - include: dns.yml
-- include: jenkins.yml
+- include: applications.yml
+- include: monitoring.yml
 
 - hosts: smokeping-build
   sudo: True

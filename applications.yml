@@ -1,0 +1,30 @@
+---
+
+- hosts: mojibake
+  sudo: True
+
+  roles:
+    # Since mojibake-site has dependencies (common/docker/nginx)
+    # they are run first and don't need to be in here
+    - mojibake
+    #- { name: sensu-client, rabbitmq_host_ip: 10.0.0.5 }
+
+- hosts: znc
+  sudo: True
+
+  roles:
+    - openvpn-client
+    - znc
+
+- hosts: xbmc
+  sudo: True
+
+  roles:
+    - common
+    - xbmc
+
+- hosts: jenkins
+  sudo: True
+
+  roles:
+    - jenkins

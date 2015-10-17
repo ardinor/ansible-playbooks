@@ -1,7 +1,0 @@
----
-
-- hosts: graylog2
-  sudo: True
-
-  roles:
-    - graylog2

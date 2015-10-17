@@ -1,8 +1,0 @@
----
-
-- hosts: xbmc
-  sudo: True
-
-  roles:
-    - common
-    - xbmc

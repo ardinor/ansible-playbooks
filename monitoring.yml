@@ -6,3 +6,9 @@
   roles:
     - sensu-server
     - graphite
+
+- hosts: graylog2
+  sudo: True
+
+  roles:
+    - graylog2

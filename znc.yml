@@ -1,8 +1,0 @@
----
-
-- hosts: znc
-  sudo: True
-
-  roles:
-    - openvpn-client
-    - znc
