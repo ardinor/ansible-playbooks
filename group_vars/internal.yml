@@ -3,3 +3,6 @@
 # Set the internal value so that hosts in our internal
 # group can be seen as such during roles.
 internal: true
+
+# The internal IPv4 subnet, gets added as an ignoreip to the fail2ban config
+internal_subnet: 192.168.1.1/26

@@ -100,7 +100,6 @@
     - fail2ban-server
     - fail2ban-firewalld
     - fail2ban-systemd
-  when: internal is not defined or internal != True
   tags:
     - common
     - fail2ban

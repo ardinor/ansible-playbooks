@@ -6,10 +6,6 @@
 
 [sshd]
 
-{% if management_ips %}
-ignoreip = {% for address in management_ips %}{{ address }} {% endfor %}
-
-{% endif %}
 enabled     = true
 # findtime = 1 day
 findtime    = 86400

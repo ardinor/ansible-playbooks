@@ -20,3 +20,4 @@ users:
 # are made
 # "ignoreip" can be an IP address, a CIDR mask or a DNS host
 management_ips:
+  - 127.0.0.1/8

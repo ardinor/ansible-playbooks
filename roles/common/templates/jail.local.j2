@@ -4,3 +4,8 @@
 {% if ansible_os_family == "RedHat" %}
 backend = systemd
 {% endif %}
+
+{% if management_ips %}
+ignoreip = {% for address in management_ips %}{{ address }} {% endfor %}{% if internal_subnet is defined %}{{ internal_subnet }}{% endif %}
+
+{% endif %}
