@@ -3,7 +3,15 @@
 [Definition]
 
 # Search for bans in the logfile
+{% if ansible_os_family == "RedHat" %}
+failregex = fail2ban.actions\s*\[(.*)\]: NOTICE  \[(.*)\] Ban <HOST>
+{% else %}
 failregex = fail2ban.actions\[(.*)\]: WARNING \[(.*)\] Ban <HOST>
+{% endif %}
 
 # ignore bans that happen from this rule
+{% if ansible_os_family == "RedHat" %}
+ignoreregex = fail2ban.actions\s*\[(.*)\]: NOTICE  \[fail2ban\] Ban <HOST>
+{% else %}
 ignoreregex = fail2ban.actions\[(.*)\]: WARNING \[fail2ban\] Ban <HOST>
+{% endif %}

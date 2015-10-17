@@ -1,3 +1,22 @@
 ---
 
 deploy_user: deploy
+
+# default password, generate using passlib, below is a sample
+# python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
+
+# Add users to the wheel role if you want them to be able to use sudo
+users:
+  - name: jordan
+    keys:
+      - /home/jordan/.ssh/jordan.pub
+    roles:
+      - ssh_users
+      - admins
+      - wheel
+
+# Management IPs or hosts, will be put in the fail2ban ssh.local jail config
+# file as IP address to be ignored, i.e. not banned if too many login failures
+# are made
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host
+management_ips:

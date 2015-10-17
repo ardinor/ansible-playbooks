@@ -150,7 +150,7 @@
     - config_files
 
 - name: copy fail2ban fail2ban filter across
-  copy: src=../files/fail2ban.conf dest=/etc/fail2ban/filter.d/fail2ban.conf
+  template: src=fail2ban-filter.conf.j2 dest=/etc/fail2ban/filter.d/fail2ban.conf
   when: internal is not defined or internal != True
   notify: restart fail2ban
   tags:

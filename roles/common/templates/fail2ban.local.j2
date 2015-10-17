@@ -13,8 +13,8 @@ filter      = fail2ban
 logpath     = /var/log/fail2ban.log
 # findtime  = 2 weeks
 findtime    = 1209600
-# bantime   = 12 weeks
-bantime     = 5443200
+# bantime   = 7 weeks (4294967 seems to be the maximum timeout for ipset)
+bantime     = 4294967
 maxretry    = 3
 {% if ansible_os_family == "RedHat" %}
 banaction = firewallcmd-allports
