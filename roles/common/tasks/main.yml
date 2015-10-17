@@ -107,7 +107,7 @@
     - users
 
 - name: copy basic vimrc over
-  copy: src=../files/.vimrc dest=/home/{{ item.name }}/.vimrc
+  copy: src=../files/vimrc dest=/home/{{ item.name }}/.vimrc
   with_items:
     - "{{ users }}"
   tags:
