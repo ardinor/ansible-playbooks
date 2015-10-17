@@ -1,2 +1,3 @@
-[yum-repo]
+[postgre-server]
 virt01
+virt02

@@ -1,0 +1,15 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: make postgres ssh directory
+  file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
+
+# Do some trickery with delegate_to to get the details from the master?
+delegate_to: 127.0.0.1
+
+- authorized_key: user=postgres
+                  key="{{ lookup('file', '/tmp/postgres-pub.tmp') }}"
+                  state=present
+                  exclusive=yes

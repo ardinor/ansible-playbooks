@@ -1,0 +1,28 @@
+---
+
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Create replication db user/password
+  postgresql_user: name=rep
+                   password={{ db_pass }}
+                   role_attr_flags=REPLICATION,LOGIN
+                   state=present
+  tags:
+    - postgresql-replication
+    - db
+
+- name: make postgres ssh directory
+  file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
+
+- name: check if ssh key exists
+  stat: path=/var/lib/pgsql/.ssh/id_rsa get_md5=no
+  register: key_exists
+
+- name: Creating pub SSH key for postgres
+  command: ssh-keygen -t rsa -b 2048 -N '' -f /var/lib/pgsql/.ssh/id_rsa -C "PostgreSQL Replication SSH Key"
+  when: key_exists.stat.isreg is undefined or (key_exists.stat.isreg) == false
+  su_user: postgres
+
+- name: Download postgres pub key
+  fetch: src=/var/lib/pgsql/.ssh/id_rsa.pub dest=/tmp/postgres-pub.tmp flat=yes
