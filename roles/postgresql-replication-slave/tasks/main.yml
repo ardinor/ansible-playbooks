@@ -6,12 +6,6 @@
 - name: make postgres ssh directory
   file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
 
-- debug: var=groups["postgre-master"][0]
-- debug: var=ansible_hostname
-
-- name: make postgres ssh directory
-  file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
-
 - name: check if ssh key exists
   stat: path=/var/lib/pgsql/.ssh/id_rsa get_md5=no
   register: key_exists
