@@ -21,7 +21,10 @@
     - repo
 
 - name: Install PostgreSQL server 9.4
-  yum: name=postgresql94-server state=present
+  yum: name={{ item }} state=present
+  with_items:
+    - postgresql94-server
+    - python-psycopg2   # for the ansible/postgre commands
   tags:
     - postgre-sql
     - packages

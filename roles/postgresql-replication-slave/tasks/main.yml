@@ -6,10 +6,33 @@
 - name: make postgres ssh directory
   file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
 
-# Do some trickery with delegate_to to get the details from the master?
-delegate_to: 127.0.0.1
+- debug: var=groups["postgre-master"][0]
+- debug: var=ansible_hostname
 
-- authorized_key: user=postgres
+- name: make postgres ssh directory
+  file: path=/var/lib/pgsql/.ssh state=directory owner=postgres group=postgres mode=0700
+
+- name: check if ssh key exists
+  stat: path=/var/lib/pgsql/.ssh/id_rsa get_md5=no
+  register: key_exists
+
+- name: Creating new SSH key pair for postgres
+  command: ssh-keygen -t rsa -b 2048 -N '' -q -f /var/lib/pgsql/.ssh/id_rsa -C "PostgreSQL Replication SSH Key for {{ ansible_hostname }}"
+  when: key_exists.stat.isreg is undefined or (key_exists.stat.isreg) == false
+
+- name: ensure ownership is correct
+  file:
+    path: /var/lib/pgsql/.ssh/
+    mode: "u=rwX,g-rX,o-rX"
+    owner: postgres
+    group: postgres
+    recurse: yes
+
+- name: Download postgres pub key
+  fetch: src=/var/lib/pgsql/.ssh/id_rsa.pub dest=/tmp/postgres-pub.tmp flat=yes
+
+- name: ensure our key is allowed on the master server
+  authorized_key: user=postgres
                   key="{{ lookup('file', '/tmp/postgres-pub.tmp') }}"
                   state=present
-                  exclusive=yes
+  delegate_to: "{{ groups['postgre-master'][0] }}"

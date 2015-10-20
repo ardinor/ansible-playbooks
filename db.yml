@@ -13,3 +13,15 @@
   roles:
     - common
     - postgresql
+
+- hosts: postgre-master
+  sudo: True
+
+  roles:
+    - postgresql-replication-master
+
+- hosts: postgre-slave
+  sudo: True
+
+  roles:
+    - postgresql-replication-slave

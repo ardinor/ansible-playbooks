@@ -1,3 +1,9 @@
 [postgre-server]
 virt01
 virt02
+
+[postgre-master]
+virt01
+
+[postgre-slave]
+virt02

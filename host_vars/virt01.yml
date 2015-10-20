@@ -11,6 +11,8 @@ repo_directory: "{{ repo_base }}/pub/"
 
 admin_email: jordan@defestri.org
 
+replication_db_pass: password
+
 supported_vers:
   - dist: "epel"
     vers:
