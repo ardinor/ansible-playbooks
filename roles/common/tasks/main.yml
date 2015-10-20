@@ -164,9 +164,14 @@
     - config_files
 
 # The service will fail to start if the log doesn't exist and since we
-# haven't started the service before it won't. First touch it
+# haven't started the service before it won't. Touch has a minor issue
+# in that it will always be marked as changed. Below are two work arounds
+# as mentioned in.
+# https://github.com/ansible/ansible-modules-core/issues/170
 - name: create fail2ban.log
-  file: path=/var/log/fail2ban.log state=touch
+  # file: path=/var/log/fail2ban.log state=touch
+  # changed_when: False
+  copy: dest=/var/log/fail2ban.log content="" force=no
   tags:
     - common
     - fail2ban

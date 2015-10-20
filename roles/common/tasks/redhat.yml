@@ -57,8 +57,12 @@
     - development-environ
     - selinux
 
+# Touch has a minor issue in that it will always be marked as changed.
+# Below is a work around as mentioned in.
+# https://github.com/ansible/ansible-modules-core/issues/170
 - name: ensure /etc/locale.conf exists
   file: path=/etc/locale.conf state=touch
+  changed_when: False
   tags:
     - common
     - locale
