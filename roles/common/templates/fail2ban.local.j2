@@ -18,6 +18,10 @@ bantime     = 4294967
 maxretry    = 3
 {% if ansible_os_family == "RedHat" %}
 banaction = firewallcmd-allports
+# We use the systemd backend however fail2ban's logs are in a file
+# in order to monitor the file we need to do the below
+backend = auto
+journalmatch =
 {% else %}
 banaction = iptables-ipset-proto6-allports
 {% endif %}
