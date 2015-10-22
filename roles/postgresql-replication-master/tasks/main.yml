@@ -20,3 +20,46 @@
   tags:
     - postgresql-replication
     - users
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp='^#wal_level = minimal'
+              line='wal_level = hot_standby'
+              state=present
+              backrefs=yes
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp='^#archive_mode = off'
+              line='archive_mode = on'
+              state=present
+              backrefs=yes
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp='^#archive_command = '''
+              line="archive_command = 'cd .'"
+              state=present
+              backrefs=yes
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp='^#max_wal_senders = 0'
+              line='max_wal_senders = 1'
+              state=present
+              backrefs=yes
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp='^#hot_standby = off'
+              line='hot_standby = on'
+              state=present
+              backrefs=yes
+
+- name: add in wal_level to postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp="^#listen_addresses = 'localhost'"
+              line="listen_addresses = 'localhost,{{ ansible_default_ipv4.address }}'"
+              state=present
+              backrefs=yes
+

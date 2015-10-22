@@ -11,7 +11,7 @@
   register: key_exists
 
 - name: Creating new SSH key pair for postgres
-  command: ssh-keygen -t rsa -b 2048 -N '' -q -f /var/lib/pgsql/.ssh/id_rsa -C "PostgreSQL Replication SSH Key for {{ ansible_hostname }}"
+  command: "ssh-keygen -t rsa -b 2048 -N '' -q -f /var/lib/pgsql/.ssh/id_rsa -C 'PostgreSQL Replication SSH Key for {{ ansible_hostname }}'"
   when: key_exists.stat.isreg is undefined or (key_exists.stat.isreg) == false
 
 - name: ensure ownership is correct
@@ -30,3 +30,9 @@
                   key="{{ lookup('file', '/tmp/postgres-pub.tmp') }}"
                   state=present
   delegate_to: "{{ groups['postgre-master'][0] }}"
+
+- name: add ourself to pg_hba.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+              line="host    replication     rep     {{ ansible_default_ipv4.address }}/32   md5"
+  delegate_to: "{{ groups['postgre-master'][0] }}"
+
