@@ -21,45 +21,16 @@
     - postgresql-replication
     - users
 
-- name: add in wal_level to postgresql.conf
+- name: add requires lines to postgresql.conf
   lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp='^#wal_level = minimal'
-              line='wal_level = hot_standby'
+              regexp="^{{ item.key }}"
+              line="{{ item.value }}"
               state=present
               backrefs=yes
-
-- name: add in wal_level to postgresql.conf
-  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp='^#archive_mode = off'
-              line='archive_mode = on'
-              state=present
-              backrefs=yes
-
-- name: add in wal_level to postgresql.conf
-  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp='^#archive_command = '''
-              line="archive_command = 'cd .'"
-              state=present
-              backrefs=yes
-
-- name: add in wal_level to postgresql.conf
-  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp='^#max_wal_senders = 0'
-              line='max_wal_senders = 1'
-              state=present
-              backrefs=yes
-
-- name: add in wal_level to postgresql.conf
-  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp='^#hot_standby = off'
-              line='hot_standby = on'
-              state=present
-              backrefs=yes
-
-- name: add in wal_level to postgresql.conf
-  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
-              regexp="^#listen_addresses = 'localhost'"
-              line="listen_addresses = 'localhost,{{ ansible_default_ipv4.address }}'"
-              state=present
-              backrefs=yes
-
+  with_items:
+    - { key: '#wal_level = minimal', value: 'wal_level = hot_standby' }
+    - { key: '#archive_mode = off', value: 'archive_mode = on'}
+    - { key: '#archive_command = ''', value: "archive_command = 'cd .'"}
+    - { key: '#max_wal_senders = 0', value: 'max_wal_senders = 1'}
+    - { key: '#hot_standby = off', value: 'hot_standby = on'}
+    - { key: "#listen_addresses = 'localhost'", value: "listen_addresses = 'localhost,{{ ansible_default_ipv4.address }}'"}

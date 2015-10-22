@@ -31,8 +31,21 @@
                   state=present
   delegate_to: "{{ groups['postgre-master'][0] }}"
 
-- name: add ourself to pg_hba.conf
+- name: add ourself to master's pg_hba.conf
   lineinfile: dest=/var/lib/pgsql/9.4/data/pg_hba.conf
               line="host    replication     rep     {{ ansible_default_ipv4.address }}/32   md5"
   delegate_to: "{{ groups['postgre-master'][0] }}"
 
+- name: add requires lines to local postgresql.conf
+  lineinfile: dest=/var/lib/pgsql/9.4/data/postgresql.conf
+              regexp="^{{ item.key }}"
+              line="{{ item.value }}"
+              state=present
+              backrefs=yes
+  with_items:
+    - { key: '#wal_level = minimal', value: 'wal_level = hot_standby' }
+    - { key: '#archive_mode = off', value: 'archive_mode = on'}
+    - { key: '#archive_command = ''', value: "archive_command = 'cd .'"}
+    - { key: '#max_wal_senders = 0', value: 'max_wal_senders = 1'}
+    - { key: '#hot_standby = off', value: 'hot_standby = on'}
+    - { key: "#listen_addresses = 'localhost'", value: "listen_addresses = 'localhost,{{ ansible_default_ipv4.address }}'"}
