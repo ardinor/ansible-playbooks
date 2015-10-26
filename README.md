@@ -46,6 +46,10 @@ Install the [Sensu](http://sensuapp.org) Client along with dependencies (RabbitM
 
 Installs and configures [Graphite](https://github.com/graphite-project).
 
+### [Grafana](roles/grafana) ###
+
+Installs and configures [Grafana](http://docs.grafana.org/) which relies on Graphite for it's backend.
+
 ### [ELK Stack](roles/elk-stack) ###
 
 Installs and configures the ELK stack (Elasticsearch, Logstash & Kibana).

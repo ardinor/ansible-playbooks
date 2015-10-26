@@ -5,7 +5,18 @@
 
   roles:
     - sensu-server
+
+- hosts: graphite
+  sudo: True
+
+  roles:
     - graphite
+
+- hosts: grafana
+  sudo: True
+
+  roles:
+    - grafana
 
 - hosts: graylog2
   sudo: True

@@ -7,3 +7,6 @@ virt01
 
 [postgre-slave]
 virt02
+
+[grafana]
+test.dev.int.defestri.org
